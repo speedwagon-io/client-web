@@ -5,7 +5,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" class="logo" src="@/assets/icons/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
@@ -20,7 +20,7 @@ import HelloWorld from './components/HelloWorld.vue'
   <RouterView />
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -36,24 +36,24 @@ nav {
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
-}
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
+  a {
+    display: inline-block;
+    padding: 0 1rem;
+    border-left: 1px solid var(--color-border);
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
+    &.router-link-exact-active {
+      color: var(--color-text);
+    }
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
+    &.router-link-exact-active:hover {
+      background-color: transparent;
+    }
 
-nav a:first-of-type {
-  border: 0;
+    &:first-of-type {
+      border: 0;
+    }
+  }
 }
 
 @media (min-width: 1024px) {
@@ -61,25 +61,24 @@ nav a:first-of-type {
     display: flex;
     place-items: center;
     padding-right: calc(var(--section-gap) / 2);
+    .wrapper {
+      display: flex;
+      place-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    nav {
+      text-align: left;
+      margin-left: -1rem;
+      font-size: 1rem;
+
+      padding: 1rem 0;
+      margin-top: 1rem;
+    }
   }
 
   .logo {
     margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
   }
 }
 </style>
