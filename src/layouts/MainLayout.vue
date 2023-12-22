@@ -48,7 +48,6 @@
           v-model="menu"
           flat
           stretch
-          padding="0 50px"
           :options="navbarMenus"
         />
 
@@ -74,10 +73,10 @@ const leftDrawerList = [
 ]
 
 const navbarMenus = [
-  { label: '질문하기', value: 'query' },
-  { label: '내 질문/답변', value: 'myQna' },
-  { label: '질문목록', value: 'queryList' },
-  { label: '마이페이지', value: 'myPage' },
+  { label: '질문하기', value: 'query', icon: 'home' },
+  { label: '질문/답변', value: 'myQna', icon: 'question_answer' },
+  { label: '질문목록', value: 'queryList', icon: 'list' },
+  { label: '마이페이지', value: 'myPage', icon: 'account_circle' },
 ]
 
 export default defineComponent({
