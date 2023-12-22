@@ -29,7 +29,7 @@
         <q-item-label header> Essential Links </q-item-label>
 
         <EssentialLink
-          v-for="link in essentialLinks"
+          v-for="link in leftDrawerLinks"
           :key="link.title"
           v-bind="link"
         />
@@ -42,29 +42,42 @@
 
     <q-footer v-if="isMobile" class="bg-grey-4 text-white">
       <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="../assets/speedwagon_logo.png" />
-          </q-avatar>
-        </q-toolbar-title>
+        <q-space />
+
+        <q-btn-toggle
+          v-model="menu"
+          flat
+          stretch
+          padding="0 50px"
+          :options="navbarMenus"
+        />
+
+        <q-space />
       </q-toolbar>
     </q-footer>
   </q-layout>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, computed, ref } from 'vue'
 import { useQuasar } from 'quasar'
 
 import EssentialLink from 'components/EssentialLink.vue'
 
-const linksList = [
+const leftDrawerList = [
   {
     title: 'Docs',
     caption: 'quasar.dev',
     icon: 'school',
     link: 'https://quasar.dev',
-  }
+  },
+]
+
+const navbarMenus = [
+  { label: '질문하기', value: 'query' },
+  { label: '내 질문/답변', value: 'myQna' },
+  { label: '질문목록', value: 'queryList' },
+  { label: '마이페이지', value: 'myPage' },
 ]
 
 export default defineComponent({
@@ -83,8 +96,10 @@ export default defineComponent({
     })
 
     return {
+      menu: ref('query'),
+      navbarMenus,
       leftDrawerOpen,
-      essentialLinks: linksList,
+      leftDrawerLinks: leftDrawerList,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
