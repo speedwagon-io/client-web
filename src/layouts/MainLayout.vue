@@ -6,10 +6,7 @@
         <q-btn v-if="!isMobile" dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <q-avatar>
-            <img src="../assets/quasar-logo-vertical.svg">
-          </q-avatar>
-          Title
+          <img src="../assets/speedwagon_logo.png" class="logo">
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -26,7 +23,7 @@
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
-            <img src="../assets/quasar-logo-vertical.svg">
+            <img src="../assets/speedwagon_logo.png">
           </q-avatar>
         </q-toolbar-title>
       </q-toolbar>
@@ -61,3 +58,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.logo {
+  width: 100px;
+}
+</style>
