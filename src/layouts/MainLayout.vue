@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useQuasar } from 'quasar'
 
 import EssentialLink from 'components/EssentialLink.vue'
@@ -87,12 +87,9 @@ export default defineComponent({
   },
 
   setup() {
-    const leftDrawerOpen = ref(false)
-
     const quasar = useQuasar()
-    const isMobile = computed(() => {
-      return quasar.screen.lt.md ? true : false
-    })
+
+    const leftDrawerOpen = ref(false)
 
     return {
       menu: ref('query'),
@@ -102,7 +99,7 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
-      isMobile,
+      isMobile: quasar.platform.is.mobile,
     }
   },
 })
