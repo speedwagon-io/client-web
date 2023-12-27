@@ -1,8 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <TextareaSimple>
-      title="TextareaSimple"
-    ></TextareaSimple>
+    <TextareaSimple> title="TextareaSimple" ></TextareaSimple>
   </q-page>
 </template>
 

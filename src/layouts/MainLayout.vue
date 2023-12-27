@@ -44,12 +44,7 @@
       <q-toolbar>
         <q-space />
 
-        <q-btn-toggle
-          v-model="menu"
-          flat
-          stretch
-          :options="navbarMenus"
-        />
+        <q-btn-toggle v-model="menu" flat stretch :options="navbarMenus" />
 
         <q-space />
       </q-toolbar>
