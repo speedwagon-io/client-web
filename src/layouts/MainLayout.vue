@@ -1,21 +1,23 @@
 <template>
   <q-layout view="lHh lpR lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          v-if="!isMobile"
-          dense
-          flat
-          round
-          icon="menu"
-          @click="toggleLeftDrawer"
-        />
+    <transition name="slide">
+      <q-header elevated v-show="isHeaderActive">
+        <q-toolbar>
+          <q-btn
+            v-if="!isMobile"
+            dense
+            flat
+            round
+            icon="menu"
+            @click="toggleLeftDrawer"
+          />
 
-        <q-toolbar-title>
-          <img src="../assets/speedwagon_logo.png" class="logo" />
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
+          <q-toolbar-title>
+            <img src="../assets/speedwagon_logo.png" class="logo" />
+          </q-toolbar-title>
+        </q-toolbar>
+      </q-header>
+    </transition>
 
     <q-drawer
       v-if="!isMobile"
@@ -38,6 +40,7 @@
 
     <q-page-container>
       <router-view />
+      <button @click="toggleHeader">hide header</button>
     </q-page-container>
 
     <q-footer v-if="isMobile" class="bg-grey-4 text-white">
@@ -57,6 +60,8 @@ import { defineComponent, ref } from 'vue'
 import { useQuasar } from 'quasar'
 
 import EssentialLink from 'components/EssentialLink.vue'
+import { menuDisplayStore } from 'src/stores/menu'
+import { storeToRefs } from 'pinia'
 
 const leftDrawerList = [
   {
@@ -83,6 +88,10 @@ export default defineComponent({
 
   setup() {
     const quasar = useQuasar()
+    const store = menuDisplayStore()
+
+    const { isHeaderActive } = storeToRefs(store)
+    const { toggleHeader } = store
 
     const leftDrawerOpen = ref(false)
 
@@ -95,12 +104,25 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
       isMobile: quasar.platform.is.mobile,
+      isHeaderActive,
+      toggleHeader,
     }
   },
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.2s ease;
+}
+
+.slide-enter,
+.slide-leave-to {
+  transform: translateY(-100%);
+  transition: all 150ms ease-in 0s;
+}
+
 .logo {
   width: 100px;
 }
