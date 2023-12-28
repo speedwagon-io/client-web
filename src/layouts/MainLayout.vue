@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh lpR lFf">
-    <q-header elevated class="bg-primary text-white">
+    <q-header elevated>
       <q-toolbar>
         <q-btn
           v-if="!isMobile"
