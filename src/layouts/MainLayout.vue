@@ -60,15 +60,15 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const leftDrawerList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
+    title: '질문하기',
+    caption: '질문하기',
     icon: 'school',
-    link: 'https://quasar.dev',
+    to: '/query',
   },
 ]
 
 const navbarMenus = [
-  { label: '질문하기', value: 'query', icon: 'home' },
+  { label: '질문하기', value: 'query', icon: 'home', to: '/query' },
   { label: '질문/답변', value: 'myQna', icon: 'question_answer' },
   { label: '질문목록', value: 'queryList', icon: 'list' },
   { label: '마이페이지', value: 'myPage', icon: 'account_circle' },
@@ -87,7 +87,7 @@ export default defineComponent({
     const leftDrawerOpen = ref(false)
 
     return {
-      menu: ref('query'),
+      menu: ref(''),
       navbarMenus,
       leftDrawerOpen,
       leftDrawerLinks: leftDrawerList,

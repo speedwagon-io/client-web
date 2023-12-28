@@ -1,5 +1,5 @@
 <template>
-  <q-scroll-area style="width: 500px; height: 100px">
+  <q-scroll-area class="scroll-area">
     <q-input v-model="text" filled autogrow />
   </q-scroll-area>
 </template>
@@ -14,3 +14,10 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+.scroll-area {
+  width: 500px;
+  height: 100px;
+}
+</style>
