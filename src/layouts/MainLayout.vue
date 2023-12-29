@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh lpR lFf">
-    <transition name="slide">
-      <q-header elevated v-show="isHeaderActive">
+    <transition name="slide_up" v-show="isHeaderActive">
+      <q-header elevated>
         <q-toolbar>
           <q-btn
             v-if="!isMobile"
@@ -40,28 +40,28 @@
 
     <q-page-container>
       <router-view />
-      <button @click="toggleHeader">hide header</button>
     </q-page-container>
 
-    <q-footer v-if="isMobile" class="bg-grey-4 text-white">
-      <q-toolbar>
-        <q-space />
+    <transition name="slide_down" v-show="isHeaderActive">
+      <q-footer v-if="isMobile" class="bg-grey-4 text-white">
+        <q-toolbar>
+          <q-space />
 
-        <q-btn-toggle v-model="menu" flat stretch :options="navbarMenus" />
+          <q-btn-toggle v-model="menu" flat stretch :options="navbarMenus" />
 
-        <q-space />
-      </q-toolbar>
-    </q-footer>
+          <q-space />
+        </q-toolbar>
+      </q-footer>
+    </transition>
   </q-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
+import { useRoute } from 'vue-router'
 
 import EssentialLink from 'components/EssentialLink.vue'
-import { menuDisplayStore } from 'src/stores/menu'
-import { storeToRefs } from 'pinia'
 
 const leftDrawerList = [
   {
@@ -88,12 +88,21 @@ export default defineComponent({
 
   setup() {
     const quasar = useQuasar()
-    const store = menuDisplayStore()
+    const route = useRoute()
 
-    const { isHeaderActive } = storeToRefs(store)
-    const { toggleHeader } = store
-
+    const isHeaderActive = ref(route.path === '/login' ? false : true)
     const leftDrawerOpen = ref(false)
+
+    watch(
+      () => route.path,
+      (change: string) => {
+        if (change === '/login') {
+          isHeaderActive.value = false
+        } else {
+          isHeaderActive.value = true
+        }
+      },
+    )
 
     return {
       menu: ref(''),
@@ -105,21 +114,31 @@ export default defineComponent({
       },
       isMobile: quasar.platform.is.mobile,
       isHeaderActive,
-      toggleHeader,
     }
   },
 })
 </script>
 
 <style lang="scss" scoped>
-.slide-enter-active,
-.slide-leave-active {
+.slide_up-enter-active,
+.slide_up-leave-active {
   transition: transform 0.2s ease;
 }
 
-.slide-enter,
-.slide-leave-to {
+.slide_up-enter,
+.slide_up-leave-to {
   transform: translateY(-100%);
+  transition: all 150ms ease-in 0s;
+}
+
+.slide_down-enter-active,
+.slide_down-leave-active {
+  transition: transform 0.2s ease;
+}
+
+.slide_down-enter,
+.slide_down-leave-to {
+  transform: translateY(100%);
   transition: all 150ms ease-in 0s;
 }
 
