@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page padding>
     <TextareaSimple> title="TextareaSimple" ></TextareaSimple>
   </q-page>
 </template>
