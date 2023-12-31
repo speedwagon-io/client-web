@@ -43,14 +43,8 @@
     </q-page-container>
 
     <transition name="slide_down" v-show="isHeaderActive">
-      <q-footer v-if="isMobile" class="bg-grey-4 text-white">
-        <q-toolbar>
-          <q-space />
-
-          <q-btn-toggle v-model="menu" flat stretch :options="navbarMenus" />
-
-          <q-space />
-        </q-toolbar>
+      <q-footer v-if="isMobile">
+        <SwipeableBottomSheet></SwipeableBottomSheet>
       </q-footer>
     </transition>
   </q-layout>
@@ -62,6 +56,7 @@ import { useQuasar } from 'quasar'
 import { useRoute } from 'vue-router'
 
 import EssentialLink from 'components/EssentialLink.vue'
+import SwipeableBottomSheet from 'components/SwipeableBottomSheet.vue'
 
 const leftDrawerList = [
   {
@@ -84,6 +79,7 @@ export default defineComponent({
 
   components: {
     EssentialLink,
+    SwipeableBottomSheet,
   },
 
   setup() {

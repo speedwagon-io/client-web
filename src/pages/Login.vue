@@ -1,7 +1,5 @@
 <template>
-  <q-page padding>
-    login
-  </q-page>
+  <q-page padding> login </q-page>
 </template>
 
 <script lang="ts">
