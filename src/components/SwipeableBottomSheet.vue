@@ -1,6 +1,7 @@
 <template>
   <div class="q-pa-md">
     <div
+      v-if="drawerMode !== 'handler'"
       class="fixed-full"
       :style="backdropStyle"
       aria-hidden="true"
