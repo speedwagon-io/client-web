@@ -11,7 +11,7 @@
       class="slide-drawer slide-drawer--bottom fixed-bottom column no-wrap"
       :class="`slide-drawer--open-${drawerMode}`"
       :style="drawerStyle"
-      style="border-radius: 30px;"
+      style="border-radius: 30px 30px 0 0;"
     >
       <q-card-section
         class="slide-drawer__handler--horizontal row justify-center"
