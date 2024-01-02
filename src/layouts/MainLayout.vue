@@ -2,20 +2,7 @@
   <q-layout view="lHh lpR lFf">
     <transition name="slide_up" v-show="isHeaderActive">
       <q-header elevated>
-        <q-toolbar>
-          <q-btn
-            v-if="!isMobile"
-            dense
-            flat
-            round
-            icon="menu"
-            @click="toggleLeftDrawer"
-          />
-
-          <q-toolbar-title>
-            <img src="../assets/speedwagon_logo.png" class="logo" />
-          </q-toolbar-title>
-        </q-toolbar>
+        <HeaderBar @toggle-left-drawer="toggleLeftDrawer"></HeaderBar>
       </q-header>
     </transition>
 
@@ -57,6 +44,7 @@ import { useRoute } from 'vue-router'
 
 import EssentialLink from 'components/EssentialLink.vue'
 import SwipeableBottomSheet from 'components/SwipeableBottomSheet.vue'
+import HeaderBar from 'components/HeaderBar.vue'
 
 const leftDrawerList = [
   {
@@ -80,6 +68,7 @@ export default defineComponent({
   components: {
     EssentialLink,
     SwipeableBottomSheet,
+    HeaderBar,
   },
 
   setup() {
@@ -136,9 +125,5 @@ export default defineComponent({
 .slide_down-leave-to {
   transform: translateY(100%);
   transition: all 150ms ease-in 0s;
-}
-
-.logo {
-  width: 100px;
 }
 </style>
