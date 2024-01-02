@@ -8,9 +8,10 @@
       @click="animateDrawerTo(100)"
     ></div>
     <q-card
-      class="slide-drawer slide-drawer--bottom text-white fixed-bottom column no-wrap"
+      class="slide-drawer slide-drawer--bottom fixed-bottom column no-wrap"
       :class="`slide-drawer--open-${drawerMode}`"
       :style="drawerStyle"
+      style="border-radius: 30px;"
     >
       <q-card-section
         class="slide-drawer__handler--horizontal row justify-center"
@@ -150,12 +151,7 @@ export default {
   &--bottom {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    background-color: #333;
-    background-image: radial-gradient(
-      circle,
-      rgba(0, 0, 0, 0.1) 0%,
-      rgba(0, 0, 0, 0.4) 100%
-    );
+    background-color: white;
     bottom: unset;
     top: 100%;
     transition: background-color 0.3s ease-in-out;
@@ -164,14 +160,6 @@ export default {
     > img:last-child {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-    }
-
-    &.slide-drawer--open-half {
-      background-color: #014a88;
-    }
-
-    &.slide-drawer--open-full {
-      background-color: #01884a;
     }
   }
 

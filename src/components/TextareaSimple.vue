@@ -17,7 +17,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .scroll-area {
-  width: 500px;
+  width: 300px;
   height: 100px;
 }
 </style>

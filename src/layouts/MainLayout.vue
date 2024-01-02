@@ -30,9 +30,9 @@
     </q-page-container>
 
     <transition name="slide_down" v-show="isHeaderActive">
-      <q-footer v-if="isMobile">
+      <div v-if="isMobile">
         <SwipeableBottomSheet></SwipeableBottomSheet>
-      </q-footer>
+      </div>
     </transition>
   </q-layout>
 </template>
