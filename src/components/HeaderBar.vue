@@ -1,33 +1,30 @@
 <template>
   <q-toolbar>
-    <q-btn
-      v-if="!isMobile"
-      dense
-      flat
-      round
-      icon="menu"
-      @click="toggleLeftDrawer"
-    />
+    <HamburgerButton v-if="!isMobile" @click="toggleMenuDrawer()" />
 
     <q-toolbar-title>
       <img src="../assets/speedwagon_logo.png" class="logo" />
     </q-toolbar-title>
+
+    <HamburgerButton v-if="isMobile" @click="toggleMenuDrawer()" />
   </q-toolbar>
 </template>
 
 <script lang="ts">
 import { useQuasar } from 'quasar'
 import { defineComponent } from 'vue'
+import HamburgerButton from 'components/HamburgerButton.vue'
 
 export default defineComponent({
   name: 'HeaderBar',
-  emits: ['toggle-left-drawer'],
+  components: { HamburgerButton },
+  emits: ['toggle-menu-drawer'],
   setup(props, { emit }) {
     const quasar = useQuasar()
 
     return {
-      toggleLeftDrawer() {
-        emit('toggle-left-drawer')
+      toggleMenuDrawer() {
+        emit('toggle-menu-drawer')
       },
       isMobile: quasar.platform.is.mobile,
     }
