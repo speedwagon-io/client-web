@@ -23,17 +23,15 @@
       </q-card-section>
 
       <q-card-section class="col">
-        <div class="text-h6">example</div>
-      </q-card-section>
-
-      <q-card-section v-if="drawerMode !== 'handler'" class="col">
-        <div class="text-h6">example2</div>
+        <TextareaSimple />
       </q-card-section>
     </q-card>
   </div>
 </template>
 
 <script>
+import TextareaSimple from 'components/TextareaSimple.vue'
+
 // TODO] vue2 to vue3
 const drawerMinHeight = 100
 const drawerTopOffset = 100
@@ -41,6 +39,7 @@ const drawerOpenRatioHalf = 50
 
 export default {
   name: 'SwipeableBottomSheet',
+  components: { TextareaSimple },
   data() {
     return {
       drawerPos: drawerMinHeight,
@@ -151,7 +150,6 @@ export default {
   &--bottom {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    background-color: white;
     bottom: unset;
     top: 100%;
     transition: background-color 0.3s ease-in-out;
