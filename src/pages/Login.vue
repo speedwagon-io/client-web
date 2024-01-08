@@ -53,6 +53,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .check {
   width: 80%;
-  padding-top: 100px;
+  max-width: 500px;
+  padding-top: 10%;
 }
 </style>
