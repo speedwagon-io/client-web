@@ -25,7 +25,7 @@
           </div>
         </q-card-section>
         <q-card-actions class="q-px-md">
-          <q-btn size="lg" class="full-width" label="카카오톡으로 로그인" />
+          <q-btn size="lg" class="full-width" label="카카오톡으로 로그인" @click="handleSignIn"/>
         </q-card-actions>
         <q-card-actions class="q-px-md">
           <q-btn size="lg" class="full-width" label="로그인" />
@@ -37,6 +37,18 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { AmplifyConfig } from '../../amplifyconfig';
+import { Amplify } from '@aws-amplify/core'
+Amplify.configure(AmplifyConfig)
+import { signInWithRedirect } from '@aws-amplify/auth';
+
+const handleSignIn = async () => {
+  await signInWithRedirect({
+    provider: {
+      custom: 'KakaotalkOIDC'
+    }
+  })
+}
 
 export default defineComponent({
   name: 'Login',
@@ -45,6 +57,7 @@ export default defineComponent({
       email: ref(''),
       password: ref(''),
       autoSignIn: ref(false),
+      handleSignIn,
     }
   }
 })
