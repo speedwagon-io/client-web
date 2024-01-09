@@ -5,7 +5,7 @@
         3분안에 응답률 100%,
       </div>
       <div>
-        스피드웨건.
+        <router-link to="/">스피드웨건.</router-link>
       </div>
       <q-card flat>
         <q-card-section>
