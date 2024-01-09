@@ -37,10 +37,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { AmplifyConfig } from '../../amplifyconfig';
+import { AmplifyConfig } from '../../amplifyconfig'
 import { Amplify } from '@aws-amplify/core'
 Amplify.configure(AmplifyConfig)
-import { signInWithRedirect } from '@aws-amplify/auth';
+import { signInWithRedirect } from '@aws-amplify/auth'
 
 const handleSignIn = async () => {
   await signInWithRedirect({
