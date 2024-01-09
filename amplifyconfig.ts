@@ -4,8 +4,8 @@ const DomainName = 'd-speedwagon'
 
 const AuthConfig: AuthUserPoolConfig = {
   Cognito: {
-    userPoolId: 'ap-northeast-2_MMMuAGGoV',
-    userPoolClientId: 'qhl1sp4o1he39iujlf7md5u97',
+    userPoolId: 'ap-northeast-2_MROpxXRM1',
+    userPoolClientId: '6ec45praknl9gguv0lsmgqc3i3',
     loginWith: {
       oauth: {
         domain: `${DomainName}.auth.ap-northeast-2.amazoncognito.com`,

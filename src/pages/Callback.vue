@@ -8,15 +8,15 @@ import { useAuthStore } from 'src/stores/auth'
 import { defineComponent, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-const route = useRoute()
-const router = useRouter()
-const authStore = useAuthStore()
-
-const { accessToken } = storeToRefs(authStore)
-
 export default defineComponent({
 	name: 'Callback',
 	setup() {
+		const route = useRoute()
+		const router = useRouter()
+		const authStore = useAuthStore()
+
+		const { accessToken } = storeToRefs(authStore)
+
 		onMounted(() => {
 			if (route.hash) {
 				route.hash.split('&').forEach((item) => {
