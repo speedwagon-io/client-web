@@ -10,8 +10,8 @@ const AuthConfig: AuthUserPoolConfig = {
       oauth: {
         domain: `${DomainName}.auth.ap-northeast-2.amazoncognito.com`,
         scopes: ['openid'],
-        redirectSignIn: ['http://localhost:3000/'],
-        redirectSignOut: ['http://localhost:3000'],
+        redirectSignIn: ['http://localhost:9000/auth/kakao/login'],
+        redirectSignOut: ['http://localhost:9000'],
         responseType: 'token',
       },
       username: true,
