@@ -9,11 +9,16 @@
         v-bind="link"
       />
     </q-list>
+    <q-btn @click="handleSignOut">로그아웃</q-btn>
   </q-drawer>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { AmplifyConfig } from '../../amplifyconfig'
+import { Amplify } from 'aws-amplify'
+Amplify.configure(AmplifyConfig)
+import { signOut } from 'aws-amplify/auth'
 
 import EssentialLink from 'components/EssentialLink.vue'
 
@@ -32,13 +37,17 @@ const menuDrawerList = [
   },
 ]
 
+const handleSignOut = async () => {
+  await signOut()
+}
+
 export default defineComponent({
   name: 'LeftMenuDrawer',
   components: {
     EssentialLink,
   },
   setup() {
-    return { menuDrawerLinks: menuDrawerList }
+    return { menuDrawerLinks: menuDrawerList, handleSignOut }
   },
 })
 </script>
