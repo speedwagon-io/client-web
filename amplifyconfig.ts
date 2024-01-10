@@ -21,8 +21,8 @@ const AuthConfig: AuthUserPoolConfig = {
       username: true,
     },
   },
-};
+}
 
 export const AmplifyConfig: ResourcesConfig = {
   Auth: AuthConfig,
-};
+}

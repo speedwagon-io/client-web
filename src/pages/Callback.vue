@@ -1,7 +1,7 @@
 <template>
-	<div> callback page </div>
+  <div>callback page</div>
 </template>
-  
+
 <script lang="ts">
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
@@ -9,27 +9,25 @@ import { defineComponent, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
-	name: 'Callback',
-	setup() {
-		const route = useRoute()
-		const router = useRouter()
-		const authStore = useAuthStore()
+  name: 'Callback',
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+    const authStore = useAuthStore()
 
-		const { accessToken } = storeToRefs(authStore)
+    const { accessToken } = storeToRefs(authStore)
 
-		onMounted(() => {
-			if (route.hash) {
-				route.hash.split('&').forEach((item) => {
-					const [key, value] = item.split('=')
-					if (key === 'id_token') {
-						accessToken.value = value
-						router.push('/')
-					}
-				})
-			}
-		})
-	}
+    onMounted(() => {
+      if (route.hash) {
+        route.hash.split('&').forEach(item => {
+          const [key, value] = item.split('=')
+          if (key === 'id_token') {
+            accessToken.value = value
+            router.push('/')
+          }
+        })
+      }
+    })
+  },
 })
-
-
 </script>

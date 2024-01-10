@@ -1,17 +1,27 @@
 <template>
   <q-page class="column content-center">
     <div class="check">
-      <div>
-        3분안에 응답률 100%,
-      </div>
+      <div>3분안에 응답률 100%,</div>
       <div>
         <router-link to="/">스피드웨건.</router-link>
       </div>
       <q-card flat>
         <q-card-section>
           <q-form>
-            <q-input label="이메일" stack-label placeholder="이메일을 입력하세요" v-model="email" type="email" />
-            <q-input label="비밀번호" stack-label placeholder="비밀번호를 입력하세요" v-model="password" type="password" />
+            <q-input
+              label="이메일"
+              stack-label
+              placeholder="이메일을 입력하세요"
+              v-model="email"
+              type="email"
+            />
+            <q-input
+              label="비밀번호"
+              stack-label
+              placeholder="비밀번호를 입력하세요"
+              v-model="password"
+              type="password"
+            />
           </q-form>
         </q-card-section>
         <q-card-section class="q-pa-none row items-center justify-between">
@@ -25,7 +35,12 @@
           </div>
         </q-card-section>
         <q-card-actions class="q-px-md">
-          <q-btn size="lg" class="full-width" label="카카오톡으로 로그인" @click="handleSignIn"/>
+          <q-btn
+            size="lg"
+            class="full-width"
+            label="카카오톡으로 로그인"
+            @click="handleSignIn"
+          />
         </q-card-actions>
         <q-card-actions class="q-px-md">
           <q-btn size="lg" class="full-width" label="로그인" />
@@ -45,8 +60,8 @@ import { signInWithRedirect } from 'aws-amplify/auth'
 const handleSignIn = async () => {
   await signInWithRedirect({
     provider: {
-      custom: 'KakaotalkOIDC'
-    }
+      custom: 'KakaotalkOIDC',
+    },
   })
 }
 
@@ -59,7 +74,7 @@ export default defineComponent({
       autoSignIn: ref(false),
       handleSignIn,
     }
-  }
+  },
 })
 </script>
 
