@@ -22,7 +22,7 @@
         </div>
       </q-card-section>
 
-      <q-card-section class="col">
+      <q-card-section class="col q-pt-none">
         <TextareaSimple />
       </q-card-section>
     </q-card>
