@@ -1,6 +1,13 @@
 <template>
   <q-scroll-area class="scroll-area">
-    <q-input v-model="text" filled autogrow />
+    <q-input v-model="text" rounded autogrow outlined :dense="true" placeholder="질문을 입력하세요">
+      <template v-slot:prepend>
+        <q-icon name="image" @click="console.log('image')" />
+      </template>
+      <template v-slot:append>
+        <q-icon name="send" @click="console.log('send')"/>
+      </template>
+    </q-input>
   </q-scroll-area>
 </template>
 
@@ -17,7 +24,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .scroll-area {
-  width: 300px;
-  height: 100px;
+  height: 100%;
+
+  .text-input {
+    align-items: end;
+  }
 }
 </style>
