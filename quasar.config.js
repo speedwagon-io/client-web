@@ -9,7 +9,9 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 const { configure } = require('quasar/wrappers')
-const env = require('dotenv').config({ path: `.env.${process.env.ENV_FILE.toLowerCase()}` }).parsed
+const env = require('dotenv').config({
+  path: `.env.${process.env.ENV_FILE.toLowerCase()}`,
+}).parsed
 
 module.exports = configure(function (/* ctx */) {
   return {

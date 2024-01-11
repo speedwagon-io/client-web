@@ -8,8 +8,12 @@ const AuthConfig: AuthUserPoolConfig = {
       oauth: {
         domain: `${process.env.COGNITO_DOMAIN}.auth.ap-northeast-2.amazoncognito.com`,
         scopes: ['openid'],
-        redirectSignIn: [`${process.env.APP_URL_NO_TRAILING_SLASH}/auth/kakao/callback`],
-        redirectSignOut: [process.env.APP_URL_NO_TRAILING_SLASH || 'http://localhost:9000'],
+        redirectSignIn: [
+          `${process.env.APP_URL_NO_TRAILING_SLASH}/auth/kakao/callback`,
+        ],
+        redirectSignOut: [
+          process.env.APP_URL_NO_TRAILING_SLASH || 'http://localhost:9000',
+        ],
         responseType: 'code',
       },
       username: true,

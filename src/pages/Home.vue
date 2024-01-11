@@ -1,7 +1,5 @@
 <template>
-  <q-page padding>
-    home
-  </q-page>
+  <q-page padding> home </q-page>
 </template>
 
 <script lang="ts">

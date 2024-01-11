@@ -31,7 +31,6 @@ import LeftMenuDrawer from 'components/sidemenu/LeftMenuDrawer.vue'
 import RightMenuDrawer from 'components/sidemenu/RightMenuDrawer.vue'
 import SwipeableBottomSheet from 'components/sidemenu/SwipeableBottomSheet.vue'
 
-
 export default defineComponent({
   name: 'MainLayout',
 
