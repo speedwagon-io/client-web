@@ -26,10 +26,11 @@ import { defineComponent, ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
 import { useRoute } from 'vue-router'
 
-import SwipeableBottomSheet from 'components/SwipeableBottomSheet.vue'
-import HeaderBar from 'components/HeaderBar.vue'
-import LeftMenuDrawer from 'components/LeftMenuDrawer.vue'
-import RightMenuDrawer from 'components/RightMenuDrawer.vue'
+import HeaderBar from 'components/header/HeaderBar.vue'
+import LeftMenuDrawer from 'components/sidemenu/LeftMenuDrawer.vue'
+import RightMenuDrawer from 'components/sidemenu/RightMenuDrawer.vue'
+import SwipeableBottomSheet from 'components/sidemenu/SwipeableBottomSheet.vue'
+
 
 export default defineComponent({
   name: 'MainLayout',

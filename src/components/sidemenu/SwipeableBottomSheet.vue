@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import TextareaSimple from 'components/TextareaSimple.vue'
+import TextareaSimple from 'components/input/TextareaSimple.vue'
 
 // TODO] vue2 to vue3
 const drawerMinHeight = 100

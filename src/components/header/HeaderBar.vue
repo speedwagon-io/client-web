@@ -3,7 +3,7 @@
     <HamburgerButton v-if="!isMobile" @click="toggleMenuDrawer()" />
 
     <q-toolbar-title>
-      <img src="../assets/speedwagon_logo.png" class="logo" />
+      <img src="../../assets/speedwagon_logo.png" class="logo" />
     </q-toolbar-title>
 
     <HamburgerButton v-if="isMobile" @click="toggleMenuDrawer()" />
@@ -13,7 +13,7 @@
 <script lang="ts">
 import { useQuasar } from 'quasar'
 import { defineComponent } from 'vue'
-import HamburgerButton from 'components/HamburgerButton.vue'
+import HamburgerButton from 'components/header/HamburgerButton.vue'
 
 export default defineComponent({
   name: 'HeaderBar',
