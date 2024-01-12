@@ -7,7 +7,11 @@
     </transition>
 
     <LeftMenuDrawer v-if="!isMobile" v-model="menuDrawerOpen" />
-    <RightMenuDrawer v-else v-model="menuDrawerOpen" />
+    <RightMenuDrawer
+      v-else
+      v-model="menuDrawerOpen"
+      @close-menu-drawer="closeMenuDrawer"
+    />
 
     <q-page-container style="padding-top: 50px">
       <router-view />
@@ -63,6 +67,9 @@ export default defineComponent({
       menuDrawerOpen,
       toggleMenuDrawer() {
         menuDrawerOpen.value = !menuDrawerOpen.value
+      },
+      closeMenuDrawer() {
+        menuDrawerOpen.value = false
       },
       isMobile: quasar.platform.is.mobile,
       isHeaderActive,

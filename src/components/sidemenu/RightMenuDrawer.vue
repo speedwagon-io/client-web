@@ -1,5 +1,12 @@
 <template>
-  <q-drawer side="right" overlay behavior="mobile" bordered>
+  <q-drawer side="right" behavior="mobile">
+    <q-toolbar class="justify-between">
+      <span>바로가기</span>
+      <div>
+        <q-icon name="settings" size="lg" />
+        <q-icon name="close" size="lg" @click="closeMenuDrawer()" />
+      </div>
+    </q-toolbar>
     <q-list>
       <q-item-label header> Essential Links </q-item-label>
 
@@ -37,8 +44,14 @@ export default defineComponent({
   components: {
     EssentialLink,
   },
-  setup() {
-    return { menuDrawerLinks: menuDrawerList }
+  emits: ['close-menu-drawer'],
+  setup(props, { emit }) {
+    return {
+      menuDrawerLinks: menuDrawerList,
+      closeMenuDrawer() {
+        emit('close-menu-drawer')
+      },
+    }
   },
 })
 </script>
