@@ -7,15 +7,8 @@
         <q-icon name="close" size="lg" @click="closeMenuDrawer()" />
       </div>
     </q-toolbar>
-    <q-list>
-      <q-item-label header> Essential Links </q-item-label>
 
-      <EssentialLink
-        v-for="link in menuDrawerLinks"
-        :key="link.title"
-        v-bind="link"
-      />
-    </q-list>
+    <MenuButtonGrid />
   </q-drawer>
 </template>
 
@@ -23,34 +16,18 @@
 import { defineComponent } from 'vue'
 import { useQuasar } from 'quasar'
 
-import EssentialLink from 'components/EssentialLink.vue'
-
-const menuDrawerList = [
-  {
-    title: '질문하기',
-    caption: '질문하기',
-    icon: 'school',
-    to: '/query',
-  },
-  {
-    title: '로그인',
-    caption: '로그인',
-    icon: 'login',
-    to: '/login',
-  },
-]
+import MenuButtonGrid from 'components/button-group/MenuButtonGrid.vue'
 
 export default defineComponent({
   name: 'RightMenuDrawer',
   components: {
-    EssentialLink,
+    MenuButtonGrid
   },
   emits: ['close-menu-drawer'],
   setup(props, { emit }) {
     const quasar = useQuasar()
 
     return {
-      menuDrawerLinks: menuDrawerList,
       closeMenuDrawer() {
         emit('close-menu-drawer')
       },
