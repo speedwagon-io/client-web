@@ -23,9 +23,7 @@
       </q-card-section>
 
       <q-card-section class="col q-pt-none">
-        <q-scroll-area class="scroll-area">
-          <TextareaSimple />
-        </q-scroll-area>
+        <TextareaSimple />
       </q-card-section>
     </q-card>
   </div>
@@ -179,10 +177,6 @@ export default {
         }
       }
     }
-  }
-
-  .scroll-area {
-    height: 100%;
   }
 }
 </style>

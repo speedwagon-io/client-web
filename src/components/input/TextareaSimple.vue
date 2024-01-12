@@ -5,6 +5,7 @@
     autogrow
     outlined
     :dense="true"
+    input-style="max-height: 300px"
     placeholder="질문을 입력하세요"
   >
     <template v-slot:prepend>
@@ -32,5 +33,5 @@ export default defineComponent({
   &:deep(.q-field__control) {
     align-items: flex-end;
   }
-  }
+}
 </style>
