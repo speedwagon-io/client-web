@@ -1,5 +1,5 @@
 <template>
-  <q-drawer side="right" behavior="mobile">
+  <q-drawer side="right" behavior="mobile" :width="screenWidth">
     <q-toolbar class="justify-between">
       <span>바로가기</span>
       <div>
@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useQuasar } from 'quasar'
 
 import EssentialLink from 'components/EssentialLink.vue'
 
@@ -46,11 +47,14 @@ export default defineComponent({
   },
   emits: ['close-menu-drawer'],
   setup(props, { emit }) {
+    const quasar = useQuasar()
+
     return {
       menuDrawerLinks: menuDrawerList,
       closeMenuDrawer() {
         emit('close-menu-drawer')
       },
+      screenWidth: quasar.screen.width,
     }
   },
 })
