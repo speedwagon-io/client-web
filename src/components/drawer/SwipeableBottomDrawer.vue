@@ -38,7 +38,7 @@ const drawerTopOffset = 100
 const drawerOpenRatioHalf = 50
 
 export default {
-  name: 'SwipeableBottomSheet',
+  name: 'SwipeableBottomDrawer',
   components: { TextareaSimple },
   data() {
     return {
