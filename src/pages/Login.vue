@@ -60,7 +60,7 @@ import { signInWithRedirect } from 'aws-amplify/auth'
 const handleSignIn = async () => {
   await signInWithRedirect({
     provider: {
-      custom: 'KakaotalkOIDC',
+      custom: 'Kakao',
     },
   })
 }
