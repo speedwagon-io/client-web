@@ -10,7 +10,9 @@
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
     "dev": "cross-env ENV_FILE=development quasar dev",
-    "build": "quasar build"
+    "build:dev": "cross-env ENV_FILE=development quasar build",
+    "build:stage": "cross-env ENV_FILE=stage quasar build",
+    "build:prod": "cross-env ENV_FILE=production quasar build"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
