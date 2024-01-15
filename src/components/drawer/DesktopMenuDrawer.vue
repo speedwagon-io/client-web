@@ -1,5 +1,5 @@
 <template>
-  <q-drawer side="left" overlay behavior="mobile" bordered>
+  <q-drawer side="right" overlay behavior="mobile" bordered>
     <q-list>
       <q-item-label header> Essential Links </q-item-label>
 
@@ -42,7 +42,7 @@ const handleSignOut = async () => {
 }
 
 export default defineComponent({
-  name: 'LeftMenuDrawer',
+  name: 'DesktopMenuDrawer',
   components: {
     EssentialLink,
   },

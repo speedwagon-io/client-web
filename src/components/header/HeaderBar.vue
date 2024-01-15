@@ -1,11 +1,16 @@
 <template>
   <q-toolbar>
-    <HamburgerButton v-if="!isMobile" @click="toggleMenuDrawer()" />
-
     <q-toolbar-title>
-      <img src="../../assets/speedwagon_logo.png" class="logo" />
+      Speedwagon
     </q-toolbar-title>
 
+    <q-btn flat round dense>
+      <q-icon name="notifications" />
+    </q-btn>
+    <q-btn flat round dense>
+      <q-icon name="search" />
+    </q-btn>
+    <HamburgerButton v-if="!isMobile" @click="toggleMenuDrawer()" />
     <HamburgerButton v-if="isMobile" @click="toggleMenuDrawer()" />
   </q-toolbar>
 </template>

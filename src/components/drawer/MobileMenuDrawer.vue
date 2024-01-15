@@ -19,7 +19,7 @@ import { useQuasar } from 'quasar'
 import MenuButtonGrid from 'components/button-group/MenuButtonGrid.vue'
 
 export default defineComponent({
-  name: 'RightMenuDrawer',
+  name: 'MobileMenuDrawer',
   components: {
     MenuButtonGrid
   },

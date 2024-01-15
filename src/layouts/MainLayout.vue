@@ -6,8 +6,8 @@
       </q-header>
     </transition>
 
-    <LeftMenuDrawer v-if="!isMobile" v-model="menuDrawerOpen" />
-    <RightMenuDrawer
+    <DesktopMenuDrawer v-if="!isMobile" v-model="menuDrawerOpen" />
+    <MobileMenuDrawer
       v-else
       v-model="menuDrawerOpen"
       @close-menu-drawer="closeMenuDrawer"
@@ -31,8 +31,8 @@ import { useQuasar } from 'quasar'
 import { useRoute } from 'vue-router'
 
 import HeaderBar from 'components/header/HeaderBar.vue'
-import LeftMenuDrawer from 'components/drawer/LeftMenuDrawer.vue'
-import RightMenuDrawer from 'components/drawer/RightMenuDrawer.vue'
+import DesktopMenuDrawer from 'components/drawer/DesktopMenuDrawer.vue'
+import MobileMenuDrawer from 'components/drawer/MobileMenuDrawer.vue'
 import SwipeableBottomDrawer from 'components/drawer/SwipeableBottomDrawer.vue'
 
 export default defineComponent({
@@ -41,8 +41,8 @@ export default defineComponent({
   components: {
     SwipeableBottomDrawer,
     HeaderBar,
-    LeftMenuDrawer,
-    RightMenuDrawer,
+    DesktopMenuDrawer,
+    MobileMenuDrawer,
   },
 
   setup() {
