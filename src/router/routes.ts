@@ -8,6 +8,7 @@ const routes: RouteRecordRaw[] = [
       { path: '', component: () => import('pages/Home.vue') },
       { path: '/index', component: () => import('pages/IndexPage.vue') },
       { path: '/login', component: () => import('pages/Login.vue') },
+      { path: '/login/email', component: () => import('pages/EmailLogin.vue')},
       {
         path: '/auth/kakao/callback',
         component: () => import('pages/Callback.vue'),

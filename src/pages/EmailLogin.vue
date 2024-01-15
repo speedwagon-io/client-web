@@ -3,29 +3,34 @@
     <div class="check">
       <CatchyPhrase />
       <q-card flat>
-        <q-card-actions class="q-px-md">
-          <q-btn
-            class="full-width"
-            size="lg"
-            label="카카오톡으로 로그인"
-            @click="handleSignIn"
-          />
-        </q-card-actions>
-        <q-card-actions class="q-px-md">
-          <q-btn to="/login/email" class="full-width" size="lg" label="이메일로 로그인" />
-        </q-card-actions>
-        <q-card-section class="q-pa-none row items-center justify-center">
-          <div>회원가입</div>
-          <span class="separator">|</span>
-          <div>비밀번호 찾기</div>
+        <q-card-section>
+          <q-form>
+            <q-input
+              label="이메일"
+              stack-label
+              placeholder="이메일을 입력하세요"
+              v-model="email"
+              type="email"
+            />
+            <q-input
+              label="비밀번호"
+              stack-label
+              placeholder="비밀번호를 입력하세요"
+              v-model="password"
+              type="password"
+            />
+          </q-form>
         </q-card-section>
+        <q-card-actions class="q-px-md">
+          <q-btn size="lg" class="full-width" label="로그인" />
+        </q-card-actions>
       </q-card>
     </div>
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 
@@ -43,12 +48,14 @@ const handleSignIn = async () => {
 }
 
 export default defineComponent({
-  name: 'Login',
+  name: 'EmailLogin',
   components: {
     CatchyPhrase,
   },
   setup() {
     return {
+      email: ref(''),
+      password: ref(''),
       handleSignIn,
     }
   },
@@ -60,9 +67,5 @@ export default defineComponent({
   width: 80%;
   max-width: 500px;
   padding-top: 10%;
-}
-
-.separator {
-  padding: 0 20px;
 }
 </style>
