@@ -86,7 +86,6 @@ export default defineComponent({
     watch(
       () => route.query,
       (change) => {
-        console.log(change)
         if (change.method === 'email') {
           isEmailSignIn.value = true
         } else {
