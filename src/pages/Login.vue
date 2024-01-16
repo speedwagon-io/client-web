@@ -3,7 +3,25 @@
     <div class="check">
       <CatchyPhrase />
       <q-card flat>
-        <q-card-actions class="q-px-md">
+        <q-card-section v-if="isEmailSignIn">
+          <q-form>
+            <q-input
+              label="이메일"
+              stack-label
+              placeholder="이메일을 입력하세요"
+              v-model="email"
+              type="email"
+            />
+            <q-input
+              label="비밀번호"
+              stack-label
+              placeholder="비밀번호를 입력하세요"
+              v-model="password"
+              type="password"
+            />
+          </q-form>
+        </q-card-section>
+        <q-card-actions class="q-px-md" v-if="!isEmailSignIn">
           <q-btn
             class="full-width"
             size="lg"
@@ -11,10 +29,13 @@
             @click="handleSignIn"
           />
         </q-card-actions>
-        <q-card-actions class="q-px-md">
-          <q-btn to="/login/email" class="full-width" size="lg" label="이메일로 로그인" />
+        <q-card-actions class="q-px-md" v-if="isEmailSignIn">
+          <q-btn class="full-width" size="lg" label="로그인" @click="handleEmailSignIn" />
         </q-card-actions>
-        <q-card-section class="q-pa-none row items-center justify-center">
+        <q-card-actions class="q-px-md" v-else>
+          <q-btn class="full-width" size="lg" label="이메일로 로그인" @click="toEmailSignin" />
+        </q-card-actions>
+        <q-card-section class="q-pa-none row items-center justify-center" v-if="!isEmailSignIn">
           <div>회원가입</div>
           <span class="separator">|</span>
           <div>비밀번호 찾기</div>
@@ -25,7 +46,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 
@@ -42,14 +64,46 @@ const handleSignIn = async () => {
   })
 }
 
+const handleEmailSignIn = async () => {
+  await signInWithRedirect({
+    provider: {
+      custom: 'KakaotalkOIDC',
+    },
+  })
+}
+
 export default defineComponent({
   name: 'Login',
   components: {
     CatchyPhrase,
   },
   setup() {
+    const route = useRoute()
+    const router = useRouter()
+
+    let isEmailSignIn = ref(route.query.method === 'email' ? true : false)
+
+    watch(
+      () => route.query,
+      (change) => {
+        console.log(change)
+        if (change.method === 'email') {
+          isEmailSignIn.value = true
+        } else {
+          isEmailSignIn.value = false
+        }
+      },
+    )
+
     return {
+      email: ref(''),
+      password: ref(''),
+      isEmailSignIn,
       handleSignIn,
+      handleEmailSignIn,
+      toEmailSignin() {
+        router.push('/login?method=email')
+      },
     }
   },
 })

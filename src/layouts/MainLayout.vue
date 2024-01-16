@@ -49,13 +49,13 @@ export default defineComponent({
     const quasar = useQuasar()
     const route = useRoute()
 
-    const isHeaderActive = ref(route.path.includes('/login') ? false : true)
+    const isHeaderActive = ref(route.path === '/login' ? false : true)
     const menuDrawerOpen = ref(false)
 
     watch(
       () => route.path,
       (change: string) => {
-        if (change.includes('/login')) {
+        if (change === '/login') {
           isHeaderActive.value = false
         } else {
           isHeaderActive.value = true
