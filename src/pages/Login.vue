@@ -1,9 +1,10 @@
 <template>
   <q-page class="column content-center">
+    <q-icon name="close" size="lg" class="self-end" @click="goBack" />
     <div class="check">
       <CatchyPhrase />
-      <q-card flat>
-        <q-card-section v-if="isEmailSignIn">
+      <q-card flat v-if="isEmailSignIn">
+        <q-card-section>
           <q-form>
             <q-input
               label="이메일"
@@ -21,15 +22,7 @@
             />
           </q-form>
         </q-card-section>
-        <q-card-actions class="q-px-md" v-if="!isEmailSignIn">
-          <q-btn
-            class="full-width"
-            size="lg"
-            label="카카오톡으로 로그인"
-            @click="handleSignIn"
-          />
-        </q-card-actions>
-        <q-card-actions class="q-px-md" v-if="isEmailSignIn">
+        <q-card-actions class="q-px-md">
           <q-btn
             class="full-width"
             size="lg"
@@ -37,7 +30,17 @@
             @click="handleEmailSignIn"
           />
         </q-card-actions>
-        <q-card-actions class="q-px-md" v-else>
+      </q-card>
+      <q-card flat v-else>
+        <q-card-actions class="q-px-md">
+          <q-btn
+            class="full-width"
+            size="lg"
+            label="카카오톡으로 로그인"
+            @click="handleSignIn"
+          />
+        </q-card-actions>
+        <q-card-actions class="q-px-md">
           <q-btn
             class="full-width"
             size="lg"
@@ -45,10 +48,7 @@
             @click="toEmailSignin"
           />
         </q-card-actions>
-        <q-card-section
-          class="q-pa-none row items-center justify-center"
-          v-if="!isEmailSignIn"
-        >
+        <q-card-section class="q-pa-none row items-center justify-center">
           <div>회원가입</div>
           <span class="separator">|</span>
           <div>비밀번호 찾기</div>
@@ -107,6 +107,10 @@ export default defineComponent({
       },
     )
 
+    const goBack = () => {
+      router.go(-1)
+    }
+
     return {
       email: ref(''),
       password: ref(''),
@@ -116,6 +120,7 @@ export default defineComponent({
       toEmailSignin() {
         router.push('/login?method=email')
       },
+      goBack,
     }
   },
 })
