@@ -3,11 +3,11 @@
     <q-toolbar class="justify-between">
       <span>바로가기</span>
       <div>
-        <q-icon name="settings" size="lg" cursor-pointer />
+        <q-icon class="cursor-pointer" name="settings" size="lg" />
         <q-icon
+          class="cursor-pointer"
           name="close"
           size="lg"
-          cursor-pointer
           @click="closeMenuDrawer()"
         />
       </div>

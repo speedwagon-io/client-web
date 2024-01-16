@@ -1,10 +1,9 @@
 <template>
   <q-page class="column content-center">
     <q-icon
-      class="self-end"
+      class="self-end cursor-pointer"
       name="close"
       size="lg"
-      cursor-pointer
       @click="goBack"
     />
     <div class="check">
