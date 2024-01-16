@@ -1,6 +1,12 @@
 <template>
   <q-page class="column content-center">
-    <q-icon name="close" size="lg" class="self-end" @click="goBack" />
+    <q-icon
+      class="self-end"
+      name="close"
+      size="lg"
+      cursor-pointer
+      @click="goBack"
+    />
     <div class="check">
       <CatchyPhrase />
       <q-card flat v-if="isEmailSignIn">
