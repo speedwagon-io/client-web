@@ -1,12 +1,16 @@
 <template>
   <div class="row">
-    <div class="col-4 column flex-center" v-for="link in menuLinks" :key="link.to">
+    <div
+      class="col-4 column flex-center"
+      v-for="link in menuLinks"
+      :key="link.to"
+    >
       <q-icon size="xl" :name="link.icon"></q-icon>
       <div>{{ link.title }}</div>
     </div>
   </div>
 </template>
-  
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 
@@ -47,14 +51,13 @@ export default defineComponent({
   name: 'MenuButtonGrid',
   setup() {
     return {
-      menuLinks: menuList
+      menuLinks: menuList,
     }
-  }
+  },
 })
 </script>
 
 <style lang="scss" scoped>
 .col-4 {
-
 }
 </style>

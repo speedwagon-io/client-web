@@ -1,8 +1,6 @@
 <template>
   <q-toolbar>
-    <q-toolbar-title>
-      Speedwagon
-    </q-toolbar-title>
+    <q-toolbar-title> Speedwagon </q-toolbar-title>
 
     <q-btn flat round dense>
       <q-icon name="notifications" />

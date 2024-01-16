@@ -21,7 +21,7 @@ import MenuButtonGrid from 'components/button-group/MenuButtonGrid.vue'
 export default defineComponent({
   name: 'MobileMenuDrawer',
   components: {
-    MenuButtonGrid
+    MenuButtonGrid,
   },
   emits: ['close-menu-drawer'],
   setup(props, { emit }) {

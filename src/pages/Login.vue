@@ -30,12 +30,25 @@
           />
         </q-card-actions>
         <q-card-actions class="q-px-md" v-if="isEmailSignIn">
-          <q-btn class="full-width" size="lg" label="로그인" @click="handleEmailSignIn" />
+          <q-btn
+            class="full-width"
+            size="lg"
+            label="로그인"
+            @click="handleEmailSignIn"
+          />
         </q-card-actions>
         <q-card-actions class="q-px-md" v-else>
-          <q-btn class="full-width" size="lg" label="이메일로 로그인" @click="toEmailSignin" />
+          <q-btn
+            class="full-width"
+            size="lg"
+            label="이메일로 로그인"
+            @click="toEmailSignin"
+          />
         </q-card-actions>
-        <q-card-section class="q-pa-none row items-center justify-center" v-if="!isEmailSignIn">
+        <q-card-section
+          class="q-pa-none row items-center justify-center"
+          v-if="!isEmailSignIn"
+        >
           <div>회원가입</div>
           <span class="separator">|</span>
           <div>비밀번호 찾기</div>
@@ -85,7 +98,7 @@ export default defineComponent({
 
     watch(
       () => route.query,
-      (change) => {
+      change => {
         if (change.method === 'email') {
           isEmailSignIn.value = true
         } else {
