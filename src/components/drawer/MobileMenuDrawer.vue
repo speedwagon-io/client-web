@@ -13,6 +13,8 @@
       </div>
     </q-toolbar>
 
+    <router-link to="/login">로그인하기 ></router-link>
+
     <MenuButtonGrid />
   </q-drawer>
 </template>

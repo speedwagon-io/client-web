@@ -72,17 +72,9 @@ import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 import { AmplifyConfig } from '../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
-import { signInWithRedirect } from 'aws-amplify/auth'
+import { signInWithRedirect, signIn } from 'aws-amplify/auth'
 
 const handleSignIn = async () => {
-  await signInWithRedirect({
-    provider: {
-      custom: 'KakaotalkOIDC',
-    },
-  })
-}
-
-const handleEmailSignIn = async () => {
   await signInWithRedirect({
     provider: {
       custom: 'KakaotalkOIDC',
@@ -100,6 +92,8 @@ export default defineComponent({
     const router = useRouter()
 
     let isEmailSignIn = ref(route.query.method === 'email' ? true : false)
+    const email = ref('')
+    const password = ref('')
 
     watch(
       () => route.query,
@@ -117,11 +111,16 @@ export default defineComponent({
     }
 
     return {
-      email: ref(''),
-      password: ref(''),
+      email: email,
+      password: password,
       isEmailSignIn,
       handleSignIn,
-      handleEmailSignIn,
+      async handleEmailSignIn() {
+        await signIn({
+          username: email.value,
+          password: password.value,
+        })
+      },
       toEmailSignin() {
         router.push('/login?method=email')
       },
