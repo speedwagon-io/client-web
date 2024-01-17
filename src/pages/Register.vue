@@ -29,11 +29,7 @@
           </q-form>
         </q-card-section>
         <q-card-actions class="q-px-md">
-          <q-btn
-            class="full-width"
-            size="lg"
-            label="다음으로"
-          />
+          <q-btn class="full-width" size="lg" label="다음으로" />
         </q-card-actions>
       </q-card>
     </div>
@@ -54,9 +50,9 @@ export default defineComponent({
     return {
       email: ref(''),
       password1: ref(null),
-      password2: ref(null)
+      password2: ref(null),
     }
-  }
+  },
 })
 </script>
 

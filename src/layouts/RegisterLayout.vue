@@ -29,8 +29,8 @@ export default defineComponent({
       menuName,
       setMenuName(menu: string) {
         menuName.value = menu
-      }
+      },
     }
-  }
+  },
 })
 </script>
