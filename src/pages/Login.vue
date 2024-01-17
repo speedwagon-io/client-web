@@ -6,7 +6,7 @@
       size="lg"
       @click="goBack"
     />
-    <div class="check">
+    <div class="wrapper">
       <CatchyPhrase />
       <q-card flat v-if="isEmailSignIn">
         <q-card-section>
@@ -54,7 +54,7 @@
           />
         </q-card-actions>
         <q-card-section class="q-pa-none row items-center justify-center">
-          <div>회원가입</div>
+          <router-link to="/register">회원가입 하기</router-link>
           <span class="separator">|</span>
           <div>비밀번호 찾기</div>
         </q-card-section>
@@ -131,8 +131,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.check {
-  width: 80%;
+.wrapper {
+  width: 90%;
   max-width: 500px;
   padding-top: 10%;
 }
