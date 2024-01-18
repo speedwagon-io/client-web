@@ -3,17 +3,28 @@
     <q-header bordered class="bg-white text-primary">
       <q-toolbar class="justify-between">
         <q-btn flat round dense @click="goBack">
-          <q-icon name="chevron_left" />
+          <q-icon v-show="isGoBackShown" name="chevron_left" />
         </q-btn>
         <q-toolbar-title class="text-center">
           {{ menuName }}
         </q-toolbar-title>
-        <q-btn flat></q-btn>
+        <q-btn flat round dense @click="goBack">
+          <q-icon v-show="isCloseShown" name="close" />
+        </q-btn>
       </q-toolbar>
     </q-header>
 
     <q-page-container>
-      <router-view @menu-name="setMenuName" />
+      <router-view
+        @menu-name="setMenuName"
+        @show-go-back="showGoBack"
+        @show-close="showClose"
+        v-slot="{ Component }"
+      >
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </q-page-container>
   </q-layout>
 </template>
@@ -28,6 +39,8 @@ export default defineComponent({
     const router = useRouter()
 
     const menuName = ref('')
+    const isGoBackShown = ref(true)
+    const isCloseShown = ref(false)
 
     const goBack = () => {
       router.go(-1)
@@ -38,6 +51,16 @@ export default defineComponent({
       goBack,
       setMenuName(menu: string) {
         menuName.value = menu
+      },
+      isGoBackShown,
+      isCloseShown,
+      showGoBack() {
+        isGoBackShown.value = true
+        isCloseShown.value = false
+      },
+      showClose() {
+        isGoBackShown.value = false
+        isCloseShown.value = true
       },
     }
   },

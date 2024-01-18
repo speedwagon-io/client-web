@@ -19,6 +19,10 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/RegisterLayout.vue'),
     children: [
       { path: 'policy', component: () => import('pages/PolicyAgreement.vue') },
+      {
+        path: 'policy/detail',
+        component: () => import('pages/PolicyDetail.vue'),
+      },
       { path: 'email', component: () => import('pages/EmailRegister.vue') },
     ],
   },

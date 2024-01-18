@@ -37,15 +37,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'EmailRegister',
-  emits: ['menu-name'],
+  emits: ['menu-name', 'show-go-back'],
   setup(props, { emit }) {
-    onMounted(() => {
-      emit('menu-name', '로그인 정보 입력')
-    })
+    const route = useRoute()
+
+    watch(
+      route,
+      to => {
+        if (to.path === '/register/email') {
+          emit('menu-name', '로그인 정보 입력')
+          emit('show-go-back')
+        }
+      },
+      {
+        immediate: true,
+      },
+    )
 
     return {
       email: ref(''),
