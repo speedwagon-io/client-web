@@ -23,7 +23,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { Ref, computed, defineComponent, onMounted, ref } from 'vue'
+
+const options = [
+  { label: '[필수] 이용약관1', value: 'one' },
+  { label: '[필수] 이용약관2', value: 'two' },
+  { label: '[선택] 마케팅 메세지 수신 동의', value: 'three' },
+]
+
+function handleCheckAll(group: Ref<string[]>) {
+  const checkAll = computed({
+    get: () => options.length === group.value.length,
+    set: (value: boolean) => {
+      group.value = value ? options.map(option => option.value) : []
+    },
+  })
+  return { checkAll }
+}
 
 export default defineComponent({
   name: 'PolicyAgreement',
@@ -33,14 +49,12 @@ export default defineComponent({
       emit('menu-name', '약관동의')
     })
 
+    const group = ref([])
+
     return {
-      checkAll: ref(false),
-      group: ref([]),
-      options: [
-        { label: '[필수] 이용약관1', value: 'one' },
-        { label: '[필수] 이용약관2', value: 'two' },
-        { label: '[선택] 마케팅 메세지 수신 동의', value: 'three' },
-      ],
+      group: group,
+      options: options,
+      ...handleCheckAll(group),
     }
   },
 })
