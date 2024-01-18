@@ -13,15 +13,15 @@
         </q-card-section>
         <q-card-section>
           <q-option-group :options="options" type="checkbox" v-model="group">
-            <template v-slot:label="opt">
+            <template v-slot:label="options">
               <div class="row items-center">
-                <span>{{ opt.label }}</span>
+                <span>{{ options.label }}</span>
                 <q-btn
                   flat
                   round
                   class="absolute"
                   style="right: 10px"
-                  @click.stop="openDetail(opt.value)"
+                  @click.stop="openDetail(options.value)"
                 >
                   <q-icon name="chevron_right" />
                 </q-btn>
@@ -30,7 +30,7 @@
           </q-option-group>
         </q-card-section>
         <q-card-actions class="q-px-md">
-          <q-btn class="full-width" size="lg" label="다음으로" />
+          <q-btn class="full-width" size="lg" label="다음으로" :disable="!requiredChecked" />
         </q-card-actions>
       </q-card>
     </div>
@@ -42,9 +42,9 @@ import { Ref, computed, defineComponent, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const options = [
-  { label: '[필수] 이용약관1', value: 'one' },
-  { label: '[필수] 이용약관2', value: 'two' },
-  { label: '[선택] 마케팅 메세지 수신 동의', value: 'three' },
+  { label: '[필수] 이용약관1', value: 'one', required: true },
+  { label: '[필수] 이용약관2', value: 'two', required: true },
+  { label: '[선택] 마케팅 메세지 수신 동의', value: 'three', required: false },
 ]
 
 const handleCheckAll = (group: Ref<string[]>) => {
@@ -55,6 +55,16 @@ const handleCheckAll = (group: Ref<string[]>) => {
     },
   })
   return { checkAll }
+}
+
+const checkRequired = (group: Ref<string[]>) => {
+  const requiredChecked = computed(() => {
+    const requiredOnes = options.filter(option => option.required).map(option => {
+        return option.value
+    })
+    return requiredOnes.every(v => group.value.includes(v))
+  })
+  return { requiredChecked }
 }
 
 export default defineComponent({
@@ -87,7 +97,9 @@ export default defineComponent({
       group: group,
       options: options,
       ...handleCheckAll(group),
+      ...checkRequired(group),
       openDetail,
+
     }
   },
 })
