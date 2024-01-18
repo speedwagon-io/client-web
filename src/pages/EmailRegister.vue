@@ -1,7 +1,6 @@
 <template>
   <q-page class="column content-center">
     <div class="wrapper">
-      <CatchyPhrase />
       <q-card flat>
         <q-card-section>
           <q-form>
@@ -18,6 +17,7 @@
               placeholder="비밀번호를 입력하세요"
               v-model="password1"
               type="password"
+              autocomplete="off"
             />
             <q-input
               label="비밀번호 재확인"
@@ -25,6 +25,7 @@
               placeholder="비밀번호를 다시 입력하세요"
               v-model="password2"
               type="password"
+              autocomplete="off"
             />
           </q-form>
         </q-card-section>
@@ -61,7 +62,7 @@ export default defineComponent({
 
     return {
       email: ref(''),
-      password1: ref(null),
+      password1: ref(''),
       password2: ref(null),
     }
   },

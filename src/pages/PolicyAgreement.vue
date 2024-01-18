@@ -35,6 +35,7 @@
             size="lg"
             label="다음으로"
             :disable="!requiredChecked"
+            @click="next"
           />
         </q-card-actions>
       </q-card>
@@ -100,12 +101,19 @@ export default defineComponent({
       router.push(`/register/policy/detail?page=${value}`)
     }
 
+    const next = () => {
+      if (route.query.method === 'email') {
+        router.push('/register/email')
+      }
+    }
+
     return {
       group: group,
       options: options,
       ...handleCheckAll(group),
       ...checkRequired(group),
       openDetail,
+      next,
     }
   },
 })
