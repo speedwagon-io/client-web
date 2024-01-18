@@ -40,7 +40,7 @@
 import { defineComponent, onMounted, ref } from 'vue'
 
 export default defineComponent({
-  name: 'Register',
+  name: 'EmailRegister',
   emits: ['menu-name'],
   setup(props, { emit }) {
     onMounted(() => {

@@ -54,7 +54,9 @@
           />
         </q-card-actions>
         <q-card-section class="q-pa-none row items-center justify-center">
-          <router-link to="/register">회원가입 하기</router-link>
+          <router-link to="/register/policy?method=email"
+            >회원가입 하기</router-link
+          >
           <span class="separator">|</span>
           <div>비밀번호 찾기</div>
         </q-card-section>

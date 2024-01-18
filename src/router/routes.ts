@@ -17,7 +17,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/register',
     component: () => import('layouts/RegisterLayout.vue'),
-    children: [{ path: 'step', component: () => import('pages/Register.vue') }],
+    children: [
+      { path: 'policy', component: () => import('pages/PolicyAgreement.vue') },
+      { path: 'email', component: () => import('pages/EmailRegister.vue') },
+    ],
   },
 
   // Always leave this as last one,
