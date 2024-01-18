@@ -21,7 +21,7 @@
                   round
                   class="absolute"
                   style="right: 10px"
-                  @click="openDetail(opt.value)"
+                  @click.stop="openDetail(opt.value)"
                 >
                   <q-icon name="chevron_right" />
                 </q-btn>
