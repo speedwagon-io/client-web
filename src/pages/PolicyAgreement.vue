@@ -30,7 +30,12 @@
           </q-option-group>
         </q-card-section>
         <q-card-actions class="q-px-md">
-          <q-btn class="full-width" size="lg" label="다음으로" :disable="!requiredChecked" />
+          <q-btn
+            class="full-width"
+            size="lg"
+            label="다음으로"
+            :disable="!requiredChecked"
+          />
         </q-card-actions>
       </q-card>
     </div>
@@ -59,9 +64,11 @@ const handleCheckAll = (group: Ref<string[]>) => {
 
 const checkRequired = (group: Ref<string[]>) => {
   const requiredChecked = computed(() => {
-    const requiredOnes = options.filter(option => option.required).map(option => {
+    const requiredOnes = options
+      .filter(option => option.required)
+      .map(option => {
         return option.value
-    })
+      })
     return requiredOnes.every(v => group.value.includes(v))
   })
   return { requiredChecked }
@@ -99,7 +106,6 @@ export default defineComponent({
       ...handleCheckAll(group),
       ...checkRequired(group),
       openDetail,
-
     }
   },
 })
