@@ -1,12 +1,12 @@
 <template>
   <q-page class="column content-center">
     <h3>이용약관</h3>
-    <div class="wrapper">이용약관 상세</div>
+    <div class="wrapper">{{ content }}</div>
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 export default defineComponent({
@@ -15,12 +15,18 @@ export default defineComponent({
   setup(props, { emit }) {
     const route = useRoute()
 
+    let content = ref()
+
     watch(
       route,
       to => {
         if (to.path === '/register/policy/detail') {
           emit('menu-name', '약관상세')
           emit('show-close')
+
+          if (to.query.page) {
+            content.value = to.query.page
+          }
         }
       },
       {
@@ -28,7 +34,9 @@ export default defineComponent({
       },
     )
 
-    return {}
+    return {
+      content,
+    }
   },
 })
 </script>
