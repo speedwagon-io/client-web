@@ -118,10 +118,42 @@ export default defineComponent({
       isEmailSignIn,
       handleSignIn,
       async handleEmailSignIn() {
-        await signIn({
-          username: email.value,
-          password: password.value,
-        })
+        try {
+          const result = await signIn({
+            username: email.value,
+            password: password.value,
+          })
+          console.log(result)
+          const signInStep = result.nextStep?.signInStep
+
+          switch (signInStep) {
+            case 'CONFIRM_SIGN_UP':
+              console.log('CONFIRM_SIGN_UP')
+              // TODO] 인증 화면으로 리다이렉트
+              break;
+            case 'DONE':
+              // TODO] 이메일 로그인 완료
+              break;
+            default:
+              break;
+          }
+        } catch (error: any) {
+          console.log(error)
+          switch (error.name) {
+            case 'UserNotFoundException':
+              // TODO] 없는 유저
+              break;
+            case 'NotAuthorizedException':
+              // TODO] 아이디/비번 오류
+              break;
+            case 'UserAlreadyAuthenticatedException':
+              // TODO] 이미 로그인 되어 있음
+              break;
+            default:
+              break;
+          }
+          return;
+        }
       },
       toEmailSignin() {
         router.push('/login?method=email')

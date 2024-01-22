@@ -77,10 +77,38 @@ export default defineComponent({
     const password2 = ref('')
 
     const handleSignUp = async () => {
-      await signUp({
-        username: email.value,
-        password: password1.value,
-      })
+      try {
+        await signUp({
+          username: email.value,
+          password: password1.value,
+        })
+      } catch (error: any) {
+        console.log(error)
+        switch (error.name) {
+          case 'UsernameExistsException':
+            // TODO] 이메일 중복 안내메세지
+            break;
+          case 'UserLambdaValidationException':
+            // TODO] 카카오 중복 안내메세지
+            break;
+          case 'EmptySignUpUsername':
+            // TODO] username 없음
+            break;
+          case 'EmptySignUpPassword':
+            // TODO] password 없음
+            break;
+          case 'InvalidParameterException':
+            // TODO] 이메일 형식 오류
+            break;
+          case 'InvalidPasswordException':
+            // TODO] 비밀번호 형식 오류
+            break;
+          default:
+            break;
+        }
+        return;
+      }
+
       router.push('/register/email/verify')
     }
 
