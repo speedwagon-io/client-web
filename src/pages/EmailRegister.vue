@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { AmplifyConfig } from '../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
@@ -56,6 +56,7 @@ export default defineComponent({
   name: 'EmailRegister',
   emits: ['menu-name', 'show-go-back'],
   setup(props, { emit }) {
+    const router = useRouter()
     const route = useRoute()
 
     watch(
@@ -80,6 +81,7 @@ export default defineComponent({
         username: email.value,
         password: password1.value,
       })
+      router.push('/register/email/verify')
     }
 
     return {

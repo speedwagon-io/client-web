@@ -62,7 +62,7 @@ export default defineComponent({
       route,
       to => {
         if (to.path === '/register/email/verify') {
-          emit('menu-name', '로그인 정보 입력')
+          emit('menu-name', '이메일 인증')
           emit('show-go-back')
         }
       },
