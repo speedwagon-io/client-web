@@ -24,6 +24,10 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/PolicyDetail.vue'),
       },
       { path: 'email', component: () => import('pages/EmailRegister.vue') },
+      {
+        path: 'email/verify',
+        component: () => import('pages/VerifyEmail.vue'),
+      },
     ],
   },
 

@@ -53,7 +53,7 @@ Amplify.configure(AmplifyConfig)
 import { signUp } from 'aws-amplify/auth'
 
 export default defineComponent({
-  name: 'EmailRegister',
+  name: 'VerifyEmail',
   emits: ['menu-name', 'show-go-back'],
   setup(props, { emit }) {
     const route = useRoute()
@@ -61,7 +61,7 @@ export default defineComponent({
     watch(
       route,
       to => {
-        if (to.path === '/register/email') {
+        if (to.path === '/register/email/verify') {
           emit('menu-name', '로그인 정보 입력')
           emit('show-go-back')
         }
@@ -80,6 +80,7 @@ export default defineComponent({
         username: email.value,
         password: password1.value,
       })
+      console.log('done')
     }
 
     return {
