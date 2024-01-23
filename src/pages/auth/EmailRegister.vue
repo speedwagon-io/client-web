@@ -41,6 +41,7 @@
             class="full-width"
             size="lg"
             label="다음으로"
+            :loading="loading"
             :disable="formHasError"
             @click="handleSignUp"
           />
@@ -94,9 +95,12 @@ export default defineComponent({
     const email = ref('')
     const password1 = ref('')
     const password2 = ref('')
+
     const errorMessage = ref('')
+    const loading = ref(false)
 
     const handleSignUp = async () => {
+      loading.value = true
       try {
         await signUp({
           username: email.value,
@@ -116,6 +120,8 @@ export default defineComponent({
             break
         }
         return
+      } finally {
+        loading.value = false
       }
 
       router.push(`/register/email/verify?email=${email.value}`)
@@ -165,6 +171,7 @@ export default defineComponent({
       password1,
       password2,
       errorMessage,
+      loading,
       handleSignUp,
       emailRules,
       pwRules,
