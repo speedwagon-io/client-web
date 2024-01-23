@@ -15,7 +15,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const route = useRoute()
 
-    let content = ref()
+    const content = ref()
 
     watch(
       route,

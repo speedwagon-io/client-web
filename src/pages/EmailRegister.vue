@@ -87,29 +87,32 @@ export default defineComponent({
         switch (error.name) {
           case 'UsernameExistsException':
             // TODO] 이메일 중복 안내메세지
-            break;
+            break
           case 'UserLambdaValidationException':
-            // TODO] 카카오 중복 안내메세지
-            break;
+            if (error.message.indexOf('Email already in use') !== -1) {
+              // TODO] 카카오 중복 안내메세지
+              console.log(error.message)
+            }
+            break
           case 'EmptySignUpUsername':
             // TODO] username 없음
-            break;
+            break
           case 'EmptySignUpPassword':
             // TODO] password 없음
-            break;
+            break
           case 'InvalidParameterException':
             // TODO] 이메일 형식 오류
-            break;
+            break
           case 'InvalidPasswordException':
             // TODO] 비밀번호 형식 오류
-            break;
+            break
           default:
-            break;
+            break
         }
-        return;
+        return
       }
 
-      router.push('/register/email/verify')
+      router.push(`/register/email/verify?email=${email.value}`)
     }
 
     return {

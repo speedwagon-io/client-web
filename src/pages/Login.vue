@@ -74,7 +74,7 @@ import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 import { AmplifyConfig } from '../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
-import { signInWithRedirect, signIn } from 'aws-amplify/auth'
+import { signInWithRedirect, signIn, resendSignUpCode } from 'aws-amplify/auth'
 
 const handleSignIn = async () => {
   await signInWithRedirect({
@@ -123,36 +123,30 @@ export default defineComponent({
             username: email.value,
             password: password.value,
           })
-          console.log(result)
           const signInStep = result.nextStep?.signInStep
 
-          switch (signInStep) {
-            case 'CONFIRM_SIGN_UP':
-              console.log('CONFIRM_SIGN_UP')
-              // TODO] 인증 화면으로 리다이렉트
-              break;
-            case 'DONE':
-              // TODO] 이메일 로그인 완료
-              break;
-            default:
-              break;
+          if (signInStep === 'CONFIRM_SIGN_UP') {
+            await resendSignUpCode({ username: email.value })
+            router.push(`/register/email/verify?email=${email.value}`)
           }
         } catch (error: any) {
-          console.log(error)
           switch (error.name) {
             case 'UserNotFoundException':
               // TODO] 없는 유저
-              break;
+              break
             case 'NotAuthorizedException':
               // TODO] 아이디/비번 오류
-              break;
+              break
             case 'UserAlreadyAuthenticatedException':
               // TODO] 이미 로그인 되어 있음
-              break;
+              break
+            case 'LimitExceededException':
+              // TODO] 인증메일 발송 한도 초과: 1시간뒤 다시 시도해보세요
+              break
             default:
-              break;
+              break
           }
-          return;
+          return
         }
       },
       toEmailSignin() {
