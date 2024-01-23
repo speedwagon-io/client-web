@@ -79,6 +79,7 @@ export default defineComponent({
     const handleResendSignUpCode = async () => {
       try {
         await resendSignUpCode({ username: email.value })
+        alert('인증번호가 발송되었습니다.')
       } catch (error: any) {
         switch (error.name) {
           case 'LimitExceededException':

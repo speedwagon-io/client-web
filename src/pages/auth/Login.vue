@@ -127,6 +127,7 @@ export default defineComponent({
 
           if (signInStep === 'CONFIRM_SIGN_UP') {
             await resendSignUpCode({ username: email.value })
+            alert('인증번호가 발송되었습니다.')
             router.push(`/register/email/verify?email=${email.value}`)
           }
         } catch (error: any) {
