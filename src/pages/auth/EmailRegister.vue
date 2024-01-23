@@ -11,6 +11,8 @@
               autofocus
               :rules="[emailRules]"
               lazy-rules
+              :error-message="errorMessage"
+              :error="onEmailError"
               v-model="email"
               type="email"
             />
@@ -19,7 +21,6 @@
               stack-label
               placeholder="비밀번호를 입력하세요"
               :rules="[pwRules]"
-              lazy-rules
               v-model="password1"
               type="password"
               autocomplete="off"
@@ -29,7 +30,6 @@
               stack-label
               placeholder="비밀번호를 다시 입력하세요"
               :rules="[pwCheckRules]"
-              lazy-rules
               v-model="password2"
               type="password"
               autocomplete="off"
@@ -51,40 +51,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from 'vue'
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import { useFormValidation } from '../../util/useFormValidation'
+import {
+  isValidEmail,
+  isValidPassword,
+  passwordValidators,
+  useFormValidation,
+} from '../../util/useFormValidation'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signUp } from 'aws-amplify/auth'
-
-const isValidEmail = (email: string) => {
-  const regex =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return regex.test(email)
-}
-
-const passwordValidators: ((s: string) => true | string)[] = [
-  s => s.length >= 8 || '비밀번호는 8자 이상입니다.',
-  s => s.length <= 99 || '비밀번호는 99자 이하입니다.',
-  s => /[@!#$%^&*()-+_]/.test(s) || '특수문자를 하나이상 포함해야 합니다.',
-  s => /\d/.test(s) || '숫자를 하나이상 포함해야 합니다.',
-  s => !/\s/.test(s) || '공백은 입력할 수 없습니다.',
-]
-
-const isValidPassword = (
-  value: string,
-  validators: ((s: string) => true | string)[],
-) => {
-  for (let v of validators) {
-    let r = v(value)
-    if (r !== true) return r
-  }
-  return true
-}
 
 export default defineComponent({
   name: 'EmailRegister',
@@ -114,6 +94,7 @@ export default defineComponent({
     const email = ref('')
     const password1 = ref('')
     const password2 = ref('')
+    const errorMessage = ref('')
 
     const handleSignUp = async () => {
       try {
@@ -124,17 +105,17 @@ export default defineComponent({
       } catch (error: any) {
         switch (error.name) {
           case 'UsernameExistsException':
-            // TODO] 이메일 중복 안내메세지. rule에서 하는거랑 별개로 처리?
+            errorMessage.value = '이미 가입된 메일입니다.'
             break
           case 'UserLambdaValidationException':
             if (error.message.indexOf('Email already in use') !== -1) {
-              // TODO] 서버 api로 처리하면 여기서 할 필요 없지 않을까
-              return '카카오로 가입된 메일입니다.'
+              errorMessage.value = '카카오로 가입된 메일입니다.'
             }
             break
           default:
-            return true
+            break
         }
+        return
       }
 
       router.push(`/register/email/verify?email=${email.value}`)
@@ -142,6 +123,8 @@ export default defineComponent({
     }
 
     const emailRules = async (value: string) => {
+      errorMessage.value = ''
+
       if (value.length === 0) {
         return true
       }
@@ -150,7 +133,6 @@ export default defineComponent({
         return '이메일 형식이 올바르지 않습니다.'
       }
 
-      // TODO] 회원조회 api 붙여서 이메일 중복 체크
       return true
     }
 
@@ -160,7 +142,6 @@ export default defineComponent({
       }
 
       if (password2.value && value !== password2.value) {
-        pwCheckRules('sdfsdf')
         return '비밀번호가 일치하지 않습니다.'
       }
 
@@ -183,12 +164,14 @@ export default defineComponent({
       email,
       password1,
       password2,
+      errorMessage,
       handleSignUp,
       emailRules,
       pwRules,
       pwCheckRules,
       formRef,
       formHasError,
+      onEmailError: computed(() => errorMessage.value.length > 0),
     }
   },
 })

@@ -15,6 +15,9 @@
               label="이메일"
               stack-label
               placeholder="이메일을 입력하세요"
+              autofocus
+              :rules="[emailRules]"
+              lazy-rules
               v-model="email"
               type="email"
             />
@@ -22,6 +25,9 @@
               label="비밀번호"
               stack-label
               placeholder="비밀번호를 입력하세요"
+              :rules="[pwRules]"
+              :error-message="errorMessage"
+              :error="onSignInError"
               v-model="password"
               type="password"
             />
@@ -66,7 +72,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
@@ -75,6 +81,7 @@ import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signInWithRedirect, signIn, resendSignUpCode } from 'aws-amplify/auth'
+import { isValidEmail } from 'src/util/useFormValidation'
 
 const handleSignIn = async () => {
   await signInWithRedirect({
@@ -96,6 +103,7 @@ export default defineComponent({
     let isEmailSignIn = ref(route.query.method === 'email' ? true : false)
     const email = ref('')
     const password = ref('')
+    const errorMessage = ref('')
 
     watch(
       () => route.query,
@@ -112,48 +120,65 @@ export default defineComponent({
       router.go(-1)
     }
 
+    const handleEmailSignIn = async () => {
+      try {
+        const result = await signIn({
+          username: email.value,
+          password: password.value,
+        })
+        const signInStep = result.nextStep?.signInStep
+
+        if (signInStep === 'CONFIRM_SIGN_UP') {
+          await resendSignUpCode({ username: email.value })
+          alert('인증번호가 발송되었습니다.')
+          router.push(`/register/email/verify?email=${email.value}`)
+        }
+      } catch (error: any) {
+        switch (error.name) {
+          case 'LimitExceededException':
+            errorMessage.value = '인증메일 발송 한도 초과: 1시간뒤 다시 시도해보세요.'
+            break
+          default:
+            errorMessage.value = '아이디 혹은 비밀번호를 확인해주세요.'
+            break
+        }
+        return
+      }
+    }
+
+    const emailRules = async (value: string) => {
+      errorMessage.value = ''
+
+      if (value.length === 0) {
+        return true
+      }
+
+      if (!isValidEmail(value)) {
+        return '이메일 형식이 올바르지 않습니다.'
+      }
+
+      return true
+    }
+
+    const pwRules = (value: string) => {
+      errorMessage.value = ''
+      return true
+    }
+
     return {
-      email: email,
-      password: password,
+      email,
+      password,
+      errorMessage,
       isEmailSignIn,
       handleSignIn,
-      async handleEmailSignIn() {
-        try {
-          const result = await signIn({
-            username: email.value,
-            password: password.value,
-          })
-          const signInStep = result.nextStep?.signInStep
-
-          if (signInStep === 'CONFIRM_SIGN_UP') {
-            await resendSignUpCode({ username: email.value })
-            alert('인증번호가 발송되었습니다.')
-            router.push(`/register/email/verify?email=${email.value}`)
-          }
-        } catch (error: any) {
-          switch (error.name) {
-            case 'UserNotFoundException':
-              // TODO] 없는 유저
-              break
-            case 'NotAuthorizedException':
-              // TODO] 아이디/비번 오류
-              break
-            case 'UserAlreadyAuthenticatedException':
-              // TODO] 이미 로그인 되어 있음
-              break
-            case 'LimitExceededException':
-              // TODO] 인증메일 발송 한도 초과: 1시간뒤 다시 시도해보세요
-              break
-            default:
-              break
-          }
-          return
-        }
-      },
+      handleEmailSignIn,
       toEmailSignin() {
         router.push('/login?method=email')
       },
       goBack,
+      emailRules,
+      pwRules,
+      onSignInError: computed(() => errorMessage.value.length > 0),
     }
   },
 })

@@ -11,7 +11,7 @@ export type FormValidationComponent = QInput | QSelect | QField
  * @formIsDirty = ref sets state of a form component if its value was changed
  * @formHasError = computed ref sets if one of the form component has error
  */
-export function useFormValidation() {
+export const useFormValidation = () => {
   // assign this in the consumer's QForm template ref
   const formRef = ref<QForm>()
   const formComponents = ref<
@@ -88,4 +88,30 @@ export function useFormValidation() {
      */
     formReset,
   }
+}
+
+export const isValidEmail = (email: string) => {
+  const regex =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return regex.test(email)
+}
+
+export const passwordValidators: ((s: string) => true | string)[] = [
+  s => s.length >= 8 || '비밀번호는 8자 이상입니다.',
+  s => s.length <= 99 || '비밀번호는 99자 이하입니다.',
+  s => /[a-zA-Z]/.test(s) || '영문자를 하나이상 포함해야 합니다.',
+  s => /[@!#$%^&*()-+_]/.test(s) || '특수문자를 하나이상 포함해야 합니다.',
+  s => /\d/.test(s) || '숫자를 하나이상 포함해야 합니다.',
+  s => !/\s/.test(s) || '공백은 입력할 수 없습니다.',
+]
+
+export const isValidPassword = (
+  value: string,
+  validators: ((s: string) => true | string)[],
+) => {
+  for (const v of validators) {
+    const r = v(value)
+    if (r !== true) return r
+  }
+  return true
 }
