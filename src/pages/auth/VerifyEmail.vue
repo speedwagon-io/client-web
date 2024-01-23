@@ -36,7 +36,7 @@
 import { defineComponent, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { AmplifyConfig } from '../../amplifyconfig'
+import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { confirmSignUp, resendSignUpCode } from 'aws-amplify/auth'

@@ -7,10 +7,10 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('pages/Home.vue') },
       { path: '/index', component: () => import('pages/IndexPage.vue') },
-      { path: '/login', component: () => import('pages/Login.vue') },
+      { path: '/login', component: () => import('pages/auth/Login.vue') },
       {
         path: '/auth/kakao/callback',
-        component: () => import('pages/Callback.vue'),
+        component: () => import('pages/auth/Callback.vue'),
       },
     ],
   },
@@ -18,15 +18,21 @@ const routes: RouteRecordRaw[] = [
     path: '/register',
     component: () => import('layouts/RegisterLayout.vue'),
     children: [
-      { path: 'policy', component: () => import('pages/PolicyAgreement.vue') },
+      {
+        path: 'policy',
+        component: () => import('pages/auth/PolicyAgreement.vue'),
+      },
       {
         path: 'policy/detail',
-        component: () => import('pages/PolicyDetail.vue'),
+        component: () => import('pages/auth/PolicyDetail.vue'),
       },
-      { path: 'email', component: () => import('pages/EmailRegister.vue') },
+      {
+        path: 'email',
+        component: () => import('pages/auth/EmailRegister.vue'),
+      },
       {
         path: 'email/verify',
-        component: () => import('pages/VerifyEmail.vue'),
+        component: () => import('pages/auth/VerifyEmail.vue'),
       },
     ],
   },

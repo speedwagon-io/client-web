@@ -71,7 +71,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 
-import { AmplifyConfig } from '../../amplifyconfig'
+import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signInWithRedirect, signIn, resendSignUpCode } from 'aws-amplify/auth'
