@@ -19,6 +19,7 @@
             class="col"
             label="재발송"
             :loading="loading[0]"
+            :disable="errorMessage[0].length > 0"
             @click="handleResendSignUpCode"
           />
         </q-card-section>
@@ -96,7 +97,7 @@ export default defineComponent({
       } catch (error: any) {
         switch (error.name) {
           case 'CodeMismatchException':
-            errorMessage.value[1] = '잘못된 코드를 입력하셨습니다.'
+            errorMessage.value[1] = '인증 코드가 일치하지 않습니다.'
             break
           default:
             break
