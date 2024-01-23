@@ -38,6 +38,7 @@
             class="full-width"
             size="lg"
             label="로그인"
+            :loading="loading"
             @click="handleEmailSignIn"
           />
         </q-card-actions>
@@ -100,10 +101,12 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
 
-    let isEmailSignIn = ref(route.query.method === 'email' ? true : false)
+    const isEmailSignIn = ref(route.query.method === 'email' ? true : false)
     const email = ref('')
     const password = ref('')
+
     const errorMessage = ref('')
+    const loading = ref(false)
 
     watch(
       () => route.query,
@@ -121,6 +124,7 @@ export default defineComponent({
     }
 
     const handleEmailSignIn = async () => {
+      loading.value = true
       try {
         const result = await signIn({
           username: email.value,
@@ -136,13 +140,16 @@ export default defineComponent({
       } catch (error: any) {
         switch (error.name) {
           case 'LimitExceededException':
-            errorMessage.value = '인증메일 발송 한도 초과: 1시간뒤 다시 시도해보세요.'
+            errorMessage.value =
+              '인증메일 발송 한도 초과. 1시간후 다시 시도해보세요.'
             break
           default:
             errorMessage.value = '아이디 혹은 비밀번호를 확인해주세요.'
             break
         }
         return
+      } finally {
+        loading.value = false
       }
     }
 
@@ -160,7 +167,7 @@ export default defineComponent({
       return true
     }
 
-    const pwRules = (value: string) => {
+    const pwRules = () => {
       errorMessage.value = ''
       return true
     }
@@ -169,6 +176,7 @@ export default defineComponent({
       email,
       password,
       errorMessage,
+      loading,
       isEmailSignIn,
       handleSignIn,
       handleEmailSignIn,
