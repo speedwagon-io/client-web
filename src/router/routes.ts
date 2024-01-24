@@ -6,10 +6,10 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Home.vue') },
-      { path: '/index', component: () => import('pages/IndexPage.vue') },
-      { path: '/login', component: () => import('pages/auth/Login.vue') },
+      { path: 'index', component: () => import('pages/IndexPage.vue') },
+      { path: 'login', component: () => import('pages/auth/Login.vue') },
       {
-        path: '/auth/kakao/callback',
+        path: 'auth/kakao/callback',
         component: () => import('pages/auth/Callback.vue'),
       },
     ],
@@ -33,6 +33,10 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'email/verify',
         component: () => import('pages/auth/VerifyEmail.vue'),
+      },
+      {
+        path: 'reset_password',
+        component: () => import('pages/auth/ResetPassword.vue'),
       },
     ],
   },
