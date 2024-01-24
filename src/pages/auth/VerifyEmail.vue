@@ -37,7 +37,8 @@
               :error-message="errorMessage[1]"
               :error="onConfirmError"
               v-model="code"
-              type="text"
+              type="number"
+              inputmode="decimal"
             >
               <template v-slot:after>
                 <q-btn
@@ -123,13 +124,13 @@ export default defineComponent({
         await resendSignUpCode({ username: email.value })
         quasar.dialog({
           title: '안내',
-          message: '인증번호가 발송되었습니다.'
+          message: '인증번호가 발송되었습니다.',
         })
       } catch (error: any) {
         switch (error.name) {
           case 'LimitExceededException':
             errorMessage.value[0] =
-              '인증메일 발송 한도 초과. 1시간후 다시 시도해보세요.'
+              '인증메일 발송 한도 초과. 잠시후 다시 시도해보세요.'
             break
           default:
             break

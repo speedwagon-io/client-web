@@ -126,14 +126,17 @@ export default defineComponent({
         loading.value = false
       }
 
-      quasar.dialog({
-        title: '안내',
-        message: '인증번호가 발송되었습니다.'
-      }).onOk(() => {
-        router.push(`/register/email/verify?email=${email.value}`)
-      }).onDismiss(() => {
-        router.push(`/register/email/verify?email=${email.value}`)
-      })
+      quasar
+        .dialog({
+          title: '안내',
+          message: '인증번호가 발송되었습니다.',
+        })
+        .onOk(() => {
+          router.push(`/register/email/verify?email=${email.value}`)
+        })
+        .onDismiss(() => {
+          router.push(`/register/email/verify?email=${email.value}`)
+        })
     }
 
     const emailRules = async (value: string) => {

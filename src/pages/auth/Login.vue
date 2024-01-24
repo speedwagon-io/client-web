@@ -137,20 +137,23 @@ export default defineComponent({
 
         if (signInStep === 'CONFIRM_SIGN_UP') {
           await resendSignUpCode({ username: email.value })
-          quasar.dialog({
-            title: '안내',
-            message: '인증번호가 발송되었습니다.'
-          }).onOk(() => {
-            router.push(`/register/email/verify?email=${email.value}`)
-          }).onDismiss(() => {
-            router.push(`/register/email/verify?email=${email.value}`)
-          })
+          quasar
+            .dialog({
+              title: '안내',
+              message: '인증번호가 발송되었습니다.',
+            })
+            .onOk(() => {
+              router.push(`/register/email/verify?email=${email.value}`)
+            })
+            .onDismiss(() => {
+              router.push(`/register/email/verify?email=${email.value}`)
+            })
         }
       } catch (error: any) {
         switch (error.name) {
           case 'LimitExceededException':
             errorMessage.value =
-              '인증메일 발송 한도 초과. 1시간후 다시 시도해보세요.'
+              '인증메일 발송 한도 초과. 잠시후 다시 시도해보세요.'
             break
           default:
             errorMessage.value = '아이디 혹은 비밀번호를 확인해주세요.'
