@@ -66,7 +66,7 @@
             >회원가입 하기</router-link
           >
           <span class="separator">|</span>
-          <div>비밀번호 찾기</div>
+          <router-link to="/register/reset_password">비밀번호 찾기</router-link>
         </q-card-section>
       </q-card>
     </div>
@@ -84,6 +84,7 @@ import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signInWithRedirect, signIn, resendSignUpCode } from 'aws-amplify/auth'
 import { isValidEmail } from 'src/util/useFormValidation'
+import { useQuasar } from 'quasar'
 
 const handleSignIn = async () => {
   await signInWithRedirect({
@@ -101,6 +102,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
+    const quasar = useQuasar()
 
     const isEmailSignIn = ref(route.query.method === 'email' ? true : false)
     const email = ref('')
@@ -135,8 +137,14 @@ export default defineComponent({
 
         if (signInStep === 'CONFIRM_SIGN_UP') {
           await resendSignUpCode({ username: email.value })
-          alert('인증번호가 발송되었습니다.')
-          router.push(`/register/email/verify?email=${email.value}`)
+          quasar.dialog({
+            title: '안내',
+            message: '인증번호가 발송되었습니다.'
+          }).onOk(() => {
+            router.push(`/register/email/verify?email=${email.value}`)
+          }).onDismiss(() => {
+            router.push(`/register/email/verify?email=${email.value}`)
+          })
         }
       } catch (error: any) {
         switch (error.name) {
@@ -148,7 +156,6 @@ export default defineComponent({
             errorMessage.value = '아이디 혹은 비밀번호를 확인해주세요.'
             break
         }
-        return
       } finally {
         loading.value = false
       }

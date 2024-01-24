@@ -6,7 +6,6 @@
           <q-form>
             <q-input
               label="이메일"
-              :disable="true"
               stack-label
               placeholder="이메일을 입력하세요"
               :error-message="errorMessage[0]"
@@ -16,12 +15,11 @@
             >
               <template v-slot:after>
                 <q-btn
-                  label="재발송"
+                  label="코드발송"
                   style="color: #000000"
                   size="lg"
                   :loading="loading[0]"
-                  :disable="errorMessage[0].length > 0"
-                  @click="handleResendSignUpCode"
+                  @click="handleResetPassword"
                 />
               </template>
             </q-input>
@@ -45,7 +43,7 @@
                   style="color: #000000"
                   size="lg"
                   :loading="loading[1]"
-                  @click="handleConfirmSignUp"
+                  @click="handleConfirmResetPw"
                 />
               </template>
             </q-input>
@@ -59,19 +57,17 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useQuasar } from 'quasar'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
-import { confirmSignUp, resendSignUpCode } from 'aws-amplify/auth'
+import { confirmResetPassword, resetPassword } from 'aws-amplify/auth'
 
 export default defineComponent({
-  name: 'VerifyEmail',
+  name: 'ResetPassword',
   emits: ['menu-name', 'show-go-back'],
   setup(props, { emit }) {
     const route = useRoute()
-    const quasar = useQuasar()
 
     const email = ref()
     const code = ref()
@@ -82,13 +78,9 @@ export default defineComponent({
     watch(
       route,
       to => {
-        if (to.path === '/register/email/verify') {
-          emit('menu-name', '이메일 인증')
+        if (to.path === '/register/reset_password') {
+          emit('menu-name', '비밀번호 찾기')
           emit('show-go-back')
-
-          if (to.query.email) {
-            email.value = to.query.email
-          }
         }
       },
       {
@@ -96,10 +88,10 @@ export default defineComponent({
       },
     )
 
-    const handleConfirmSignUp = async () => {
+    const handleConfirmResetPw = async () => {
       loading.value[1] = true
       try {
-        const result = await confirmSignUp({
+        const result = await confirmResetPassword({
           username: email.value,
           confirmationCode: code.value,
         })
@@ -117,19 +109,20 @@ export default defineComponent({
       }
     }
 
-    const handleResendSignUpCode = async () => {
+    const handleResetPassword = async () => {
       loading.value[0] = true
       try {
-        await resendSignUpCode({ username: email.value })
-        quasar.dialog({
-          title: '안내',
-          message: '인증번호가 발송되었습니다.'
-        })
+        await resetPassword({ username: email.value })
       } catch (error: any) {
+        console.log(error)
         switch (error.name) {
-          case 'LimitExceededException':
+          case 'InvalidParameterException':
             errorMessage.value[0] =
-              '인증메일 발송 한도 초과. 1시간후 다시 시도해보세요.'
+              '인증되지 않은 이메일입니다. 비밀번호를 재설정 할 수 없습니다.'
+            break
+          case 'UserNotFoundException':
+            errorMessage.value[0] =
+              '존재하지 않는 이메일입니다.'
             break
           default:
             break
@@ -149,8 +142,8 @@ export default defineComponent({
       code,
       loading,
       errorMessage,
-      handleConfirmSignUp,
-      handleResendSignUpCode,
+      handleConfirmResetPw,
+      handleResetPassword,
       codeRules,
       onResendError: computed(() => errorMessage.value[0].length > 0),
       onConfirmError: computed(() => errorMessage.value[1].length > 0),

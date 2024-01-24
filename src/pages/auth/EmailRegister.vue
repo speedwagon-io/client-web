@@ -54,6 +54,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 
 import {
   isValidEmail,
@@ -73,6 +74,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const router = useRouter()
     const route = useRoute()
+    const quasar = useQuasar()
     const { formRef, formBindValidation, formHasError } = useFormValidation()
 
     onMounted(() => {
@@ -124,8 +126,14 @@ export default defineComponent({
         loading.value = false
       }
 
-      router.push(`/register/email/verify?email=${email.value}`)
-      return true
+      quasar.dialog({
+        title: '안내',
+        message: '인증번호가 발송되었습니다.'
+      }).onOk(() => {
+        router.push(`/register/email/verify?email=${email.value}`)
+      }).onDismiss(() => {
+        router.push(`/register/email/verify?email=${email.value}`)
+      })
     }
 
     const emailRules = async (value: string) => {
