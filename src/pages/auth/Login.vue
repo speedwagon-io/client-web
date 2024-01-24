@@ -4,7 +4,7 @@
       class="self-end cursor-pointer"
       name="close"
       size="lg"
-      @click="goBack"
+      @click="redirectTo"
     />
     <div class="wrapper">
       <CatchyPhrase />
@@ -136,12 +136,16 @@ export default defineComponent({
       },
     )
 
-    const goBack = () => {
+    const redirectTo = () => {
       // TODO] 로그인을 발생시킨 곳으로 로그인 이후 다시 goBack
       if (route.query.method === 'email') {
         router.push('/login')
-      } else {
-        router.go(-1)
+        return
+      }
+
+      if (!route.query.redirect) {
+        router.push('/')
+        return
       }
     }
 
@@ -213,7 +217,7 @@ export default defineComponent({
       toEmailSignin() {
         router.push('/login?method=email')
       },
-      goBack,
+      redirectTo,
       emailRules,
       pwRules,
       onSignInError: computed(() => errorMessage.value.length > 0),
