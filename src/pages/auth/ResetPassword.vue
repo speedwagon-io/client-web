@@ -78,7 +78,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
@@ -97,6 +97,7 @@ export default defineComponent({
   emits: ['menu-name', 'show-go-back'],
   setup(props, { emit }) {
     const route = useRoute()
+    const router = useRouter()
     const quasar = useQuasar()
     const { formRef, formBindValidation, formHasError } = useFormValidation()
 
@@ -134,6 +135,20 @@ export default defineComponent({
           confirmationCode: code.value,
           newPassword: password1.value,
         })
+
+        quasar
+          .dialog({
+            title: '안내',
+            message:
+              '<span>비밀번호가 변경되었습니다.<br />다시 로그인 해주세요.<span>',
+            html: true,
+          })
+          .onOk(() => {
+            router.push(`/login?method=email&email=${email.value}`)
+          })
+          .onDismiss(() => {
+            router.push(`/login?method=email&email=${email.value}`)
+          })
       } catch (error: any) {
         switch (error.name) {
           case 'CodeMismatchException':

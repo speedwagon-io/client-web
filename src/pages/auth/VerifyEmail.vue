@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
@@ -72,6 +72,7 @@ export default defineComponent({
   emits: ['menu-name', 'show-go-back'],
   setup(props, { emit }) {
     const route = useRoute()
+    const router = useRouter()
     const quasar = useQuasar()
 
     const email = ref()
@@ -100,15 +101,32 @@ export default defineComponent({
     const handleConfirmSignUp = async () => {
       loading.value[1] = true
       try {
-        const result = await confirmSignUp({
+        await confirmSignUp({
           username: email.value,
           confirmationCode: code.value,
         })
-        console.log(result)
+
+        quasar
+          .dialog({
+            title: '안내',
+            message:
+              '<span>회원가입이 완료되었습니다.<br />다시 로그인 해주세요.<span>',
+            html: true,
+          })
+          .onOk(() => {
+            router.push(`/login?method=email&email=${email.value}`)
+          })
+          .onDismiss(() => {
+            router.push(`/login?method=email&email=${email.value}`)
+          })
       } catch (error: any) {
         switch (error.name) {
           case 'CodeMismatchException':
             errorMessage.value[1] = '인증 코드가 일치하지 않습니다.'
+            break
+          case 'LimitExceededException':
+            errorMessage.value[0] =
+              '너무 많은 시도로 이용이 제한되었습니다. 잠시후 다시 시도해보세요.'
             break
           default:
             break
@@ -131,6 +149,9 @@ export default defineComponent({
           case 'LimitExceededException':
             errorMessage.value[0] =
               '인증메일 발송 한도 초과. 잠시후 다시 시도해보세요.'
+            break
+          case 'InvalidParameterException':
+            errorMessage.value[0] = '이미 인증된 유저입니다.'
             break
           default:
             break

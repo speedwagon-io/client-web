@@ -122,8 +122,27 @@ export default defineComponent({
       },
     )
 
+    watch(
+      route,
+      to => {
+        if (to.path === '/login') {
+          if (to.query.email) {
+            email.value = to.query.email as string
+          }
+        }
+      },
+      {
+        immediate: true,
+      },
+    )
+
     const goBack = () => {
-      router.go(-1)
+      // TODO] 로그인을 발생시킨 곳으로 로그인 이후 다시 goBack
+      if (route.query.method === 'email') {
+        router.push('/login')
+      } else {
+        router.go(-1)
+      }
     }
 
     const handleEmailSignIn = async () => {
