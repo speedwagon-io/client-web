@@ -11,7 +11,7 @@
               autofocus
               :rules="[emailRules]"
               lazy-rules
-              :error-message="errorMessage"
+              :error-message="errorMessage[0]"
               :error="onEmailError"
               v-model="email"
               type="email"
@@ -30,6 +30,8 @@
               stack-label
               placeholder="비밀번호를 다시 입력하세요"
               :rules="[pwCheckRules]"
+              :error-message="errorMessage[1]"
+              :error="onPwNotEqualError"
               v-model="password2"
               type="password"
               autocomplete="off"
@@ -98,10 +100,15 @@ export default defineComponent({
     const password1 = ref('')
     const password2 = ref('')
 
-    const errorMessage = ref('')
+    const errorMessage = ref(['', ''])
     const loading = ref(false)
 
     const handleSignUp = async () => {
+      if (password1.value !== password2.value) {
+        errorMessage.value[1] = '비밀번호가 일치하지 않습니다.'
+        return
+      }
+
       loading.value = true
       try {
         await signUp({
@@ -111,11 +118,11 @@ export default defineComponent({
       } catch (error: any) {
         switch (error.name) {
           case 'UsernameExistsException':
-            errorMessage.value = '이미 가입된 메일입니다.'
+            errorMessage.value[0] = '이미 가입된 메일입니다.'
             break
           case 'UserLambdaValidationException':
             if (error.message.indexOf('Email already in use') !== -1) {
-              errorMessage.value = '카카오로 가입된 메일입니다.'
+              errorMessage.value[0] = '카카오로 가입된 메일입니다.'
             }
             break
           default:
@@ -140,7 +147,7 @@ export default defineComponent({
     }
 
     const emailRules = async (value: string) => {
-      errorMessage.value = ''
+      errorMessage.value[0] = ''
 
       if (value.length === 0) {
         return true
@@ -158,14 +165,12 @@ export default defineComponent({
         return true
       }
 
-      if (password2.value && value !== password2.value) {
-        return '비밀번호가 일치하지 않습니다.'
-      }
-
       return isValidPassword(value, passwordValidators)
     }
 
     const pwCheckRules = (value: string) => {
+      errorMessage.value[1] = ''
+
       if (value.length === 0) {
         return true
       }
@@ -189,7 +194,8 @@ export default defineComponent({
       pwCheckRules,
       formRef,
       formHasError,
-      onEmailError: computed(() => errorMessage.value.length > 0),
+      onEmailError: computed(() => errorMessage.value[0].length > 0),
+      onPwNotEqualError: computed(() => errorMessage.value[1].length > 0),
     }
   },
 })

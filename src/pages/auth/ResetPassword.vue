@@ -56,6 +56,8 @@
               stack-label
               placeholder="새로운 비밀번호를 다시 입력하세요"
               :rules="[pwCheckRules]"
+              :error-message="errorMessage[2]"
+              :error="onPwNotEqualError"
               v-model="password2"
               type="password"
               autocomplete="off"
@@ -112,7 +114,7 @@ export default defineComponent({
     const isCodeSent = ref(false)
 
     const loading = ref([false, false])
-    const errorMessage = ref(['', ''])
+    const errorMessage = ref(['', '', ''])
 
     watch(
       route,
@@ -128,6 +130,11 @@ export default defineComponent({
     )
 
     const handleComfirmResetPw = async () => {
+      if (password1.value !== password2.value) {
+        errorMessage.value[2] = '비밀번호가 일치하지 않습니다.'
+        return
+      }
+
       loading.value[1] = true
       try {
         await confirmResetPassword({
@@ -231,14 +238,12 @@ export default defineComponent({
         return true
       }
 
-      if (password2.value && value !== password2.value) {
-        return '비밀번호가 일치하지 않습니다.'
-      }
-
       return isValidPassword(value, passwordValidators)
     }
 
     const pwCheckRules = (value: string) => {
+      errorMessage.value[2] = ''
+
       if (value.length === 0) {
         return true
       }
@@ -268,6 +273,7 @@ export default defineComponent({
       formHasError,
       onResendError: computed(() => errorMessage.value[0].length > 0),
       onConfirmError: computed(() => errorMessage.value[1].length > 0),
+      onPwNotEqualError: computed(() => errorMessage.value[2].length > 0),
     }
   },
 })
