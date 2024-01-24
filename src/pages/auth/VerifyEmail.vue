@@ -2,8 +2,8 @@
   <q-page class="column content-center">
     <div class="wrapper">
       <q-card flat>
-        <q-card-section class="row justify-between">
-          <q-form class="col-9 q-pr-sm">
+        <q-card-section>
+          <q-form>
             <q-input
               label="이메일"
               :disable="true"
@@ -13,18 +13,21 @@
               :error="onResendError"
               v-model="email"
               type="email"
-            />
+            >
+              <template v-slot:after>
+                <q-btn
+                  label="재발송"
+                  size="lg"
+                  :loading="loading[0]"
+                  :disable="errorMessage[0].length > 0"
+                  @click="handleResendSignUpCode"
+                />
+              </template>
+            </q-input>
           </q-form>
-          <q-btn
-            class="col"
-            label="재발송"
-            :loading="loading[0]"
-            :disable="errorMessage[0].length > 0"
-            @click="handleResendSignUpCode"
-          />
         </q-card-section>
-        <q-card-section class="row justify-between">
-          <q-form class="col-6 q-pr-sm">
+        <q-card-section>
+          <q-form>
             <q-input
               label="인증코드"
               stack-label
@@ -34,14 +37,17 @@
               :error="onConfirmError"
               v-model="code"
               type="text"
-            />
+            >
+              <template v-slot:after>
+                <q-btn
+                  label="인증하기"
+                  size="lg"
+                  :loading="loading[1]"
+                  @click="handleConfirmSignUp"
+                />
+              </template>
+            </q-input>
           </q-form>
-          <q-btn
-            class="col"
-            label="인증하기"
-            :loading="loading[1]"
-            @click="handleConfirmSignUp"
-          />
         </q-card-section>
       </q-card>
     </div>
