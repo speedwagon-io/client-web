@@ -17,6 +17,7 @@
               <template v-slot:after>
                 <q-btn
                   label="재발송"
+                  style="color: #000000;"
                   size="lg"
                   :loading="loading[0]"
                   :disable="errorMessage[0].length > 0"
@@ -41,6 +42,7 @@
               <template v-slot:after>
                 <q-btn
                   label="인증하기"
+                  style="color: #000000;"
                   size="lg"
                   :loading="loading[1]"
                   @click="handleConfirmSignUp"
