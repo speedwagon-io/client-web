@@ -21,8 +21,11 @@ export default defineComponent({
       if (route.hash) {
         route.hash.split('&').forEach(item => {
           const [key, value] = item.split('=')
+          console.log(item)
           if (key === 'id_token') {
+            console.log(value)
             accessToken.value = value
+            console.log('accessToken:',accessToken)
             router.push('/')
           }
         })

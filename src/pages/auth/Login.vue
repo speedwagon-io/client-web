@@ -76,15 +76,16 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
+
+import { isValidEmail } from 'src/util/useFormValidation'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signInWithRedirect, signIn, resendSignUpCode } from 'aws-amplify/auth'
-import { isValidEmail } from 'src/util/useFormValidation'
-import { useQuasar } from 'quasar'
 
 const handleSignIn = async () => {
   await signInWithRedirect({

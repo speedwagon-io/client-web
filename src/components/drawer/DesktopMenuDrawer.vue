@@ -15,12 +15,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+
+import EssentialLink from 'components/EssentialLink.vue'
+
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signOut } from 'aws-amplify/auth'
-
-import EssentialLink from 'components/EssentialLink.vue'
 
 const menuDrawerList = [
   {

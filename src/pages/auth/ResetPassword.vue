@@ -83,16 +83,17 @@ import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
-import { AmplifyConfig } from '../../../amplifyconfig'
-import { Amplify } from 'aws-amplify'
-Amplify.configure(AmplifyConfig)
-import { confirmResetPassword, resetPassword } from 'aws-amplify/auth'
 import {
   isValidEmail,
   isValidPassword,
   passwordValidators,
   useFormValidation,
 } from 'src/util/useFormValidation'
+
+import { AmplifyConfig } from '../../../amplifyconfig'
+import { Amplify } from 'aws-amplify'
+Amplify.configure(AmplifyConfig)
+import { confirmResetPassword, resetPassword } from 'aws-amplify/auth'
 
 export default defineComponent({
   name: 'ResetPassword',

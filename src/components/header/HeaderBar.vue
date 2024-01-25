@@ -16,6 +16,7 @@
 <script lang="ts">
 import { useQuasar } from 'quasar'
 import { defineComponent } from 'vue'
+
 import HamburgerButton from 'components/header/HamburgerButton.vue'
 
 export default defineComponent({
