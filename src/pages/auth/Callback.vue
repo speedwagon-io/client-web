@@ -3,34 +3,33 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
-import { defineComponent, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+
+import { AmplifyConfig } from '../../../amplifyconfig'
+import { Amplify } from 'aws-amplify'
+Amplify.configure(AmplifyConfig)
+import { fetchAuthSession } from 'aws-amplify/auth'
 
 export default defineComponent({
   name: 'Callback',
   setup() {
-    const route = useRoute()
     const router = useRouter()
     const authStore = useAuthStore()
 
-    const { accessToken } = storeToRefs(authStore)
+    const auth = storeToRefs(authStore)
 
-    onMounted(() => {
-      if (route.hash) {
-        route.hash.split('&').forEach(item => {
-          const [key, value] = item.split('=')
-          console.log(item)
-          if (key === 'id_token') {
-            console.log(value)
-            accessToken.value = value
-            console.log('accessToken:',accessToken)
-            router.push('/')
-          }
-        })
+    onMounted(async () => {
+      const { accessToken } = (await fetchAuthSession()).tokens ?? {};
+      const accessTokenString = accessToken?.toString()
+      if (accessTokenString) {
+        auth.accessToken.value = accessTokenString
+        router.push('/')
       }
     })
-  },
+  }
 })
 </script>
