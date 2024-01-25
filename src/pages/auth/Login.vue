@@ -172,6 +172,9 @@ export default defineComponent({
             .onDismiss(() => {
               router.push(`/register/email/verify?email=${email.value}`)
             })
+        } else if (signInStep === 'DONE') {
+          // TODO] 유저 조회 + 상태관리 + 리다이렉트
+          router.push('/')
         }
       } catch (error: any) {
         switch (error.name) {
