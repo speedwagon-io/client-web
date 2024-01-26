@@ -54,8 +54,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, defineComponent, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
 import { useFormValidation } from '../../util/useFormValidation'
@@ -65,34 +65,21 @@ import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signUp } from 'aws-amplify/auth'
-// import { useWatchRoute } from 'src/util/useWatchRoute'
+import { useWatchRoute } from 'src/util/useWatchRoute'
 
 export default defineComponent({
   name: 'EmailRegister',
   emits: ['menu-name', 'back-or-close'],
   setup(props, { emit }) {
     const router = useRouter()
-    const route = useRoute()
     const quasar = useQuasar()
     const { formRef, formBindValidation, formHasError } = useFormValidation()
-    // const {} = useWatchRoute()
+    const { watchRouteForRegisterLayout } = useWatchRoute(emit)
 
     onMounted(() => {
       formBindValidation()
+      watchRouteForRegisterLayout('/register/email', '로그인 정보 입력', 'BACK')
     })
-
-    watch(
-      route,
-      to => {
-        if (to.path === '/register/email') {
-          emit('menu-name', '로그인 정보 입력')
-          emit('back-or-close', 'back')
-        }
-      },
-      {
-        immediate: true,
-      },
-    )
 
     const email = ref('')
     const password1 = ref('')

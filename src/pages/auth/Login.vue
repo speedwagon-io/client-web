@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
@@ -86,6 +86,7 @@ import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signInWithRedirect, signIn, resendSignUpCode } from 'aws-amplify/auth'
+import { useWatchRoute } from 'src/util/useWatchRoute'
 
 export default defineComponent({
   name: 'Login',
@@ -96,10 +97,15 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const quasar = useQuasar()
+    const { watchRouteQueryParam } = useWatchRoute()
 
     const isEmailSignIn = ref(route.query.method === 'email' ? true : false)
     const email = ref('')
     const password = ref('')
+
+    onMounted(() => {
+      watchRouteQueryParam('email', email)
+    })
 
     const loading = ref(false)
     const errorMessage = ref({
@@ -115,20 +121,6 @@ export default defineComponent({
         } else {
           isEmailSignIn.value = false
         }
-      },
-    )
-
-    watch(
-      route,
-      to => {
-        if (to.path === '/login') {
-          if (to.query.email) {
-            email.value = to.query.email as string
-          }
-        }
-      },
-      {
-        immediate: true,
       },
     )
 

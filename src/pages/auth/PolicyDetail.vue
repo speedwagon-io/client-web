@@ -6,33 +6,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { defineComponent, onMounted, ref } from 'vue'
+
+import { useWatchRoute } from 'src/util/useWatchRoute'
 
 export default defineComponent({
   name: 'PolicyDetail',
   emits: ['menu-name', 'back-or-close'],
   setup(props, { emit }) {
-    const route = useRoute()
+    const { watchRouteForRegisterLayout, watchRouteQueryParam } =
+      useWatchRoute(emit)
 
-    const content = ref()
+    const content = ref('')
 
-    watch(
-      route,
-      to => {
-        if (to.path === '/register/policy/detail') {
-          emit('menu-name', '약관상세')
-          emit('back-or-close', 'CLOSE')
-
-          if (to.query.page) {
-            content.value = to.query.page
-          }
-        }
-      },
-      {
-        immediate: true,
-      },
-    )
+    onMounted(() => {
+      watchRouteForRegisterLayout(
+        '/register/policy/detail',
+        '약관상세',
+        'CLOSE',
+      )
+      watchRouteQueryParam('page', content)
+    })
 
     return {
       content,

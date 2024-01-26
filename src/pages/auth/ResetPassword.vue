@@ -79,12 +79,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, defineComponent, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
 import { useFormValidation } from 'src/util/useFormValidation'
 import { useFormRules } from 'src/util/useFormRules'
+import { useWatchRoute } from 'src/util/useWatchRoute'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
@@ -95,13 +96,18 @@ export default defineComponent({
   name: 'ResetPassword',
   emits: ['menu-name', 'back-or-close'],
   setup(props, { emit }) {
-    const route = useRoute()
     const router = useRouter()
     const quasar = useQuasar()
     const { formRef, formBindValidation, formHasError } = useFormValidation()
+    const { watchRouteForRegisterLayout } = useWatchRoute(emit)
 
     onMounted(() => {
       formBindValidation()
+      watchRouteForRegisterLayout(
+        '/register/reset_password',
+        '비밀번호 찾기',
+        'BACK',
+      )
     })
 
     const email = ref('')
@@ -125,19 +131,6 @@ export default defineComponent({
     const { emailRules, pwRules, pwCheckRules } = useFormRules(
       errorMessage,
       metaData,
-    )
-
-    watch(
-      route,
-      to => {
-        if (to.path === '/register/reset_password') {
-          emit('menu-name', '비밀번호 찾기')
-          emit('back-or-close', 'BACK')
-        }
-      },
-      {
-        immediate: true,
-      },
     )
 
     const handleComfirmResetPw = async () => {

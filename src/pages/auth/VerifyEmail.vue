@@ -59,11 +59,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, defineComponent, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
 import { useFormRules } from 'src/util/useFormRules'
+import { useWatchRoute } from 'src/util/useWatchRoute'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
@@ -74,12 +75,22 @@ export default defineComponent({
   name: 'VerifyEmail',
   emits: ['menu-name', 'back-or-close'],
   setup(props, { emit }) {
-    const route = useRoute()
     const router = useRouter()
     const quasar = useQuasar()
+    const { watchRouteForRegisterLayout, watchRouteQueryParam } =
+      useWatchRoute(emit)
 
     const email = ref()
     const code = ref()
+
+    onMounted(() => {
+      watchRouteForRegisterLayout(
+        '/register/email/verify',
+        '이메일 인증',
+        'BACK',
+      )
+      watchRouteQueryParam('email', email)
+    })
 
     const loading = ref({
       resend: false,
@@ -90,23 +101,6 @@ export default defineComponent({
       code: '',
     })
     const { emailRules } = useFormRules(errorMessage)
-
-    watch(
-      route,
-      to => {
-        if (to.path === '/register/email/verify') {
-          emit('menu-name', '이메일 인증')
-          emit('back-or-close', 'BACK')
-
-          if (to.query.email) {
-            email.value = to.query.email
-          }
-        }
-      },
-      {
-        immediate: true,
-      },
-    )
 
     const handleConfirmSignUp = async () => {
       loading.value.verify = true

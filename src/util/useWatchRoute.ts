@@ -1,10 +1,11 @@
-import { watch } from 'vue'
+import { Ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 export const useWatchRoute = (
-  emit: (event: 'menu-name' | 'back-or-close', ...args: any[]) => void,
+  emit?: (event: 'menu-name' | 'back-or-close', ...args: any[]) => void,
 ) => {
   const route = useRoute()
+  const option = { immediate: true }
 
   const watchRouteForRegisterLayout = (
     path: string,
@@ -14,18 +15,32 @@ export const useWatchRoute = (
     watch(
       route,
       to => {
-        if (to.path === path) {
+        if (emit && to.path === path) {
           emit('menu-name', menuName)
           emit('back-or-close', backOrClose)
         }
       },
-      {
-        immediate: true,
+      option,
+    )
+  }
+
+  const watchRouteQueryParam = (
+    queryParamKey: string,
+    valueToSet: Ref<string>,
+  ) => {
+    watch(
+      route,
+      to => {
+        if (to.query[queryParamKey]) {
+          valueToSet.value = to.query[queryParamKey] as string
+        }
       },
+      option,
     )
   }
 
   return {
     watchRouteForRegisterLayout,
+    watchRouteQueryParam,
   }
 }

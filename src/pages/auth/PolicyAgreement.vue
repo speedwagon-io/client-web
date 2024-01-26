@@ -44,8 +44,10 @@
 </template>
 
 <script lang="ts">
-import { Ref, computed, defineComponent, ref, watch } from 'vue'
+import { Ref, computed, defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
+import { useWatchRoute } from 'src/util/useWatchRoute'
 
 const options = [
   { label: '[필수] 이용약관1', value: 'one', required: true },
@@ -81,19 +83,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const router = useRouter()
     const route = useRoute()
+    const { watchRouteForRegisterLayout } = useWatchRoute(emit)
 
-    watch(
-      route,
-      to => {
-        if (to.path === '/register/policy') {
-          emit('menu-name', '약관동의')
-          emit('back-or-close', 'back')
-        }
-      },
-      {
-        immediate: true,
-      },
-    )
+    onMounted(() => {
+      watchRouteForRegisterLayout('/register/policy', '약관동의', 'BACK')
+    })
 
     const group = ref([])
 
