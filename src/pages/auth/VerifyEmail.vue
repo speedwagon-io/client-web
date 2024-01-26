@@ -9,7 +9,8 @@
               :disable="true"
               stack-label
               placeholder="이메일을 입력하세요"
-              :error-message="errorMessage[0]"
+              :rules="[emailRules]"
+              :error-message="errorMessage.email"
               :error="onResendError"
               v-model="email"
               type="email"
@@ -20,7 +21,7 @@
                   style="color: #000000"
                   size="lg"
                   :loading="loading[0]"
-                  :disable="errorMessage[0].length > 0"
+                  :disable="errorMessage.email.length > 0"
                   @click="handleResendSignUpCode"
                 />
               </template>
@@ -34,7 +35,7 @@
               stack-label
               placeholder="6자리 코드를 입력하세요"
               :rules="[codeRules]"
-              :error-message="errorMessage[1]"
+              :error-message="errorMessage.code"
               :error="onConfirmError"
               v-model="code"
               type="number"
@@ -62,6 +63,8 @@ import { computed, defineComponent, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
+import { useFormRules } from 'src/util/useFormRules'
+
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
@@ -79,7 +82,11 @@ export default defineComponent({
     const code = ref()
 
     const loading = ref([false, false])
-    const errorMessage = ref(['', ''])
+    const errorMessage = ref({
+      email: '',
+      code: '',
+    })
+    const { emailRules } = useFormRules(errorMessage)
 
     watch(
       route,
@@ -122,10 +129,10 @@ export default defineComponent({
       } catch (error: any) {
         switch (error.name) {
           case 'CodeMismatchException':
-            errorMessage.value[1] = '인증 코드가 일치하지 않습니다.'
+            errorMessage.value.code = '인증 코드가 일치하지 않습니다.'
             break
           case 'LimitExceededException':
-            errorMessage.value[0] =
+            errorMessage.value.email =
               '너무 많은 시도로 이용이 제한되었습니다. 잠시후 다시 시도해보세요.'
             break
           default:
@@ -147,11 +154,11 @@ export default defineComponent({
       } catch (error: any) {
         switch (error.name) {
           case 'LimitExceededException':
-            errorMessage.value[0] =
+            errorMessage.value.email =
               '인증메일 발송 한도 초과. 잠시후 다시 시도해보세요.'
             break
           case 'InvalidParameterException':
-            errorMessage.value[0] = '이미 인증된 유저입니다.'
+            errorMessage.value.email = '이미 인증된 유저입니다.'
             break
           default:
             break
@@ -161,11 +168,6 @@ export default defineComponent({
       }
     }
 
-    const codeRules = () => {
-      errorMessage.value[1] = ''
-      return true
-    }
-
     return {
       email,
       code,
@@ -173,9 +175,13 @@ export default defineComponent({
       errorMessage,
       handleConfirmSignUp,
       handleResendSignUpCode,
-      codeRules,
-      onResendError: computed(() => errorMessage.value[0].length > 0),
-      onConfirmError: computed(() => errorMessage.value[1].length > 0),
+      emailRules,
+      codeRules: () => {
+        errorMessage.value.code = ''
+        return true
+      },
+      onResendError: computed(() => errorMessage.value.email.length > 0),
+      onConfirmError: computed(() => errorMessage.value.code.length > 0),
     }
   },
 })

@@ -58,11 +58,7 @@ import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
-import {
-  isValidPassword,
-  passwordValidators,
-  useFormValidation,
-} from '../../util/useFormValidation'
+import { useFormValidation } from '../../util/useFormValidation'
 import { useFormRules } from 'src/util/useFormRules'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
@@ -105,7 +101,13 @@ export default defineComponent({
       email: '',
       pwCheck: '',
     })
-    const { emailRules } = useFormRules(errorMessage)
+    const metaData = ref({
+      password1: password1,
+    })
+    const { emailRules, pwRules, pwCheckRules } = useFormRules(
+      errorMessage,
+      metaData,
+    )
 
     const handleSignUp = async () => {
       if (password1.value !== password2.value) {
@@ -153,28 +155,6 @@ export default defineComponent({
       } finally {
         loading.value = false
       }
-    }
-
-    const pwRules = (value: string) => {
-      if (value.length === 0) {
-        return true
-      }
-
-      return isValidPassword(value, passwordValidators)
-    }
-
-    const pwCheckRules = (value: string) => {
-      errorMessage.value.pwCheck = ''
-
-      if (value.length === 0) {
-        return true
-      }
-
-      if (password1.value && value !== password1.value) {
-        return '비밀번호가 일치하지 않습니다.'
-      }
-
-      return true
     }
 
     return {

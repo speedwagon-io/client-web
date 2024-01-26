@@ -103,7 +103,7 @@ export default defineComponent({
 
     const loading = ref(false)
     const errorMessage = ref({
-      email: ''
+      email: '',
     })
     const { emailRules } = useFormRules(errorMessage)
 
@@ -205,11 +205,6 @@ export default defineComponent({
       }
     }
 
-    const pwRules = () => {
-      errorMessage.value.email = ''
-      return true
-    }
-
     return {
       email,
       password,
@@ -223,7 +218,10 @@ export default defineComponent({
       },
       redirectTo,
       emailRules,
-      pwRules,
+      pwRules: () => {
+        errorMessage.value.email = ''
+        return true
+      },
       onSignInError: computed(() => errorMessage.value.email.length > 0),
     }
   },
