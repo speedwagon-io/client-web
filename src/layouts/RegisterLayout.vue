@@ -58,17 +58,14 @@ export default defineComponent({
           case 'BACK':
             isGoBackShown.value = true
             isCloseShown.value = false
-            break;
+            break
           case 'CLOSE':
             isGoBackShown.value = false
             isCloseShown.value = true
-            break;
+            break
           default:
-            break;
+            break
         }
-      },
-      showClose() {
-        
       },
     }
   },

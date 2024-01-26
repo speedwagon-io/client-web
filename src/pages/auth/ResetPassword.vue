@@ -112,7 +112,7 @@ export default defineComponent({
 
     const loading = ref({
       code: false,
-      reset: false
+      reset: false,
     })
     const errorMessage = ref({
       email: '',

@@ -83,7 +83,7 @@ export default defineComponent({
 
     const loading = ref({
       resend: false,
-      verify: false
+      verify: false,
     })
     const errorMessage = ref({
       email: '',

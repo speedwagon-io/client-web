@@ -1,10 +1,16 @@
-import { watch } from "vue"
-import { useRoute } from "vue-router"
+import { watch } from 'vue'
+import { useRoute } from 'vue-router'
 
-export const useWatchRoute = (emit: (event: 'menu-name' | 'back-or-close', ...args: any[]) => void) => {
+export const useWatchRoute = (
+  emit: (event: 'menu-name' | 'back-or-close', ...args: any[]) => void,
+) => {
   const route = useRoute()
 
-  const watchRouteForRegisterLayout = (path: string, menuName: string, backOrClose: 'BACK' | 'CLOSE') => {
+  const watchRouteForRegisterLayout = (
+    path: string,
+    menuName: string,
+    backOrClose: 'BACK' | 'CLOSE',
+  ) => {
     watch(
       route,
       to => {
@@ -20,6 +26,6 @@ export const useWatchRoute = (emit: (event: 'menu-name' | 'back-or-close', ...ar
   }
 
   return {
-    watchRouteForRegisterLayout
+    watchRouteForRegisterLayout,
   }
 }
