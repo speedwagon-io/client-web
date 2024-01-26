@@ -21,9 +21,9 @@
                   label="코드발송"
                   style="color: #000000"
                   size="lg"
-                  :loading="loading[0]"
+                  :loading="loading.code"
                   :disable="formHasError"
-                  @click="handleResetPassword"
+                  @click="handleSendResetPwCode"
                 />
               </template>
             </q-input>
@@ -69,7 +69,7 @@
             class="full-width"
             size="lg"
             label="비밀번호 재설정"
-            :loading="loading[1]"
+            :loading="loading.reset"
             @click="handleComfirmResetPw"
           />
         </q-card-actions>
@@ -110,7 +110,10 @@ export default defineComponent({
     const code = ref()
     const isCodeSent = ref(false)
 
-    const loading = ref([false, false])
+    const loading = ref({
+      code: false,
+      reset: false
+    })
     const errorMessage = ref({
       email: '',
       pwCheck: '',
@@ -143,7 +146,7 @@ export default defineComponent({
         return
       }
 
-      loading.value[1] = true
+      loading.value.reset = true
       try {
         await confirmResetPassword({
           username: email.value,
@@ -177,12 +180,12 @@ export default defineComponent({
             break
         }
       } finally {
-        loading.value[1] = false
+        loading.value.reset = false
       }
     }
 
-    const handleResetPassword = async () => {
-      loading.value[0] = true
+    const handleSendResetPwCode = async () => {
+      loading.value.code = true
       try {
         const result = await resetPassword({ username: email.value })
         const resetPasswordStep = result.nextStep?.resetPasswordStep
@@ -217,7 +220,7 @@ export default defineComponent({
             break
         }
       } finally {
-        loading.value[0] = false
+        loading.value.code = false
       }
     }
 
@@ -230,7 +233,7 @@ export default defineComponent({
       loading,
       errorMessage,
       handleComfirmResetPw,
-      handleResetPassword,
+      handleSendResetPwCode,
       emailRules,
       codeRules: () => {
         errorMessage.value.code = ''

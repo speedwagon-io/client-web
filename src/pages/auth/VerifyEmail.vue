@@ -20,7 +20,7 @@
                   label="재발송"
                   style="color: #000000"
                   size="lg"
-                  :loading="loading[0]"
+                  :loading="loading.resend"
                   :disable="errorMessage.email.length > 0"
                   @click="handleResendSignUpCode"
                 />
@@ -46,7 +46,7 @@
                   label="인증하기"
                   style="color: #000000"
                   size="lg"
-                  :loading="loading[1]"
+                  :loading="loading.verify"
                   @click="handleConfirmSignUp"
                 />
               </template>
@@ -81,7 +81,10 @@ export default defineComponent({
     const email = ref()
     const code = ref()
 
-    const loading = ref([false, false])
+    const loading = ref({
+      resend: false,
+      verify: false
+    })
     const errorMessage = ref({
       email: '',
       code: '',
@@ -106,7 +109,7 @@ export default defineComponent({
     )
 
     const handleConfirmSignUp = async () => {
-      loading.value[1] = true
+      loading.value.verify = true
       try {
         await confirmSignUp({
           username: email.value,
@@ -139,12 +142,12 @@ export default defineComponent({
             break
         }
       } finally {
-        loading.value[1] = false
+        loading.value.verify = false
       }
     }
 
     const handleResendSignUpCode = async () => {
-      loading.value[0] = true
+      loading.value.resend = true
       try {
         await resendSignUpCode({ username: email.value })
         quasar.dialog({
@@ -164,7 +167,7 @@ export default defineComponent({
             break
         }
       } finally {
-        loading.value[0] = false
+        loading.value.resend = false
       }
     }
 
