@@ -26,7 +26,7 @@
               stack-label
               placeholder="비밀번호를 입력하세요"
               :rules="[pwRules]"
-              :error-message="errorMessage"
+              :error-message="errorMessage.email"
               :error="onSignInError"
               v-model="password"
               type="password"
@@ -80,7 +80,7 @@ import { useQuasar } from 'quasar'
 
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 
-import { isValidEmail } from 'src/util/useFormValidation'
+import { useFormRules } from 'src/util/useFormRules'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
@@ -101,8 +101,11 @@ export default defineComponent({
     const email = ref('')
     const password = ref('')
 
-    const errorMessage = ref('')
     const loading = ref(false)
+    const errorMessage = ref({
+      email: ''
+    })
+    const { emailRules } = useFormRules(errorMessage)
 
     watch(
       () => route.query,
@@ -186,15 +189,15 @@ export default defineComponent({
       } catch (error: any) {
         switch (error.name) {
           case 'LimitExceededException':
-            errorMessage.value =
+            errorMessage.value.email =
               '인증메일 발송 한도 초과. 잠시후 다시 시도해보세요.'
             break
           case 'UserAlreadyAuthenticatedException':
-            errorMessage.value = '이미 인증된 유저가 있습니다.'
+            errorMessage.value.email = '이미 인증된 유저가 있습니다.'
             router.push('/')
             break
           default:
-            errorMessage.value = '아이디 혹은 비밀번호를 확인해주세요.'
+            errorMessage.value.email = '아이디 혹은 비밀번호를 확인해주세요.'
             break
         }
       } finally {
@@ -202,22 +205,8 @@ export default defineComponent({
       }
     }
 
-    const emailRules = async (value: string) => {
-      errorMessage.value = ''
-
-      if (value.length === 0) {
-        return true
-      }
-
-      if (!isValidEmail(value)) {
-        return '이메일 형식이 올바르지 않습니다.'
-      }
-
-      return true
-    }
-
     const pwRules = () => {
-      errorMessage.value = ''
+      errorMessage.value.email = ''
       return true
     }
 
@@ -235,7 +224,7 @@ export default defineComponent({
       redirectTo,
       emailRules,
       pwRules,
-      onSignInError: computed(() => errorMessage.value.length > 0),
+      onSignInError: computed(() => errorMessage.value.email.length > 0),
     }
   },
 })

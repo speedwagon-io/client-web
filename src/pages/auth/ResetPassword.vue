@@ -11,7 +11,7 @@
               autofocus
               :rules="[emailRules]"
               lazy-rules
-              :error-message="errorMessage[0]"
+              :error-message="errorMessage.email"
               :error="onResendError"
               v-model="email"
               type="email"
@@ -36,7 +36,7 @@
               stack-label
               placeholder="6자리 코드를 입력하세요"
               :rules="[codeRules]"
-              :error-message="errorMessage[1]"
+              :error-message="errorMessage.code"
               :error="onConfirmError"
               v-model="code"
               type="number"
@@ -56,7 +56,7 @@
               stack-label
               placeholder="새로운 비밀번호를 다시 입력하세요"
               :rules="[pwCheckRules]"
-              :error-message="errorMessage[2]"
+              :error-message="errorMessage.pwCheck"
               :error="onPwNotEqualError"
               v-model="password2"
               type="password"
@@ -84,11 +84,11 @@ import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
 import {
-  isValidEmail,
   isValidPassword,
   passwordValidators,
   useFormValidation,
 } from 'src/util/useFormValidation'
+import { useFormRules } from 'src/util/useFormRules'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
@@ -115,7 +115,13 @@ export default defineComponent({
     const isCodeSent = ref(false)
 
     const loading = ref([false, false])
-    const errorMessage = ref(['', '', ''])
+    const errorMessage = ref({
+      email: '',
+      pwCheck: '',
+      code: '',
+    })
+    const { emailRules } = useFormRules(errorMessage)
+
 
     watch(
       route,
@@ -132,7 +138,7 @@ export default defineComponent({
 
     const handleComfirmResetPw = async () => {
       if (password1.value !== password2.value) {
-        errorMessage.value[2] = '비밀번호가 일치하지 않습니다.'
+        errorMessage.value.pwCheck = '비밀번호가 일치하지 않습니다.'
         return
       }
 
@@ -160,10 +166,10 @@ export default defineComponent({
       } catch (error: any) {
         switch (error.name) {
           case 'CodeMismatchException':
-            errorMessage.value[1] = '인증 코드가 일치하지 않습니다.'
+            errorMessage.value.code = '인증 코드가 일치하지 않습니다.'
             break
           case 'LimitExceededException':
-            errorMessage.value[1] =
+            errorMessage.value.code =
               '너무 많은 시도로 이용이 제한되었습니다. 잠시후 다시 시도해보세요.'
             break
           default:
@@ -197,15 +203,15 @@ export default defineComponent({
         console.log(error)
         switch (error.name) {
           case 'InvalidParameterException':
-            errorMessage.value[0] =
+            errorMessage.value.email =
               '인증되지 않은 이메일입니다. 비밀번호를 재설정 할 수 없습니다.'
             break
           case 'LimitExceededException':
-            errorMessage.value[0] =
+            errorMessage.value.email =
               '인증메일 발송 한도 초과. 잠시후 다시 시도해보세요.'
             break
           case 'UserNotFoundException':
-            errorMessage.value[0] = '존재하지 않는 이메일입니다.'
+            errorMessage.value.email = '존재하지 않는 이메일입니다.'
             break
           default:
             break
@@ -215,22 +221,8 @@ export default defineComponent({
       }
     }
 
-    const emailRules = async (value: string) => {
-      errorMessage.value[0] = ''
-
-      if (value.length === 0) {
-        return true
-      }
-
-      if (!isValidEmail(value)) {
-        return '이메일 형식이 올바르지 않습니다.'
-      }
-
-      return true
-    }
-
     const codeRules = () => {
-      errorMessage.value[1] = ''
+      errorMessage.value.code = ''
       return true
     }
 
@@ -243,7 +235,7 @@ export default defineComponent({
     }
 
     const pwCheckRules = (value: string) => {
-      errorMessage.value[2] = ''
+      errorMessage.value.pwCheck = ''
 
       if (value.length === 0) {
         return true
@@ -272,9 +264,9 @@ export default defineComponent({
       pwCheckRules,
       formRef,
       formHasError,
-      onResendError: computed(() => errorMessage.value[0].length > 0),
-      onConfirmError: computed(() => errorMessage.value[1].length > 0),
-      onPwNotEqualError: computed(() => errorMessage.value[2].length > 0),
+      onResendError: computed(() => errorMessage.value.email.length > 0),
+      onConfirmError: computed(() => errorMessage.value.code.length > 0),
+      onPwNotEqualError: computed(() => errorMessage.value.pwCheck.length > 0),
     }
   },
 })

@@ -11,7 +11,7 @@
               autofocus
               :rules="[emailRules]"
               lazy-rules
-              :error-message="errorMessage[0]"
+              :error-message="errorMessage.email"
               :error="onEmailError"
               v-model="email"
               type="email"
@@ -30,7 +30,7 @@
               stack-label
               placeholder="비밀번호를 다시 입력하세요"
               :rules="[pwCheckRules]"
-              :error-message="errorMessage[1]"
+              :error-message="errorMessage.pwCheck"
               :error="onPwNotEqualError"
               v-model="password2"
               type="password"
@@ -59,11 +59,11 @@ import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
 import {
-  isValidEmail,
   isValidPassword,
   passwordValidators,
   useFormValidation,
 } from '../../util/useFormValidation'
+import { useFormRules } from 'src/util/useFormRules'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
@@ -100,12 +100,16 @@ export default defineComponent({
     const password1 = ref('')
     const password2 = ref('')
 
-    const errorMessage = ref(['', ''])
     const loading = ref(false)
+    const errorMessage = ref({
+      email: '',
+      pwCheck: '',
+    })
+    const { emailRules } = useFormRules(errorMessage)
 
     const handleSignUp = async () => {
       if (password1.value !== password2.value) {
-        errorMessage.value[1] = '비밀번호가 일치하지 않습니다.'
+        errorMessage.value.pwCheck = '비밀번호가 일치하지 않습니다.'
         return
       }
 
@@ -135,11 +139,11 @@ export default defineComponent({
       } catch (error: any) {
         switch (error.name) {
           case 'UsernameExistsException':
-            errorMessage.value[0] = '이미 가입된 메일입니다.'
+            errorMessage.value.email = '이미 가입된 메일입니다.'
             break
           case 'UserLambdaValidationException':
             if (error.message.indexOf('Email already in use') !== -1) {
-              errorMessage.value[0] = '카카오로 가입된 메일입니다.'
+              errorMessage.value.email = '카카오로 가입된 메일입니다.'
             }
             break
           default:
@@ -151,20 +155,6 @@ export default defineComponent({
       }
     }
 
-    const emailRules = async (value: string) => {
-      errorMessage.value[0] = ''
-
-      if (value.length === 0) {
-        return true
-      }
-
-      if (!isValidEmail(value)) {
-        return '이메일 형식이 올바르지 않습니다.'
-      }
-
-      return true
-    }
-
     const pwRules = (value: string) => {
       if (value.length === 0) {
         return true
@@ -174,7 +164,7 @@ export default defineComponent({
     }
 
     const pwCheckRules = (value: string) => {
-      errorMessage.value[1] = ''
+      errorMessage.value.pwCheck = ''
 
       if (value.length === 0) {
         return true
@@ -199,8 +189,8 @@ export default defineComponent({
       pwCheckRules,
       formRef,
       formHasError,
-      onEmailError: computed(() => errorMessage.value[0].length > 0),
-      onPwNotEqualError: computed(() => errorMessage.value[1].length > 0),
+      onEmailError: computed(() => errorMessage.value.email.length > 0),
+      onPwNotEqualError: computed(() => errorMessage.value.pwCheck.length > 0),
     }
   },
 })
