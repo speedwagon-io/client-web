@@ -77,7 +77,7 @@ const checkRequired = (group: Ref<string[]>) => {
 
 export default defineComponent({
   name: 'PolicyAgreement',
-  emits: ['menu-name', 'show-go-back'],
+  emits: ['menu-name', 'back-or-close'],
   setup(props, { emit }) {
     const router = useRouter()
     const route = useRoute()
@@ -87,7 +87,7 @@ export default defineComponent({
       to => {
         if (to.path === '/register/policy') {
           emit('menu-name', '약관동의')
-          emit('show-go-back')
+          emit('back-or-close', 'back')
         }
       },
       {

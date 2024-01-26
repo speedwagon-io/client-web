@@ -17,8 +17,7 @@
     <q-page-container>
       <router-view
         @menu-name="setMenuName"
-        @show-go-back="showGoBack"
-        @show-close="showClose"
+        @back-or-close="showGoBackOrClose"
         v-slot="{ Component }"
       >
         <keep-alive>
@@ -54,13 +53,22 @@ export default defineComponent({
       },
       isGoBackShown,
       isCloseShown,
-      showGoBack() {
-        isGoBackShown.value = true
-        isCloseShown.value = false
+      showGoBackOrClose(backOrClose: 'BACK' | 'CLOSE') {
+        switch (backOrClose) {
+          case 'BACK':
+            isGoBackShown.value = true
+            isCloseShown.value = false
+            break;
+          case 'CLOSE':
+            isGoBackShown.value = false
+            isCloseShown.value = true
+            break;
+          default:
+            break;
+        }
       },
       showClose() {
-        isGoBackShown.value = false
-        isCloseShown.value = true
+        
       },
     }
   },

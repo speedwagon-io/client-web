@@ -11,7 +11,7 @@ import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'PolicyDetail',
-  emits: ['menu-name', 'show-close'],
+  emits: ['menu-name', 'back-or-close'],
   setup(props, { emit }) {
     const route = useRoute()
 
@@ -22,7 +22,7 @@ export default defineComponent({
       to => {
         if (to.path === '/register/policy/detail') {
           emit('menu-name', '약관상세')
-          emit('show-close')
+          emit('back-or-close', 'CLOSE')
 
           if (to.query.page) {
             content.value = to.query.page

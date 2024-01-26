@@ -93,7 +93,7 @@ import { confirmResetPassword, resetPassword } from 'aws-amplify/auth'
 
 export default defineComponent({
   name: 'ResetPassword',
-  emits: ['menu-name', 'show-go-back'],
+  emits: ['menu-name', 'back-or-close'],
   setup(props, { emit }) {
     const route = useRoute()
     const router = useRouter()
@@ -132,7 +132,7 @@ export default defineComponent({
       to => {
         if (to.path === '/register/reset_password') {
           emit('menu-name', '비밀번호 찾기')
-          emit('show-go-back')
+          emit('back-or-close', 'BACK')
         }
       },
       {

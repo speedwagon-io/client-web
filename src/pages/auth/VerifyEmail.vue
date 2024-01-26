@@ -72,7 +72,7 @@ import { confirmSignUp, resendSignUpCode } from 'aws-amplify/auth'
 
 export default defineComponent({
   name: 'VerifyEmail',
-  emits: ['menu-name', 'show-go-back'],
+  emits: ['menu-name', 'back-or-close'],
   setup(props, { emit }) {
     const route = useRoute()
     const router = useRouter()
@@ -96,7 +96,7 @@ export default defineComponent({
       to => {
         if (to.path === '/register/email/verify') {
           emit('menu-name', '이메일 인증')
-          emit('show-go-back')
+          emit('back-or-close', 'BACK')
 
           if (to.query.email) {
             email.value = to.query.email

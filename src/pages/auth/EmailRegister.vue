@@ -65,15 +65,17 @@ import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signUp } from 'aws-amplify/auth'
+// import { useWatchRoute } from 'src/util/useWatchRoute'
 
 export default defineComponent({
   name: 'EmailRegister',
-  emits: ['menu-name', 'show-go-back'],
+  emits: ['menu-name', 'back-or-close'],
   setup(props, { emit }) {
     const router = useRouter()
     const route = useRoute()
     const quasar = useQuasar()
     const { formRef, formBindValidation, formHasError } = useFormValidation()
+    // const {} = useWatchRoute()
 
     onMounted(() => {
       formBindValidation()
@@ -84,7 +86,7 @@ export default defineComponent({
       to => {
         if (to.path === '/register/email') {
           emit('menu-name', '로그인 정보 입력')
-          emit('show-go-back')
+          emit('back-or-close', 'back')
         }
       },
       {
