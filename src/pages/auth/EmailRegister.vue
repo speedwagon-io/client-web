@@ -111,10 +111,27 @@ export default defineComponent({
 
       loading.value = true
       try {
-        await signUp({
+        const result = await signUp({
           username: email.value,
           password: password1.value,
         })
+        const signUpStep = result.nextStep?.signUpStep
+
+        if (signUpStep === 'CONFIRM_SIGN_UP') {
+          // TODO] update user 이용약관
+
+          quasar
+            .dialog({
+              title: '안내',
+              message: '인증번호가 발송되었습니다.',
+            })
+            .onOk(() => {
+              router.push(`/register/email/verify?email=${email.value}`)
+            })
+            .onDismiss(() => {
+              router.push(`/register/email/verify?email=${email.value}`)
+            })
+        }
       } catch (error: any) {
         switch (error.name) {
           case 'UsernameExistsException':
@@ -132,18 +149,6 @@ export default defineComponent({
       } finally {
         loading.value = false
       }
-
-      quasar
-        .dialog({
-          title: '안내',
-          message: '인증번호가 발송되었습니다.',
-        })
-        .onOk(() => {
-          router.push(`/register/email/verify?email=${email.value}`)
-        })
-        .onDismiss(() => {
-          router.push(`/register/email/verify?email=${email.value}`)
-        })
     }
 
     const emailRules = async (value: string) => {

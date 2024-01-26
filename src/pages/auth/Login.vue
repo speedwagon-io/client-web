@@ -87,14 +87,6 @@ import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signInWithRedirect, signIn, resendSignUpCode } from 'aws-amplify/auth'
 
-const handleSignIn = async () => {
-  await signInWithRedirect({
-    provider: {
-      custom: 'Kakao',
-    },
-  })
-}
-
 export default defineComponent({
   name: 'Login',
   components: {
@@ -150,6 +142,21 @@ export default defineComponent({
       }
     }
 
+    const handleSignIn = async () => {
+      // BUG] 카카오 로그인 화면으로 이동후 뒤로가기 해서 버튼 다시 누르면 무반응
+      try {
+        await signInWithRedirect({
+          provider: {
+            custom: 'Kakao',
+          },
+        })
+      } catch (error: any) {
+        if (error.name === 'UserAlreadyAuthenticatedException') {
+          router.push('/')
+        }
+      }
+    }
+
     const handleEmailSignIn = async () => {
       loading.value = true
       try {
@@ -181,6 +188,10 @@ export default defineComponent({
           case 'LimitExceededException':
             errorMessage.value =
               '인증메일 발송 한도 초과. 잠시후 다시 시도해보세요.'
+            break
+          case 'UserAlreadyAuthenticatedException':
+            errorMessage.value = '이미 인증된 유저가 있습니다.'
+            router.push('/')
             break
           default:
             errorMessage.value = '아이디 혹은 비밀번호를 확인해주세요.'
