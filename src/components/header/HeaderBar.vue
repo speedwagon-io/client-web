@@ -1,11 +1,13 @@
 <template>
   <q-toolbar>
-    <q-toolbar-title> Speedwagon </q-toolbar-title>
+    <q-toolbar-title>
+      <router-link class="logo" to="/">Speedwagon</router-link>
+    </q-toolbar-title>
 
-    <q-btn flat round dense>
+    <q-btn color="black" flat round dense>
       <q-icon name="notifications" />
     </q-btn>
-    <q-btn flat round dense>
+    <q-btn color="black" flat round dense>
       <q-icon name="search" />
     </q-btn>
     <HamburgerButton v-if="!isMobile" @click="toggleMenuDrawer()" />
@@ -38,6 +40,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .logo {
-  width: 100px;
+  color: black;
+  text-decoration: none;
 }
 </style>
