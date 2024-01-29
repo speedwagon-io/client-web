@@ -26,9 +26,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
 import { useRoute } from 'vue-router'
+
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from 'src/stores/auth'
+
+import { getCurrentSession } from 'src/util/authUtil'
 
 import HeaderBar from 'components/header/HeaderBar.vue'
 import DesktopMenuDrawer from 'components/drawer/DesktopMenuDrawer.vue'
@@ -48,9 +53,28 @@ export default defineComponent({
   setup() {
     const quasar = useQuasar()
     const route = useRoute()
+    const authStore = storeToRefs(useAuthStore())
 
     const isHeaderActive = ref(route.path === '/login' ? false : true)
     const menuDrawerOpen = ref(false)
+
+    onMounted(async () => {
+      const tokenAndSub = await getCurrentSession()
+      // TODO] current user sync
+      if (tokenAndSub.accessToken) {
+        authStore.accessToken.value = tokenAndSub.accessToken
+        const mockResult = {
+          id: 1,
+          email: 'test@test.com',
+          email_verified: true,
+          nickname: 'Teddy',
+          short_bio: '안녕하세요 반가워요',
+          image_thumbnail_s3key: 's3://exmple/path',
+          created_at: new Date('2024-01-25 23:14:33.52521'),
+        }
+        authStore.user.value = mockResult
+      }
+    })
 
     watch(
       () => route.path,
