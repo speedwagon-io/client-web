@@ -83,9 +83,9 @@ import { useAuthStore } from 'src/stores/auth'
 
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 
-import { useFormRules } from '../../composition/useFormRules'
-import { useWatchRoute } from '../../composition/useWatchRoute'
-import { getCurrentSession } from '../../util/authUtil'
+import { useFormRules } from 'src/composition/useFormRules'
+import { useWatchRoute } from 'src/composition/useWatchRoute'
+import { getCurrentSession } from 'src/util/authUtil'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'

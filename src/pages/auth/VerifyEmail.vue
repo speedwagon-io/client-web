@@ -63,8 +63,8 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
-import { useFormRules } from '../../composition/useFormRules'
-import { useWatchRoute } from '../../composition/useWatchRoute'
+import { useFormRules } from 'src/composition/useFormRules'
+import { useWatchRoute } from 'src/composition/useWatchRoute'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'

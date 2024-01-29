@@ -47,7 +47,7 @@
 import { Ref, computed, defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import { useWatchRoute } from '../../composition/useWatchRoute'
+import { useWatchRoute } from 'src/composition/useWatchRoute'
 
 const options = [
   { label: '[필수] 이용약관1', value: 'one', required: true },

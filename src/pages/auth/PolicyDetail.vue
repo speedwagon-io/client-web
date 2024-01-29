@@ -8,7 +8,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 
-import { useWatchRoute } from '../../composition/useWatchRoute'
+import { useWatchRoute } from 'src/composition/useWatchRoute'
 
 export default defineComponent({
   name: 'PolicyDetail',
