@@ -78,10 +78,14 @@ import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from 'src/stores/auth'
+
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 
 import { useFormRules } from '../../composition/useFormRules'
 import { useWatchRoute } from '../../composition/useWatchRoute'
+import { getCurrentSession } from '../../util/authUtil'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
@@ -98,6 +102,7 @@ export default defineComponent({
     const router = useRouter()
     const quasar = useQuasar()
     const { watchRouteQueryParam } = useWatchRoute()
+    const authStore = storeToRefs(useAuthStore())
 
     const isEmailSignIn = ref(route.query.method === 'email' ? true : false)
     const email = ref('')
@@ -175,8 +180,22 @@ export default defineComponent({
               router.push(`/register/email/verify?email=${email.value}`)
             })
         } else if (signInStep === 'DONE') {
+          const tokenAndSub = await getCurrentSession()
           // TODO] 유저 조회 + 상태관리 + 리다이렉트
-          router.push('/')
+          if (tokenAndSub.accessToken) {
+            authStore.accessToken.value = tokenAndSub.accessToken
+            const mockResult = {
+              id: 1,
+              email: 'test@test.com',
+              email_verified: true,
+              nickname: 'Teddy',
+              short_bio: '안녕하세요 반가워요',
+              image_thumbnail_s3key: 's3://exmple/path',
+              created_at: new Date('2024-01-25 23:14:33.52521'),
+            }
+            authStore.user.value = mockResult
+            router.push('/')
+          }
         }
       } catch (error: any) {
         switch (error.name) {
