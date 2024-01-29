@@ -80,13 +80,13 @@ import { useQuasar } from 'quasar'
 
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 
-import { useFormRules } from 'src/util/useFormRules'
+import { useFormRules } from '../../composition/useFormRules'
+import { useWatchRoute } from '../../composition/useWatchRoute'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signInWithRedirect, signIn, resendSignUpCode } from 'aws-amplify/auth'
-import { useWatchRoute } from 'src/util/useWatchRoute'
 
 export default defineComponent({
   name: 'Login',

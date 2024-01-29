@@ -58,14 +58,14 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
-import { useFormValidation } from '../../util/useFormValidation'
-import { useFormRules } from 'src/util/useFormRules'
+import { useFormValidation } from '../../composition/useFormValidation'
+import { useFormRules } from '../../composition/useFormRules'
+import { useWatchRoute } from '../../composition/useWatchRoute'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
 import { signUp } from 'aws-amplify/auth'
-import { useWatchRoute } from 'src/util/useWatchRoute'
 
 export default defineComponent({
   name: 'EmailRegister',
