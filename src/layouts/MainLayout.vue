@@ -3,6 +3,7 @@
     <transition name="slide_up" v-show="isHeaderActive">
       <q-header class="transparent">
         <HeaderBar @toggle-menu-drawer="toggleMenuDrawer" />
+        <QnAModeToggle />
       </q-header>
     </transition>
 
@@ -13,7 +14,7 @@
       @close-menu-drawer="closeMenuDrawer"
     />
 
-    <q-page-container style="padding-top: 50px">
+    <q-page-container style="padding-top: 100px">
       <router-view />
     </q-page-container>
 
@@ -36,6 +37,7 @@ import { useAuthStore } from 'src/stores/auth'
 import { getCurrentSession } from 'src/util/authUtil'
 
 import HeaderBar from 'components/header/HeaderBar.vue'
+import QnAModeToggle from 'components/input/QnAModeToggle.vue'
 import DesktopMenuDrawer from 'components/drawer/DesktopMenuDrawer.vue'
 import MobileMenuDrawer from 'components/drawer/MobileMenuDrawer.vue'
 import SwipeableBottomDrawer from 'components/drawer/SwipeableBottomDrawer.vue'
@@ -48,6 +50,7 @@ export default defineComponent({
     HeaderBar,
     DesktopMenuDrawer,
     MobileMenuDrawer,
+    QnAModeToggle,
   },
 
   setup() {
