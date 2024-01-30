@@ -85,7 +85,7 @@ import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 
 import { useFormRules } from 'src/composition/useFormRules'
 import { useWatchRoute } from 'src/composition/useWatchRoute'
-import { getCurrentSession } from 'src/util/authUtil'
+import { useGetUserSession } from 'src/composition/useGetUserSession'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
@@ -103,6 +103,7 @@ export default defineComponent({
     const quasar = useQuasar()
     const { watchRouteQueryParam } = useWatchRoute()
     const authStore = storeToRefs(useAuthStore())
+    const { getCurrentSession } = useGetUserSession()
 
     const isEmailSignIn = ref(route.query.method === 'email' ? true : false)
     const email = ref('')
@@ -180,10 +181,10 @@ export default defineComponent({
               router.push(`/register/email/verify?email=${email.value}`)
             })
         } else if (signInStep === 'DONE') {
-          const tokenAndSub = await getCurrentSession()
+          const currentUser = await getCurrentSession()
           // TODO] 유저 조회 + 상태관리 + 리다이렉트
-          if (tokenAndSub.accessToken) {
-            authStore.accessToken.value = tokenAndSub.accessToken
+          if (currentUser.accessToken) {
+            authStore.accessToken.value = currentUser.accessToken
             const mockResult = {
               id: 1,
               email: 'test@test.com',

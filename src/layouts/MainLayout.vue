@@ -33,8 +33,7 @@ import { useRoute } from 'vue-router'
 
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
-
-import { getCurrentSession } from 'src/util/authUtil'
+import { useGetUserSession } from 'src/composition/useGetUserSession'
 
 import HeaderBar from 'components/header/HeaderBar.vue'
 import QnAModeToggle from 'components/input/QnAModeToggle.vue'
@@ -57,15 +56,16 @@ export default defineComponent({
     const quasar = useQuasar()
     const route = useRoute()
     const authStore = storeToRefs(useAuthStore())
+    const { getAuthSession } = useGetUserSession()
 
     const isHeaderActive = ref(route.path === '/login' ? false : true)
     const menuDrawerOpen = ref(false)
 
     onMounted(async () => {
-      const tokenAndSub = await getCurrentSession()
-      // TODO] current user sync
-      if (tokenAndSub.accessToken) {
-        authStore.accessToken.value = tokenAndSub.accessToken
+      const authSession = await getAuthSession()
+      // TODO] current user sync(sub, username으로 조회)
+      if (authSession.accessToken) {
+        authStore.accessToken.value = authSession.accessToken
         const mockResult = {
           id: 1,
           email: 'test@test.com',
