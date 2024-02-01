@@ -19,7 +19,6 @@
               <template v-slot:after>
                 <q-btn
                   label="코드발송"
-                  style="color: #000000"
                   size="lg"
                   :loading="loading.code"
                   :disable="formHasError"

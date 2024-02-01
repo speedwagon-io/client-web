@@ -49,9 +49,9 @@ export const useGetUserSession = () => {
     }
     return { accessToken: '', sub: '' }
   }
-  
+
   return {
     getCurrentSession,
-    getAuthSession
+    getAuthSession,
   }
 }

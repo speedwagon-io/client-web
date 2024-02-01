@@ -44,7 +44,7 @@
           />
         </q-card-actions>
       </q-card>
-      <q-card flat v-else>
+      <q-card flat class="q-pa-lg" v-else>
         <q-card-actions class="q-px-md">
           <q-btn
             class="full-width"

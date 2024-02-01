@@ -1,5 +1,5 @@
 <template>
-  <q-toolbar :class="isDark?'text-white':'text-black'">
+  <q-toolbar :class="isDark ? 'text-white' : 'text-black'">
     <q-toolbar-title>
       <router-link class="logo" to="/">Speedwagon</router-link>
     </q-toolbar-title>
@@ -33,7 +33,7 @@ export default defineComponent({
         emit('toggle-menu-drawer')
       },
       isMobile: quasar.platform.is.mobile,
-      isDark: quasar.dark.isActive
+      isDark: quasar.dark.isActive,
     }
   },
 })

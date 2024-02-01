@@ -12,7 +12,12 @@
           />
         </q-card-section>
         <q-card-section>
-          <q-option-group :options="options" type="checkbox" v-model="group">
+          <q-option-group
+            :options="options"
+            type="checkbox"
+            color="black"
+            v-model="group"
+          >
             <template v-slot:label="options">
               <div class="row items-center">
                 <span>{{ options.label }}</span>
