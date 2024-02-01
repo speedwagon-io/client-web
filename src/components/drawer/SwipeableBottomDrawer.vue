@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <div
       v-if="drawerMode !== 'handler'"
-      class="fixed-full"
+      class="fixed-full drawer-backdrop"
       :style="backdropStyle"
       aria-hidden="true"
       @click="animateDrawerTo(100)"
@@ -146,7 +146,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.drawer-backdrop {
+  z-index: 2;
+}
 .slide-drawer {
+  z-index: 3;
+
   &--bottom {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;

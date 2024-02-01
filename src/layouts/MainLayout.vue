@@ -106,6 +106,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.q-header {
+  z-index: 1;
+}
+
 .slide_up-enter-active,
 .slide_up-leave-active {
   transition: transform 0.2s ease;
