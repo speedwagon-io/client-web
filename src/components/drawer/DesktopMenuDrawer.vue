@@ -10,6 +10,7 @@
       />
     </q-list>
     <q-btn @click="handleSignOut">로그아웃</q-btn>
+    <LightDarkToggle />
   </q-drawer>
 </template>
 
@@ -17,6 +18,7 @@
 import { defineComponent } from 'vue'
 
 import EssentialLink from 'components/EssentialLink.vue'
+import LightDarkToggle from 'components/input/LightDarkToggle.vue'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
@@ -46,6 +48,7 @@ export default defineComponent({
   name: 'DesktopMenuDrawer',
   components: {
     EssentialLink,
+    LightDarkToggle,
   },
   setup() {
     return { menuDrawerLinks: menuDrawerList, handleSignOut }

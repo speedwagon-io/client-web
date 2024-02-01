@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { useQuasar } from 'quasar'
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import HamburgerButton from 'components/header/HamburgerButton.vue'
 
@@ -33,7 +33,7 @@ export default defineComponent({
         emit('toggle-menu-drawer')
       },
       isMobile: quasar.platform.is.mobile,
-      isDark: quasar.dark.isActive,
+      isDark: computed(() => quasar.dark.isActive),
     }
   },
 })
