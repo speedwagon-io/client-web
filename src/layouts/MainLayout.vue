@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh lpR lFf">
     <transition name="slide_up" v-show="isHeaderActive">
-      <q-header class="transparent">
+      <q-header>
         <HeaderBar @toggle-menu-drawer="toggleMenuDrawer" />
         <QnAModeToggle />
       </q-header>

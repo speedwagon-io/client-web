@@ -1,5 +1,5 @@
 <template>
-  <q-btn color="black" dense flat round icon="menu" />
+  <q-btn dense flat round icon="menu" />
 </template>
 
 <script lang="ts">

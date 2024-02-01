@@ -5,7 +5,6 @@
     no-caps
     rounded
     unelevated
-    toggle-color="primary"
     color="grey-2"
     text-color="grey-5"
     :options="[

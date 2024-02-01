@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh lpR lFf">
-    <q-header bordered class="bg-white text-primary">
+    <q-header>
       <q-toolbar class="justify-between">
         <q-btn flat round dense @click="goBack">
           <q-icon v-show="isGoBackShown" name="chevron_left" />
