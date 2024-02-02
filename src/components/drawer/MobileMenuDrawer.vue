@@ -12,16 +12,20 @@
         />
       </div>
     </q-toolbar>
-
+    <!-- TODO] 버튼 모양이 비스무리한게 많아보이는데 컴포넌트화 해야할까? -->
     <section class="q-ma-lg">
-      <q-btn class="full-width" icon="mail" icon-right="send" label="?">
-        개의 새로운 메세지가 있습니다.
+      <q-btn class="full-width">
+        <div class="row justify-between full-width">
+          <q-icon name="mail"/>
+          ?개의 새로운 메세지가 있습니다.
+          <q-icon name="chevron_right"/>
+        </div>
       </q-btn>
     </section>
 
     <section class="q-ma-md">
       <router-link to="/login">로그인하기 ></router-link>
-      <MenuButtonGrid />
+      <MenuButtonGrid class="q-my-md" />
     </section>
   </q-drawer>
 </template>
