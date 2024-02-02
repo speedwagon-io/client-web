@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { useQuasar } from 'quasar';
+import { useQuasar } from 'quasar'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -20,12 +20,12 @@ export default defineComponent({
     const isDark = ref(quasar.dark.isActive)
     const toggleDark = () => {
       quasar.dark.set(isDark.value)
-    };
+    }
 
     return {
       isDark,
       toggleDark,
-    };
+    }
   },
 })
 </script>

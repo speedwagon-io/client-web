@@ -13,9 +13,16 @@
       </div>
     </q-toolbar>
 
-    <router-link to="/login">로그인하기 ></router-link>
+    <section class="q-ma-lg">
+      <q-btn class="full-width" icon="mail" icon-right="send" label="?">
+        개의 새로운 메세지가 있습니다.
+      </q-btn>
+    </section>
 
-    <MenuButtonGrid />
+    <section class="q-ma-md">
+      <router-link to="/login">로그인하기 ></router-link>
+      <MenuButtonGrid />
+    </section>
   </q-drawer>
 </template>
 
