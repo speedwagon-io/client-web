@@ -1,7 +1,10 @@
 <template>
   <q-layout view="lHh lpR lFf">
     <q-header>
-      <q-toolbar class="justify-between">
+      <q-toolbar
+        class="justify-between"
+        :class="isDark ? 'text-white' : 'text-black'"
+      >
         <q-btn flat round dense @click="goBack">
           <q-icon v-show="isGoBackShown" name="chevron_left" />
         </q-btn>
@@ -29,13 +32,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 
 export default defineComponent({
   name: 'RegisterLayout',
   setup() {
     const router = useRouter()
+    const quasar = useQuasar()
 
     const menuName = ref('')
     const isGoBackShown = ref(true)
@@ -67,6 +72,7 @@ export default defineComponent({
             break
         }
       },
+      isDark: computed(() => quasar.dark.isActive),
     }
   },
 })
