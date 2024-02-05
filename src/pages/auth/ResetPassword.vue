@@ -150,8 +150,8 @@ export default defineComponent({
           path: '/next/login',
           state: {
             title: '비밀번호가 변경되었습니다!',
-            email: email.value
-          }
+            email: email.value,
+          },
         })
       } catch (error: any) {
         switch (error.name) {
@@ -181,7 +181,7 @@ export default defineComponent({
             .dialog({
               title: '안내',
               message: '<span>인증번호가 발송되었습니다.</span>',
-              html: true
+              html: true,
             })
             .onOk(() => {
               isCodeSent.value = true

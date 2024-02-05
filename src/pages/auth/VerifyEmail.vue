@@ -75,8 +75,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const router = useRouter()
     const quasar = useQuasar()
-    const { watchRouteForRegisterLayout } =
-      useWatchRoute(emit)
+    const { watchRouteForRegisterLayout } = useWatchRoute(emit)
 
     const email = ref()
     email.value = history.state.email
@@ -112,8 +111,8 @@ export default defineComponent({
           path: '/next/login',
           state: {
             title: '회원가입이 완료되었습니다!',
-            email: email.value
-          }
+            email: email.value,
+          },
         })
       } catch (error: any) {
         switch (error.name) {

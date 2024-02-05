@@ -16,9 +16,9 @@
     <section class="q-ma-lg">
       <q-btn class="full-width">
         <div class="row justify-between full-width">
-          <q-icon name="mail"/>
+          <q-icon name="mail" />
           ?개의 새로운 메세지가 있습니다.
-          <q-icon name="chevron_right"/>
+          <q-icon name="chevron_right" />
         </div>
       </q-btn>
     </section>

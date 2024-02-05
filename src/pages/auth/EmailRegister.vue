@@ -123,13 +123,13 @@ export default defineComponent({
             .onOk(() => {
               router.push({
                 path: '/register/email/verify',
-                state: { email: email.value }
+                state: { email: email.value },
               })
             })
             .onDismiss(() => {
               router.push({
                 path: '/register/email/verify',
-                state: { email: email.value }
+                state: { email: email.value },
               })
             })
         }

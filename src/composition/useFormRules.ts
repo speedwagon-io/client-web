@@ -18,7 +18,7 @@ export const useFormRules = (
   const emailRules = (value: string) => {
     errorMessage.value.email = ''
 
-    if (value.length === 0) {
+    if (!value || value.length === 0) {
       return true
     }
 
