@@ -10,8 +10,7 @@
     <q-btn flat round dense>
       <q-icon name="search" />
     </q-btn>
-    <HamburgerButton v-if="!isMobile" @click="toggleMenuDrawer()" />
-    <HamburgerButton v-if="isMobile" @click="toggleMenuDrawer()" />
+    <HamburgerButton @click="toggleMenuDrawer()" />
   </q-toolbar>
 </template>
 
