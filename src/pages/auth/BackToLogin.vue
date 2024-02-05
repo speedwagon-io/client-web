@@ -1,6 +1,6 @@
 <template>
 	<q-page class="column justify-between q-pa-lg">
-		<p>회원가입 완료!!!</p>
+		<p>{{ title }}</p>
 		<div class="self-center">
 			<img src="../../assets/flower_check.svg" alt="">
 		</div>
@@ -8,17 +8,29 @@
 			class="full-width"
 			size="lg"
 			label="로그인"
+			@click="goToLoginWithEmail"
 		/>
 	</q-page>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
 	name: 'BackToLogin',
 	setup() {
-		return {}
+		const router = useRouter()
+		const { title, email } = history.state
+
+		const goToLoginWithEmail = () => {
+			router.push(`/login?method=email&email=${email}`)
+		}
+
+		return {
+			title,
+			goToLoginWithEmail
+		}
 	},
 })
 </script>

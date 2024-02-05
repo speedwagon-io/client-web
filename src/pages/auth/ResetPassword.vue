@@ -146,19 +146,13 @@ export default defineComponent({
           newPassword: password1.value,
         })
 
-        quasar
-          .dialog({
-            title: '안내',
-            message:
-              '<span>비밀번호가 변경되었습니다.<br />다시 로그인 해주세요.<span>',
-            html: true,
-          })
-          .onOk(() => {
-            router.push(`/login?method=email&email=${email.value}`)
-          })
-          .onDismiss(() => {
-            router.push(`/login?method=email&email=${email.value}`)
-          })
+        router.push({
+          path: '/next/login',
+          state: {
+            title: '비밀번호가 변경되었습니다!',
+            email: email.value
+          }
+        })
       } catch (error: any) {
         switch (error.name) {
           case 'CodeMismatchException':
@@ -186,7 +180,8 @@ export default defineComponent({
           quasar
             .dialog({
               title: '안내',
-              message: '인증번호가 발송되었습니다.',
+              message: '<span>인증번호가 발송되었습니다.</span>',
+              html: true
             })
             .onOk(() => {
               isCodeSent.value = true

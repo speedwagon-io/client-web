@@ -108,19 +108,13 @@ export default defineComponent({
           confirmationCode: code.value,
         })
 
-        quasar
-          .dialog({
-            title: '안내',
-            message:
-              '<span>회원가입이 완료되었습니다.<br />다시 로그인 해주세요.<span>',
-            html: true,
-          })
-          .onOk(() => {
-            router.push(`/login?method=email&email=${email.value}`)
-          })
-          .onDismiss(() => {
-            router.push(`/login?method=email&email=${email.value}`)
-          })
+        router.push({
+          path: '/next/login',
+          state: {
+            title: '회원가입이 완료되었습니다!',
+            email: email.value
+          }
+        })
       } catch (error: any) {
         switch (error.name) {
           case 'CodeMismatchException':
