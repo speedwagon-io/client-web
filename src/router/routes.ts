@@ -40,7 +40,16 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
-
+  {
+    path: '/next',
+    component: () => import('layouts/ToNextLayout.vue'),
+    children: [
+      {
+        path: 'login',
+        component: () => import('pages/auth/BackToLogin.vue'),
+      },
+    ]
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
