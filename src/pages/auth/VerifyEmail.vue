@@ -75,10 +75,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const router = useRouter()
     const quasar = useQuasar()
-    const { watchRouteForRegisterLayout, watchRouteQueryParam } =
+    const { watchRouteForRegisterLayout } =
       useWatchRoute(emit)
 
     const email = ref()
+    email.value = history.state.email
     const code = ref()
 
     onMounted(() => {
@@ -87,7 +88,6 @@ export default defineComponent({
         '이메일 인증',
         'BACK',
       )
-      watchRouteQueryParam('email', email)
     })
 
     const loading = ref({

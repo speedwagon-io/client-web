@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
@@ -84,7 +84,6 @@ import { useAuthStore } from 'src/stores/auth'
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 
 import { useFormRules } from 'src/composition/useFormRules'
-import { useWatchRoute } from 'src/composition/useWatchRoute'
 import { useGetUserSession } from 'src/composition/useGetUserSession'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
@@ -101,17 +100,13 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const quasar = useQuasar()
-    const { watchRouteQueryParam } = useWatchRoute()
     const authStore = storeToRefs(useAuthStore())
     const { getCurrentSession } = useGetUserSession()
 
     const isEmailSignIn = ref(route.query.method === 'email' ? true : false)
     const email = ref('')
+    email.value = history.state.email
     const password = ref('')
-
-    onMounted(() => {
-      watchRouteQueryParam('email', email)
-    })
 
     const loading = ref(false)
     const errorMessage = ref({
@@ -175,10 +170,16 @@ export default defineComponent({
               message: '인증번호가 발송되었습니다.',
             })
             .onOk(() => {
-              router.push(`/register/email/verify?email=${email.value}`)
+              router.push({
+                path: '/register/email/verify',
+                state: { email: email.value }
+              })
             })
             .onDismiss(() => {
-              router.push(`/register/email/verify?email=${email.value}`)
+              router.push({
+                path: '/register/email/verify',
+                state: { email: email.value }
+              })
             })
         } else if (signInStep === 'DONE') {
           const currentUser = await getCurrentSession()

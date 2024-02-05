@@ -24,7 +24,11 @@ export default defineComponent({
 		const { title, email } = history.state
 
 		const goToLoginWithEmail = () => {
-			router.push(`/login?method=email&email=${email}`)
+			router.push({
+				path: '/login',
+				query: { method: 'email' },
+				state: { email: email }
+			})
 		}
 
 		return {

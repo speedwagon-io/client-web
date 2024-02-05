@@ -121,10 +121,16 @@ export default defineComponent({
               message: '인증번호가 발송되었습니다.',
             })
             .onOk(() => {
-              router.push(`/register/email/verify?email=${email.value}`)
+              router.push({
+                path: '/register/email/verify',
+                state: { email: email.value }
+              })
             })
             .onDismiss(() => {
-              router.push(`/register/email/verify?email=${email.value}`)
+              router.push({
+                path: '/register/email/verify',
+                state: { email: email.value }
+              })
             })
         }
       } catch (error: any) {
