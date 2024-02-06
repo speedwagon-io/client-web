@@ -12,11 +12,11 @@ interface UserInfo {
 }
 
 export const useAuthStore = defineStore('auth', () => {
-  const accessToken = ref<string>('')
+  const idToken = ref<string>('')
   const user = ref<UserInfo>()
 
   return {
-    accessToken,
+    idToken,
     user,
   }
 })

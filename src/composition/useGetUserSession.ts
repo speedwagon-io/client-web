@@ -6,7 +6,7 @@ Amplify.configure(AmplifyConfig)
 import { fetchAuthSession, getCurrentUser } from 'aws-amplify/auth'
 
 interface AuthSession {
-  accessToken: string
+  idToken: string
   sub: string
 }
 
@@ -19,39 +19,24 @@ export const useGetUserSession = () => {
 
   const getCurrentSession = async (): Promise<CurrentUser> => {
     try {
-      const { username } = await getCurrentUser()
-      const { accessToken } = (await fetchAuthSession()).tokens ?? {}
-      const accessTokenString = accessToken?.toString()
-      if (accessTokenString) {
+      const { idToken } = (await fetchAuthSession()).tokens ?? {}
+      const idTokenString = idToken?.toString()
+      if (idTokenString) {
         return {
-          accessToken: accessTokenString,
-          sub: accessToken?.payload.sub || '',
-          username: username,
+          idToken: idTokenString,
+          sub: idToken?.payload.sub || '',
+          username: idToken?.payload['cognito:username'] as string,
         }
       }
     } catch (error: any) {
       if (error.name === 'UserUnAuthenticatedException') {
-        console.log(router)
         router.push('/login')
       }
     }
-    return { accessToken: '', sub: '', username: '' }
-  }
-
-  const getAuthSession = async (): Promise<AuthSession> => {
-    const { accessToken } = (await fetchAuthSession()).tokens ?? {}
-    const accessTokenString = accessToken?.toString()
-    if (accessTokenString) {
-      return {
-        accessToken: accessTokenString,
-        sub: accessToken?.payload.sub || '',
-      }
-    }
-    return { accessToken: '', sub: '' }
+    return { idToken: '', sub: '', username: '' }
   }
 
   return {
     getCurrentSession,
-    getAuthSession,
   }
 }

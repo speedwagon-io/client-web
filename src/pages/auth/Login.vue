@@ -183,9 +183,9 @@ export default defineComponent({
             })
         } else if (signInStep === 'DONE') {
           const currentUser = await getCurrentSession()
-          // TODO] 유저 조회 + 상태관리 + 리다이렉트
-          if (currentUser.accessToken) {
-            authStore.accessToken.value = currentUser.accessToken
+          // TODO] 유저 조회(GET /users/self) + 상태관리 + 리다이렉트
+          if (currentUser.idToken) {
+            authStore.idToken.value = currentUser.idToken
             const mockResult = {
               id: 1,
               email: 'test@test.com',

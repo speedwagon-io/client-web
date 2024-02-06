@@ -56,16 +56,16 @@ export default defineComponent({
     const quasar = useQuasar()
     const route = useRoute()
     const authStore = storeToRefs(useAuthStore())
-    const { getAuthSession } = useGetUserSession()
+    const { getCurrentSession } = useGetUserSession()
 
     const isHeaderActive = ref(route.path === '/login' ? false : true)
     const menuDrawerOpen = ref(false)
 
     onMounted(async () => {
-      const authSession = await getAuthSession()
-      // TODO] current user sync(sub, username으로 조회)
-      if (authSession.accessToken) {
-        authStore.accessToken.value = authSession.accessToken
+      const currentUser = await getCurrentSession()
+      // TODO] current user sync(GET /users/self로 조회)
+      if (currentUser.idToken) {
+        authStore.idToken.value = currentUser.idToken
         const mockResult = {
           id: 1,
           email: 'test@test.com',

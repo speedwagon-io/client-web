@@ -24,9 +24,9 @@ export default defineComponent({
 
     onMounted(async () => {
       const currentUser = await getCurrentSession()
-      if (currentUser.accessToken) {
-        authStore.accessToken.value = currentUser.accessToken
-        // TODO] oauth 인증 이후 유저 조회(key는 sub, username)해서 상태관리(로컬스토리지는?)하고
+      if (currentUser.idToken) {
+        authStore.idToken.value = currentUser.idToken
+        // TODO] oauth 인증 이후 유저 조회(GET /users/self)해서 상태관리(로컬스토리지는?)하고
         const mockResult = {
           id: 1,
           email: 'test@test.com',
