@@ -2,7 +2,10 @@
   <q-btn>
     <div class="row justify-between items-center full-width">
       <div class="column items-start">
-        <div>0분전 0답변</div>
+        <div class="row">
+          <InButtonTopLabel :name="'0분전'" />
+          <InButtonTopLabel :name="'0답변'" />
+        </div>
         <span>{{ title }}</span>
         <span>{{ content }}</span>
       </div>
@@ -14,8 +17,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import InButtonTopLabel from 'components/labels/InButtonTopLabel.vue'
+
 export default defineComponent({
   name: 'ContentButton',
+  components: { InButtonTopLabel },
   props: {
     title: {
       type: String,
