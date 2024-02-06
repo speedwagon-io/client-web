@@ -18,7 +18,7 @@ import ContentButton from 'components/buttons/ContentButton.vue'
 
 export default defineComponent({
   name: 'Home',
-  components: { ContentButton }
+  components: { ContentButton },
 })
 </script>
 
