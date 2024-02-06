@@ -33,7 +33,7 @@ import { useRoute } from 'vue-router'
 
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
-import { useGetUserSession } from 'src/composition/useGetUserSession'
+import { getCurrentUser } from 'src/api/user'
 
 import HeaderBar from 'components/header/HeaderBar.vue'
 import QnAModeToggle from 'components/input/QnAModeToggle.vue'
@@ -56,27 +56,26 @@ export default defineComponent({
     const quasar = useQuasar()
     const route = useRoute()
     const authStore = storeToRefs(useAuthStore())
-    const { getCurrentSession } = useGetUserSession()
 
     const isHeaderActive = ref(route.path === '/login' ? false : true)
     const menuDrawerOpen = ref(false)
 
     onMounted(async () => {
-      const currentUser = await getCurrentSession()
       // TODO] current user sync(GET /users/self로 조회)
-      if (currentUser.idToken) {
-        authStore.idToken.value = currentUser.idToken
-        const mockResult = {
-          id: 1,
-          email: 'test@test.com',
-          email_verified: true,
-          nickname: 'Teddy',
-          short_bio: '안녕하세요 반가워요',
-          image_thumbnail_s3key: 's3://exmple/path',
-          created_at: new Date('2024-01-25 23:14:33.52521'),
-        }
-        authStore.user.value = mockResult
-      }
+      const result = await getCurrentUser()
+      console.log(result)
+      // if (currentUser.idToken) {
+        // const mockResult = {
+        //   id: 1,
+        //   email: 'test@test.com',
+        //   email_verified: true,
+        //   nickname: 'Teddy',
+        //   short_bio: '안녕하세요 반가워요',
+        //   image_thumbnail_s3key: 's3://exmple/path',
+        //   created_at: new Date('2024-01-25 23:14:33.52521'),
+        // }
+        // authStore.user.value = mockResult
+      // }
     })
 
     watch(

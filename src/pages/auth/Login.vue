@@ -80,11 +80,10 @@ import { useQuasar } from 'quasar'
 
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
+import { useFormRules } from 'src/composition/useFormRules'
+import { getCurrentUser } from 'src/api/user'
 
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
-
-import { useFormRules } from 'src/composition/useFormRules'
-import { useGetUserSession } from 'src/composition/useGetUserSession'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
@@ -101,7 +100,6 @@ export default defineComponent({
     const router = useRouter()
     const quasar = useQuasar()
     const authStore = storeToRefs(useAuthStore())
-    const { getCurrentSession } = useGetUserSession()
 
     const isEmailSignIn = ref(route.query.method === 'email' ? true : false)
     const email = ref('')
@@ -182,22 +180,22 @@ export default defineComponent({
               })
             })
         } else if (signInStep === 'DONE') {
-          const currentUser = await getCurrentSession()
           // TODO] 유저 조회(GET /users/self) + 상태관리 + 리다이렉트
-          if (currentUser.idToken) {
-            authStore.idToken.value = currentUser.idToken
-            const mockResult = {
-              id: 1,
-              email: 'test@test.com',
-              email_verified: true,
-              nickname: 'Teddy',
-              short_bio: '안녕하세요 반가워요',
-              image_thumbnail_s3key: 's3://exmple/path',
-              created_at: new Date('2024-01-25 23:14:33.52521'),
-            }
-            authStore.user.value = mockResult
+          const result = await getCurrentUser()
+          console.log(result)
+          // if (currentUser.idToken) {
+          //   const mockResult = {
+          //     id: 1,
+          //     email: 'test@test.com',
+          //     email_verified: true,
+          //     nickname: 'Teddy',
+          //     short_bio: '안녕하세요 반가워요',
+          //     image_thumbnail_s3key: 's3://exmple/path',
+          //     created_at: new Date('2024-01-25 23:14:33.52521'),
+          //   }
+          //   authStore.user.value = mockResult
             router.push('/')
-          }
+          // }
         }
       } catch (error: any) {
         switch (error.name) {
