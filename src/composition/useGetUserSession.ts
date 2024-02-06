@@ -3,7 +3,7 @@ import { useRouter } from 'vue-router'
 import { AmplifyConfig } from '../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
 Amplify.configure(AmplifyConfig)
-import { fetchAuthSession, getCurrentUser } from 'aws-amplify/auth'
+import { fetchAuthSession } from 'aws-amplify/auth'
 
 interface AuthSession {
   idToken: string
