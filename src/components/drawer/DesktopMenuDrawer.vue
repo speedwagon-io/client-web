@@ -41,6 +41,7 @@ const menuDrawerList = [
 ]
 
 const handleSignOut = async () => {
+  // TODO] pinia user값 비우기
   await signOut()
 }
 

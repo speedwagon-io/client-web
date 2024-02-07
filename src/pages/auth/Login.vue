@@ -124,7 +124,7 @@ export default defineComponent({
     )
 
     const redirectTo = () => {
-      // TODO] 로그인을 발생시킨 곳으로 로그인 이후 다시 goBack
+      // TODO] 로그인 발생시킨 곳으로 다시 goBack
       if (route.query.method === 'email') {
         router.push('/login')
         return
@@ -134,6 +134,11 @@ export default defineComponent({
         router.push('/')
         return
       }
+    }
+
+    const routeAfterLogin = () => {
+      // TODO] 적절한 곳으로 리다이렉트
+      router.push('/')
     }
 
     const handleSignIn = async () => {
@@ -180,22 +185,9 @@ export default defineComponent({
               })
             })
         } else if (signInStep === 'DONE') {
-          // TODO] 유저 조회(GET /users/self) + 상태관리 + 리다이렉트
           const result = await getCurrentUser()
-          console.log(result)
-          // if (currentUser.idToken) {
-          //   const mockResult = {
-          //     id: 1,
-          //     email: 'test@test.com',
-          //     email_verified: true,
-          //     nickname: 'Teddy',
-          //     short_bio: '안녕하세요 반가워요',
-          //     image_thumbnail_s3key: 's3://exmple/path',
-          //     created_at: new Date('2024-01-25 23:14:33.52521'),
-          //   }
-          //   authStore.user.value = mockResult
-          router.push('/')
-          // }
+          authStore.user.value = result
+          routeAfterLogin()
         }
       } catch (error: any) {
         switch (error.name) {

@@ -66,20 +66,8 @@ export default defineComponent({
       // 다른 Layout에서도 hasCurrentUser 체크 해야하지 않나? 해야함. 다른데선 리다이렉트도 해야함
       if (await hasCurrentUser()) {
         const result = await getCurrentUser()
-        console.log(result)
+        authStore.user.value = result
       }
-      // if (currentUser.idToken) {
-      // const mockResult = {
-      //   id: 1,
-      //   email: 'test@test.com',
-      //   email_verified: true,
-      //   nickname: 'Teddy',
-      //   short_bio: '안녕하세요 반가워요',
-      //   image_thumbnail_s3key: 's3://exmple/path',
-      //   created_at: new Date('2024-01-25 23:14:33.52521'),
-      // }
-      // authStore.user.value = mockResult
-      // }
     })
 
     watch(
