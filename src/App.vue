@@ -4,15 +4,17 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
-import { hasCurrentUser } from './util/session'
-import { getCurrentUser } from './api/user'
-import { useAuthStore } from './stores/auth'
+
 import { storeToRefs } from 'pinia'
+import { useAuthStore } from './stores/auth'
+import { useUserSession } from './composition/useUserSession'
+import { getCurrentUser } from './api/user'
 
 export default defineComponent({
   name: 'App',
   setup() {
     const authStore = storeToRefs(useAuthStore())
+    const { hasCurrentUser } = useUserSession()
 
     onMounted(async () => {
       if (await hasCurrentUser()) {

@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import axios, { AxiosInstance } from 'axios'
-import { getCurrentSession } from 'src/util/session'
+import { useUserSession } from 'src/composition/useUserSession'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -19,6 +19,7 @@ const api = axios.create({ baseURL: process.env.BASE_URL })
 
 api.interceptors.request.use(
   async config => {
+    const { getCurrentSession } = useUserSession()
     const { idTokenString } = await getCurrentSession()
     config.headers.Authorization = idTokenString
     return config

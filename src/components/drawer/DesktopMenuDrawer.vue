@@ -17,13 +17,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import { useUserSession } from 'src/composition/useUserSession'
+
 import EssentialLink from 'components/EssentialLink.vue'
 import LightDarkToggle from 'components/input/LightDarkToggle.vue'
-
-import { AmplifyConfig } from '../../../amplifyconfig'
-import { Amplify } from 'aws-amplify'
-Amplify.configure(AmplifyConfig)
-import { signOut } from 'aws-amplify/auth'
 
 const menuDrawerList = [
   {
@@ -40,11 +37,6 @@ const menuDrawerList = [
   },
 ]
 
-const handleSignOut = async () => {
-  // TODO] pinia user값 비우기
-  await signOut()
-}
-
 export default defineComponent({
   name: 'DesktopMenuDrawer',
   components: {
@@ -52,6 +44,12 @@ export default defineComponent({
     LightDarkToggle,
   },
   setup() {
+    const { logOut } = useUserSession()
+
+    const handleSignOut = async () => {
+      await logOut()
+    }
+
     return { menuDrawerLinks: menuDrawerList, handleSignOut }
   },
 })
