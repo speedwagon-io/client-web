@@ -34,6 +34,7 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
 import { getCurrentUser } from 'src/api/user'
+import { hasCurrentUser } from 'src/util/session'
 
 import HeaderBar from 'components/header/HeaderBar.vue'
 import QnAModeToggle from 'components/input/QnAModeToggle.vue'
@@ -62,8 +63,10 @@ export default defineComponent({
 
     onMounted(async () => {
       // TODO] current user sync(GET /users/self로 조회)
-      const result = await getCurrentUser()
-      console.log(result)
+      if (await hasCurrentUser()) {
+        const result = await getCurrentUser()
+        console.log(result)
+      }
       // if (currentUser.idToken) {
         // const mockResult = {
         //   id: 1,
