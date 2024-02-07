@@ -27,14 +27,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
 import { useRoute } from 'vue-router'
-
-import { storeToRefs } from 'pinia'
-import { useAuthStore } from 'src/stores/auth'
-import { getCurrentUser } from 'src/api/user'
-import { hasCurrentUser } from 'src/util/session'
 
 import HeaderBar from 'components/header/HeaderBar.vue'
 import QnAModeToggle from 'components/input/QnAModeToggle.vue'
@@ -56,19 +51,9 @@ export default defineComponent({
   setup() {
     const quasar = useQuasar()
     const route = useRoute()
-    const authStore = storeToRefs(useAuthStore())
 
     const isHeaderActive = ref(route.path === '/login' ? false : true)
     const menuDrawerOpen = ref(false)
-
-    onMounted(async () => {
-      // TODO] current user sync(GET /users/self로 조회)
-      // 다른 Layout에서도 hasCurrentUser 체크 해야하지 않나? 해야함. 다른데선 리다이렉트도 해야함
-      if (await hasCurrentUser()) {
-        const result = await getCurrentUser()
-        authStore.user.value = result
-      }
-    })
 
     watch(
       () => route.path,
