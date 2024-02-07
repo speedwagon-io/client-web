@@ -5,6 +5,4 @@ const getCurrentUser = async () => {
   return result
 }
 
-export {
-  getCurrentUser
-}
+export { getCurrentUser }

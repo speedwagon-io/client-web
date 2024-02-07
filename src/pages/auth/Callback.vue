@@ -36,7 +36,7 @@ export default defineComponent({
       //     created_at: new Date('2024-01-25 23:14:33.52521'),
       //   }
       //   authStore.user.value = mockResult
-        routeAfterLogin()
+      routeAfterLogin()
       // }
     })
   },

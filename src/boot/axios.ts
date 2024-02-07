@@ -17,13 +17,25 @@ declare module '@vue/runtime-core' {
 // for each client)
 const api = axios.create({ baseURL: process.env.BASE_URL })
 
-api.interceptors.request.use(async config => {
-  const { idTokenString } = await getCurrentSession()
-  config.headers.Authorization = idTokenString
-  return config
-}, (error) => {
-  return Promise.reject(error)
-})
+api.interceptors.request.use(
+  async config => {
+    const { idTokenString } = await getCurrentSession()
+    config.headers.Authorization = idTokenString
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  },
+)
+
+api.interceptors.response.use(
+  response => {
+    return response.data
+  },
+  error => {
+    return Promise.reject(error)
+  },
+)
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
