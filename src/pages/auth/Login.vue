@@ -126,12 +126,12 @@ export default defineComponent({
     const redirectTo = () => {
       // TODO] 로그인 발생시킨 곳으로 다시 goBack
       if (route.query.method === 'email') {
-        router.push('/login')
+        router.replace('/login')
         return
       }
 
       if (!route.query.redirect) {
-        router.push('/')
+        router.go(-1)
         return
       }
     }
@@ -217,7 +217,7 @@ export default defineComponent({
       handleSignIn,
       handleEmailSignIn,
       toEmailSignin() {
-        router.push('/login?method=email')
+        router.replace('/login?method=email')
       },
       redirectTo,
       emailRules,
