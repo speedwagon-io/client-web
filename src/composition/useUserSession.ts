@@ -16,7 +16,7 @@ export const useUserSession = () => {
     const idTokenString = idToken?.toString()
     return { idTokenDecoded: idToken, idTokenString }
   }
-  
+
   const hasCurrentUser = async () => {
     try {
       const result = await getCurrentUser()

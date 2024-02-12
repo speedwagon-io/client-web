@@ -22,6 +22,6 @@ export default defineComponent({
         authStore.user.value = result
       }
     })
-  }
+  },
 })
 </script>

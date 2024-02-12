@@ -109,12 +109,15 @@ export default defineComponent({
         const result = await signUp({
           username: email.value,
           password: password1.value,
+          options: {
+            userAttributes: {
+              'custom:subscribeToMarketing': 'true', //TODO] 이전화면에서 동의여부 가져오기
+            },
+          },
         })
         const signUpStep = result.nextStep?.signUpStep
 
         if (signUpStep === 'CONFIRM_SIGN_UP') {
-          // TODO] update user 이용약관
-
           quasar
             .dialog({
               title: '안내',
