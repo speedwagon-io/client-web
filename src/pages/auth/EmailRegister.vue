@@ -125,7 +125,6 @@ export default defineComponent({
             },
           },
         })
-        console.log(result)
         const signUpStep = result.nextStep?.signUpStep
 
         if (signUpStep === 'CONFIRM_SIGN_UP') {
