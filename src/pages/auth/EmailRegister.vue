@@ -61,6 +61,8 @@ import { useQuasar } from 'quasar'
 import { useFormValidation } from 'src/composition/useFormValidation'
 import { useFormRules } from 'src/composition/useFormRules'
 import { useWatchRoute } from 'src/composition/useWatchRoute'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from 'src/stores/auth'
 
 import { AmplifyConfig } from '../../../amplifyconfig'
 import { Amplify } from 'aws-amplify'
@@ -75,6 +77,7 @@ export default defineComponent({
     const quasar = useQuasar()
     const { formRef, formBindValidation, formHasError } = useFormValidation()
     const { watchRouteForRegisterLayout } = useWatchRoute(emit)
+    const authStore = storeToRefs(useAuthStore())
 
     onMounted(() => {
       formBindValidation()
@@ -106,15 +109,23 @@ export default defineComponent({
 
       loading.value = true
       try {
+        const termsAgreement = authStore.termsAgreement.value
+        if (!termsAgreement?.policy_and_terms) {
+          router.push('/register/policy?method=email')
+        }
+
         const result = await signUp({
           username: email.value,
           password: password1.value,
           options: {
             userAttributes: {
-              'custom:subscribeToMarketing': 'true', //TODO] 이전화면에서 동의여부 가져오기
+              'custom:subscribeToMarketing': (
+                termsAgreement?.subscribe_to_marketing as boolean
+              ).toString(),
             },
           },
         })
+        console.log(result)
         const signUpStep = result.nextStep?.signUpStep
 
         if (signUpStep === 'CONFIRM_SIGN_UP') {

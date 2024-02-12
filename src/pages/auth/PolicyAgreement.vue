@@ -53,11 +53,17 @@ import { Ref, computed, defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { useWatchRoute } from 'src/composition/useWatchRoute'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from 'src/stores/auth'
 
 const options = [
   { label: '[필수] 이용약관1', value: 'one', required: true },
   { label: '[필수] 이용약관2', value: 'two', required: true },
-  { label: '[선택] 마케팅 메세지 수신 동의', value: 'three', required: false },
+  {
+    label: '[선택] 마케팅 메세지 수신 동의',
+    value: 'marketing',
+    required: false,
+  },
 ]
 
 const handleCheckAll = (group: Ref<string[]>) => {
@@ -89,6 +95,7 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const { watchRouteForRegisterLayout } = useWatchRoute(emit)
+    const authStore = storeToRefs(useAuthStore())
 
     onMounted(() => {
       watchRouteForRegisterLayout('/register/policy', '약관동의', 'BACK')
@@ -101,6 +108,18 @@ export default defineComponent({
     }
 
     const next = () => {
+      if (group.value[2] === 'marketing') {
+        authStore.termsAgreement.value = {
+          policy_and_terms: true,
+          subscribe_to_marketing: true,
+        }
+      } else {
+        authStore.termsAgreement.value = {
+          policy_and_terms: true,
+          subscribe_to_marketing: false,
+        }
+      }
+
       if (route.query.method === 'email') {
         router.push('/register/email')
       }
