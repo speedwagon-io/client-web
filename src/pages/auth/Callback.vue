@@ -1,5 +1,5 @@
 <template>
-  <div>callback page</div>
+  <div></div>
 </template>
 
 <script lang="ts">
@@ -9,6 +9,7 @@ import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
 import { getCurrentUser } from 'src/api/user'
+import { UserInfo } from 'src/api/user.type'
 
 export default defineComponent({
   name: 'Callback',
@@ -16,15 +17,20 @@ export default defineComponent({
     const router = useRouter()
     const authStore = storeToRefs(useAuthStore())
 
-    const routeAfterLogin = () => {
-      // TODO] 약관 동의 여부 확인 후 적절한 곳으로 리다이렉트
-      router.push('/')
+    const routeAfterLogin = (user: UserInfo) => {
+      // TODO] redirect_url query param으로 적절한 곳으로 리다이렉트
+      if (user.terms_and_marketing_agreement.subscribe_to_marketing) {
+        router.push('/')
+      } else {
+        router.push('/register/policy?method=kakao')
+        return
+      }
     }
 
     onMounted(async () => {
       const result = await getCurrentUser()
       authStore.user.value = result
-      routeAfterLogin()
+      routeAfterLogin(result)
     })
   },
 })

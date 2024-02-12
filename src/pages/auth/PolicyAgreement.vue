@@ -39,6 +39,7 @@
             class="full-width"
             size="lg"
             label="다음으로"
+            :loading="loading"
             :disable="!requiredChecked"
             @click="next"
           />
@@ -55,6 +56,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useWatchRoute } from 'src/composition/useWatchRoute'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
+import { updateTermsAgreement } from 'src/api/user'
 
 const options = [
   { label: '[필수] 이용약관1', value: 'one', required: true },
@@ -102,26 +104,31 @@ export default defineComponent({
     })
 
     const group = ref([])
+    const loading = ref(false)
 
     const openDetail = (value: string) => {
       router.push(`/register/policy/detail?page=${value}`)
     }
 
-    const next = () => {
-      if (group.value[2] === 'marketing') {
-        authStore.termsAgreement.value = {
-          policy_and_terms: true,
-          subscribe_to_marketing: true,
-        }
-      } else {
-        authStore.termsAgreement.value = {
-          policy_and_terms: true,
-          subscribe_to_marketing: false,
-        }
-      }
+    const next = async () => {
+      const isMarketingAgreed = group.value[2] === 'marketing'
 
       if (route.query.method === 'email') {
+        authStore.termsAgreement.value = {
+          policy_and_terms: true,
+          subscribe_to_marketing: isMarketingAgreed,
+        }
         router.push('/register/email')
+      } else if (route.query.method === 'kakao') {
+        loading.value = true
+        await updateTermsAgreement(isMarketingAgreed)
+        loading.value = false
+
+        if (route.query.redirect_url) {
+          router.push(route.query.redirect_url.toString())
+        } else {
+          router.push('/')
+        }
       }
     }
 
@@ -132,6 +139,7 @@ export default defineComponent({
       ...checkRequired(group),
       openDetail,
       next,
+      loading,
     }
   },
 })

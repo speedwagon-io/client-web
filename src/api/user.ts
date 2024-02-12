@@ -7,4 +7,11 @@ const getCurrentUser = async () => {
   return result.data as UserInfo
 }
 
-export { getCurrentUser }
+const updateTermsAgreement = async (subscribeToMarketing: boolean) => {
+  const result = await api.patch('/users/self/termsAgreement', {
+    subscribeToMarketing: subscribeToMarketing,
+  })
+  return result
+}
+
+export { getCurrentUser, updateTermsAgreement }
