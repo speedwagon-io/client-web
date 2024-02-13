@@ -23,7 +23,6 @@ export default defineComponent({
         router.push('/')
       } else {
         router.push('/register/policy?method=kakao')
-        return
       }
     }
 

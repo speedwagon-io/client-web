@@ -1,5 +1,5 @@
 <template>
-  <q-drawer side="right" overlay behavior="mobile" bordered>
+  <q-drawer side="right" overlay behavior="mobile">
     <q-list>
       <q-item-label header> Essential Links </q-item-label>
 

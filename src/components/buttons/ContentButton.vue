@@ -2,12 +2,12 @@
   <q-btn>
     <div class="row justify-between items-center full-width">
       <div class="column items-start">
-        <div class="row">
+        <div class="row q-py-xs">
           <InButtonTopLabel :name="'0분전'" />
           <InButtonTopLabel :name="'0답변'" />
         </div>
-        <span>{{ title }}</span>
-        <span>{{ content }}</span>
+        <span class="text-weight-bold text-subtitle1">{{ title }}</span>
+        <span class="text-weight-light text-body2">{{ content }}</span>
       </div>
       <q-icon name="chevron_right" />
     </div>
