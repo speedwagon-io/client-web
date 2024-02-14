@@ -9,6 +9,7 @@ import { fetchAuthSession, getCurrentUser, signOut } from 'aws-amplify/auth'
 
 export const useUserSession = () => {
   const route = useRoute()
+  const router = useRouter()
   const authStore = storeToRefs(useAuthStore())
 
   const getCurrentSession = async () => {
@@ -17,13 +18,20 @@ export const useUserSession = () => {
     return { idTokenDecoded: idToken, idTokenString }
   }
 
-  const hasCurrentUser = async () => {
+  const isAuthenticated = async (redirect_url: string | null) => {
     try {
       const result = await getCurrentUser()
       return result ? true : false
     } catch (error: any) {
       if (error.name === 'UserUnAuthenticatedException') {
-        return false
+        if (redirect_url) {
+          router.push({
+            path: '/login',
+            state: { redirect_url: redirect_url },
+          })
+        } else {
+          return false
+        }
       }
     }
   }
@@ -36,7 +44,7 @@ export const useUserSession = () => {
 
   return {
     getCurrentSession,
-    hasCurrentUser,
+    isAuthenticated,
     logOut,
   }
 }

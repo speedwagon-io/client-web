@@ -11,25 +11,42 @@ import { useAuthStore } from 'src/stores/auth'
 import { getCurrentUser } from 'src/api/user'
 import { UserInfo } from 'src/api/user.type'
 
+import { Hub } from 'aws-amplify/utils'
+
 export default defineComponent({
   name: 'Callback',
   setup() {
     const router = useRouter()
     const authStore = storeToRefs(useAuthStore())
 
+    let redirect_url = ''
+
     const routeAfterLogin = (user: UserInfo) => {
-      // TODO] redirect_url query param으로 적절한 곳으로 리다이렉트
       if (user.terms_and_marketing_agreement.subscribe_to_marketing) {
-        router.push('/')
+        router.push(redirect_url || '/')
       } else {
-        router.push('/register/policy?method=kakao')
+        router.push(
+          `/register/policy?method=kakao&redirect_url=${redirect_url}`,
+        )
       }
     }
 
     onMounted(async () => {
-      const result = await getCurrentUser()
-      authStore.user.value = result
-      routeAfterLogin(result)
+      Hub.listen('auth', async ({ payload }) => {
+        switch (payload.event) {
+          case 'signInWithRedirect':
+            const result = await getCurrentUser()
+            authStore.user.value = result
+            routeAfterLogin(result)
+            break
+          case 'signInWithRedirect_failure':
+            console.error('signInWithRedirect_failure')
+            break
+          case 'customOAuthState':
+            redirect_url = payload.data
+            break
+        }
+      })
     })
   },
 })

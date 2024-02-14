@@ -112,6 +112,9 @@ export default defineComponent({
     })
     const { emailRules } = useFormRules(errorMessage)
 
+    const redirect_url = ref('')
+    redirect_url.value = history.state.redirect_url
+
     watch(
       () => route.query,
       change => {
@@ -148,6 +151,7 @@ export default defineComponent({
           provider: {
             custom: 'Kakao',
           },
+          customState: redirect_url.value || '/',
         })
       } catch (error: any) {
         if (error.name === 'UserAlreadyAuthenticatedException') {

@@ -14,10 +14,10 @@ export default defineComponent({
   name: 'App',
   setup() {
     const authStore = storeToRefs(useAuthStore())
-    const { hasCurrentUser } = useUserSession()
+    const { isAuthenticated } = useUserSession()
 
     onMounted(async () => {
-      if (await hasCurrentUser()) {
+      if (await isAuthenticated(null)) {
         const result = await getCurrentUser()
         authStore.user.value = result
       }
