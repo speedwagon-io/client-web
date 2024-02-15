@@ -1,8 +1,8 @@
 <template>
   <q-btn class="q-ma-sm">
-    <div class="row justify-between items-center full-width">
+    <div class="row justify-between items-center full-width q-py-xs">
       <div class="column items-start">
-        <div class="row q-py-xs">
+        <div class="row text-weight-regular q-py-xs">
           <InButtonTopLabel :name="'0분전'" />
           <InButtonTopLabel :name="'0답변'" />
         </div>

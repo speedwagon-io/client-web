@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <section>
-      <p>진행중인 질문(0)</p>
+      <p class="text-weight-bold text-subtitle2">진행중인 질문(0)</p>
       <div class="row justify-center">
         <ContentButton
           v-for="x of 12"
@@ -13,7 +13,7 @@
     </section>
 
     <section>
-      <p>인기 질문</p>
+      <p class="text-weight-bold text-subtitle2">인기 질문</p>
     </section>
   </q-page>
 </template>
