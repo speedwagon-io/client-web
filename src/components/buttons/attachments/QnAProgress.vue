@@ -15,11 +15,8 @@ export default defineComponent({
 
     return {
       progress,
-      color: ''
+      color: '',
     }
   },
 })
 </script>
-
-<style lang="scss" scoped>
-</style>

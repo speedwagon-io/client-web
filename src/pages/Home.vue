@@ -3,12 +3,8 @@
     <section>
       <p class="text-weight-bold text-subtitle2">진행중인 질문(0)</p>
       <div class="row justify-start">
-        <ContentButton
-          :title="'제목'"
-          :content="'내용'"
-          :progress="true"
-        />
-    </div>
+        <ContentButton :title="'제목'" :content="'내용'" :progress="true" />
+      </div>
     </section>
 
     <section>

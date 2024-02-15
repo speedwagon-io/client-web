@@ -35,8 +35,8 @@ export default defineComponent({
     },
     progress: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup() {
     return {}
@@ -48,19 +48,19 @@ export default defineComponent({
 @media (min-width: 0px) {
   .q-btn {
     width: calc(100% - 1em);
-    margin: .5em;
+    margin: 0.5em;
   }
 }
 @media (min-width: 600px) {
   .q-btn {
     width: calc(50% - 1em);
-    margin: .5em;
+    margin: 0.5em;
   }
 }
 @media (min-width: 1024px) {
   .q-btn {
     width: calc(33.33% - 1em);
-    margin: .5em;
+    margin: 0.5em;
   }
 }
 </style>
