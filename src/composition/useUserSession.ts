@@ -8,7 +8,6 @@ Amplify.configure(AmplifyConfig)
 import { fetchAuthSession, getCurrentUser, signOut } from 'aws-amplify/auth'
 
 export const useUserSession = () => {
-  const route = useRoute()
   const router = useRouter()
   const authStore = storeToRefs(useAuthStore())
 

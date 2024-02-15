@@ -1,6 +1,6 @@
 <template>
   <div
-    class="q-px-sm q-mr-xs"
+    class="q-px-sm q-mr-xs text-weight-regular text-caption"
     :class="[
       { 'bg-grey-2': style === 'GREY' },
       { 'bg-primary': style === 'ORANGE' },
