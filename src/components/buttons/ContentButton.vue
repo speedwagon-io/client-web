@@ -63,4 +63,10 @@ export default defineComponent({
     margin: 0.5em;
   }
 }
+@media (min-width: 1920px) {
+  .q-btn {
+    width: calc(25% - 1em);
+    margin: 0.5em;
+  }
+}
 </style>
