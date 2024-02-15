@@ -1,5 +1,5 @@
 <template>
-  <q-btn>
+  <q-btn class="q-ma-sm">
     <div class="row justify-between items-center full-width">
       <div class="column items-start">
         <div class="row q-py-xs">
@@ -37,3 +37,21 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+@media (min-width: 0px) {
+  .q-btn {
+    width: 100%;
+  }
+}
+@media (min-width: 600px) {
+  .q-btn {
+    width: 45%;
+  }
+}
+@media (min-width: 1024px) {
+  .q-btn {
+    width: 30%;
+  }
+}
+</style>
