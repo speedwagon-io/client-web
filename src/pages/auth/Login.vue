@@ -145,8 +145,14 @@ export default defineComponent({
     }
 
     const handleSignIn = async () => {
-      // BUG] 카카오 로그인 화면으로 이동후 뒤로가기 해서 버튼 다시 누르면 무반응
+      const kakaoAuthUrlOrAnyString = 'accounts.kakao.com/login'
+
       try {
+        localStorage.setItem('previousUrl', kakaoAuthUrlOrAnyString)
+        if (localStorage.getItem('previousUrl') === kakaoAuthUrlOrAnyString) {
+          router.go(1)
+        }
+
         await signInWithRedirect({
           provider: {
             custom: 'Kakao',
@@ -157,6 +163,8 @@ export default defineComponent({
         if (error.name === 'UserAlreadyAuthenticatedException') {
           router.push('/')
         }
+      } finally {
+        localStorage.removeItem('previousUrl')
       }
     }
 

@@ -39,7 +39,6 @@ export const useUserSession = () => {
   const logOut = async () => {
     await signOut()
     authStore.user.value = undefined
-    location.href = route.path
   }
 
   return {
