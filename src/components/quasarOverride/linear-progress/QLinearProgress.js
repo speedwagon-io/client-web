@@ -4,7 +4,7 @@ import useDark, { useDarkProps } from '../util/user-dark'
 import useSize, { useSizeProps } from '../util/use-size'
 
 import { createComponent } from '../util/create.js'
-import { hMergeSlot } from '../util/render.js'
+import { hMergeSlot, hMergeSlotSafely } from '../util/render.js'
 
 const defaultSizes = {
   xs: 2,
@@ -14,18 +14,7 @@ const defaultSizes = {
   xl: 14,
 }
 
-function width(val, reverse, $q) {
-  return {
-    transform:
-      reverse === true
-        ? `translateX(${
-            $q.lang.rtl === true ? '-' : ''
-          }100%) scale3d(${-val},1,1)`
-        : `scale3d(${val},1,1)`,
-  }
-}
-
-function widthNew(val) {
+function width(val) {
   return {
     width: val * 100 + '%',
   }
@@ -47,7 +36,6 @@ export default createComponent({
     color: String,
     trackColor: String,
 
-    reverse: Boolean,
     stripe: Boolean,
     indeterminate: Boolean,
     query: Boolean,
@@ -69,29 +57,17 @@ export default createComponent({
     const motion = computed(
       () => props.indeterminate === true || props.query === true,
     )
-    const widthReverse = computed(() => props.reverse !== props.query)
     const style = computed(() => ({
       ...(sizeStyle.value !== null ? sizeStyle.value : {}),
-      '--q-linear-progress-speed': `${props.animationSpeed}ms`,
       overflow: 'visible',
     }))
 
     const classes = computed(
       () =>
         'q-linear-progress' +
-        (props.color !== void 0 ? ` text-${props.color}` : '') +
-        (props.reverse === true || props.query === true
-          ? ' q-linear-progress--reverse'
-          : ''),
+        (props.color !== void 0 ? ` text-${props.color}` : ''),
     )
 
-    const trackStyle = computed(() =>
-      width(
-        props.buffer !== void 0 ? props.buffer : 1,
-        widthReverse.value,
-        proxy.$q,
-      ),
-    )
     const transitionSuffix = computed(
       () => `with${props.instantFeedback === true ? 'out' : ''}-transition`,
     )
@@ -108,10 +84,10 @@ export default createComponent({
     )
 
     const modelStyle = computed(() => ({
-      ...widthNew(motion.value === true ? 1 : props.value),
+      ...width(motion.value === true ? 1 : props.value),
       position: 'relative',
       height: 'inherit',
-      transition: 'width 1s ease-in-out',
+      transition: `width ${props.animationSpeed}ms ease-in-out`,
     }))
 
     const modelClass = computed(
@@ -127,22 +103,19 @@ export default createComponent({
     const stripeStyle = computed(() => ({ width: `${props.value * 100}%` }))
     const stripeClass = computed(
       () =>
-        `q-linear-progress__stripe absolute-${
-          props.reverse === true ? 'right' : 'left'
-        }` + ` q-linear-progress__stripe--${transitionSuffix.value}`,
+        `q-linear-progress__stripe absolute-` + ` q-linear-progress__stripe--${transitionSuffix.value}`,
     )
 
     return () => {
       const child = [
         h('div', {
           class: trackClass.value,
-          style: trackStyle.value,
         }),
 
         h('div', {
           class: modelClass.value,
           style: modelStyle.value,
-        }),
+        }, hMergeSlotSafely(slots.thumb)),
       ]
 
       props.stripe === true &&
