@@ -103,7 +103,8 @@ export default createComponent({
     const stripeStyle = computed(() => ({ width: `${props.value * 100}%` }))
     const stripeClass = computed(
       () =>
-        `q-linear-progress__stripe absolute-` + ` q-linear-progress__stripe--${transitionSuffix.value}`,
+        'q-linear-progress__stripe absolute-' +
+        ` q-linear-progress__stripe--${transitionSuffix.value}`,
     )
 
     return () => {
@@ -112,10 +113,14 @@ export default createComponent({
           class: trackClass.value,
         }),
 
-        h('div', {
-          class: modelClass.value,
-          style: modelStyle.value,
-        }, hMergeSlotSafely(slots.thumb)),
+        h(
+          'div',
+          {
+            class: modelClass.value,
+            style: modelStyle.value,
+          },
+          hMergeSlotSafely(slots.thumb),
+        ),
       ]
 
       props.stripe === true &&

@@ -1,6 +1,6 @@
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 import { AmplifyConfig } from '../../amplifyconfig'
 import { Amplify } from 'aws-amplify'

@@ -8,7 +8,13 @@
       size="lg"
     >
       <template v-slot:thumb>
-        <img class="logo" src="/src/assets/progress_logo.svg" alt="" />
+        <object
+          class="logo"
+          type="image/svg+xml"
+          :data="progress_logo"
+        >
+          <img src="../../../assets/progress_logo.svg" alt="Progress Icon" />
+        </object>
       </template>
     </QLinearProgress>
     <div>답변자 찾는중</div>
@@ -16,8 +22,10 @@
 </template>
 
 <script lang="ts">
-import QLinearProgress from 'components/quasarOverride/linear-progress/QLinearProgress'
 import { defineComponent, onMounted, ref } from 'vue'
+
+import QLinearProgress from 'components/quasarOverride/linear-progress/QLinearProgress'
+import progress_logo from 'assets/progress_logo.svg'
 
 export default defineComponent({
   name: 'QnAProgress',
@@ -31,6 +39,7 @@ export default defineComponent({
 
     return {
       progress,
+      progress_logo,
     }
   },
 })
