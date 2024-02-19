@@ -1,6 +1,7 @@
 <template>
-  <div class="q-pa-sm full-width">
+  <div class="q-pa-sm q-ma-sm bg-dark rounded-borders full-width">
     <QLinearProgress
+      class="q-my-sm"
       rounded
       :value="progress"
       color="accent"
@@ -13,7 +14,7 @@
         </q-icon>
       </template>
     </QLinearProgress>
-    <div>답변자 찾는중</div>
+    <div class="text-grey-4">답변자 찾는중</div>
   </div>
 </template>
 
@@ -34,6 +35,7 @@ export default defineComponent({
 
     return {
       progress,
+      white: 'linear-gradient(270deg, #FFFFFF -0.95%, rgba(255, 255, 255, 0.1) 87.45%)'
     }
   },
 })

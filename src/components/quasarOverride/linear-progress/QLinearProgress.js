@@ -34,7 +34,6 @@ export default createComponent({
     buffer: Number,
 
     color: String,
-    trackColor: String,
 
     stripe: Boolean,
     indeterminate: Boolean,
@@ -72,6 +71,11 @@ export default createComponent({
       () => `with${props.instantFeedback === true ? 'out' : ''}-transition`,
     )
 
+    const trackStyle = computed(() => ({
+      opacity: 'unset',
+      background: 'linear-gradient(270deg, #FFFFFF -0.95%, rgba(255, 255, 255, 0.1) 87.45%)'
+    }))
+
     const trackClass = computed(
       () =>
         'q-linear-progress__track absolute-full' +
@@ -79,7 +83,6 @@ export default createComponent({
         ` q-linear-progress__track--${
           isDark.value === true ? 'dark' : 'light'
         }` +
-        (props.trackColor !== void 0 ? ` bg-${props.trackColor}` : '') +
         (props.rounded === true ? ' rounded-borders' : ''),
     )
 
@@ -111,6 +114,7 @@ export default createComponent({
       const child = [
         h('div', {
           class: trackClass.value,
+          style: trackStyle.value,
         }),
 
         h(
