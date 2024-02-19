@@ -5,17 +5,21 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => {
-        const userMode = localStorage.getItem('userMode')
-        switch (userMode) {
-          case 'query':
-            return import('pages/QModeHome.vue')
-          case 'answer':
-            return import('pages/AModeHome.vue')
-          default:
-            return import('pages/QModeHome.vue')
-        }
-      }},
+      {
+        path: '',
+        name: 'home',
+        component: () => {
+          const userMode = localStorage.getItem('userMode')
+          switch (userMode) {
+            case 'query':
+              return import('pages/QModeHome.vue')
+            case 'answer':
+              return import('pages/AModeHome.vue')
+            default:
+              return import('pages/QModeHome.vue')
+          }
+        },
+      },
       { path: 'index', component: () => import('pages/IndexPage.vue') },
       { path: 'login', component: () => import('pages/auth/Login.vue') },
       {
