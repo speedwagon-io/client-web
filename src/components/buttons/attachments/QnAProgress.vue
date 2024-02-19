@@ -35,7 +35,6 @@ export default defineComponent({
 
     return {
       progress,
-      white: 'linear-gradient(270deg, #FFFFFF -0.95%, rgba(255, 255, 255, 0.1) 87.45%)'
     }
   },
 })
