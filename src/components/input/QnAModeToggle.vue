@@ -16,20 +16,39 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 
 import { useUserSession } from 'src/composition/useUserSession'
+import { useWatchRoute } from 'src/composition/useWatchRoute'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'QnAModeToggle',
   setup() {
+    const router = useRouter()
     const { isAuthenticated } = useUserSession()
+    const { watchRouteQueryParam } = useWatchRoute()
 
     const mode = ref('query')
 
+    onMounted(() => {
+      watchRouteQueryParam('mode', mode)
+    })
+
     const handleModeClicked = async () => {
-      await isAuthenticated('/index')
-      console.log(mode.value)
+      if (mode.value === 'query') {
+        router.push('/').then(() => {
+          router.go(0)
+        })
+      } else {
+        if (await isAuthenticated('/?mode=wagon')) {
+          // TODO] 답변자 온보딩 여부 확인 후 리다이렉트
+          router.push('/?mode=wagon')
+        } else {
+          mode.value = 'query'
+          // TODO] 인증 이후 돌아와서 온보딩
+        }
+      }
     }
 
     return { mode, handleModeClicked }

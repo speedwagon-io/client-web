@@ -5,7 +5,11 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Home.vue') },
+      {
+        path: '',
+        component: () => import('pages/QModeHome.vue'),
+        props: route => ({ query: route.query.mode }),
+      },
       { path: 'index', component: () => import('pages/IndexPage.vue') },
       { path: 'login', component: () => import('pages/auth/Login.vue') },
       {
