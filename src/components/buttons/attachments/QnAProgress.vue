@@ -8,7 +8,9 @@
       size="lg"
     >
       <template v-slot:thumb>
-        <q-icon class="logo" name="img:src/assets/progress_logo.svg" />
+        <q-icon class="logo" size="lg">
+          <img src="~assets/progress_logo.svg" alt="progress_logo" />
+        </q-icon>
       </template>
     </QLinearProgress>
     <div>답변자 찾는중</div>
@@ -41,8 +43,6 @@ export default defineComponent({
 .logo {
   position: absolute;
   right: -20px;
-  top: -10px;
-  width: 36px;
-  height: 36px;
+  top: -12px;
 }
 </style>
