@@ -10,7 +10,7 @@
     @click="handleModeClicked"
     :options="[
       { label: '질문자모드', value: 'query' },
-      { label: '답변자모드', value: 'wagon' },
+      { label: '답변자모드', value: 'answer' },
     ]"
   />
 </template>
@@ -19,36 +19,26 @@
 import { defineComponent, onMounted, ref } from 'vue'
 
 import { useUserSession } from 'src/composition/useUserSession'
-import { useWatchRoute } from 'src/composition/useWatchRoute'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'QnAModeToggle',
   setup() {
     const router = useRouter()
-    const { isAuthenticated } = useUserSession()
-    const { watchRouteQueryParam } = useWatchRoute()
+    // const { isAuthenticated } = useUserSession()
 
     const mode = ref('query')
 
     onMounted(() => {
-      watchRouteQueryParam('mode', mode)
+      const userMode = localStorage.getItem('userMode')
+      mode.value = userMode || 'query'
     })
 
     const handleModeClicked = async () => {
-      if (mode.value === 'query') {
-        router.push('/').then(() => {
-          router.go(0)
-        })
-      } else {
-        if (await isAuthenticated('/?mode=wagon')) {
-          // TODO] 답변자 온보딩 여부 확인 후 리다이렉트
-          router.push('/?mode=wagon')
-        } else {
-          mode.value = 'query'
-          // TODO] 인증 이후 돌아와서 온보딩
-        }
-      }
+      localStorage.setItem('userMode', mode.value)
+      router.push('/').then(() => {
+        router.go(0)
+      })
     }
 
     return { mode, handleModeClicked }

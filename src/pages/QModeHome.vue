@@ -18,33 +18,17 @@
         />
       </div>
     </section>
-    {{ userMode.mode }}
   </q-page>
 </template>
 
 <script lang="ts">
-import { PropType, computed, defineComponent, reactive } from 'vue'
+import { defineComponent } from 'vue'
 
 import ContentButton from 'components/buttons/ContentButton.vue'
 
 export default defineComponent({
   name: 'QModeHome',
-  props: {
-    mode: {
-      type: String as PropType<'query' | 'wagon'>,
-      // default: 'query',
-    },
-  },
   components: { ContentButton },
-  setup(props) {
-    const userMode = reactive({
-      mode: computed(() => props.mode),
-    })
-
-    return {
-      userMode,
-    }
-  },
 })
 </script>
 
