@@ -22,7 +22,7 @@ export default defineComponent({
     let redirect_url = ''
 
     const routeAfterLogin = (user: UserInfo) => {
-      if (user.terms_and_marketing_agreement.subscribe_to_marketing) {
+      if (user.terms_and_marketing_agreement.policy_and_terms) {
         router.push(redirect_url || '/')
       } else {
         router.push(

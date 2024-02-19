@@ -17,6 +17,7 @@ export default defineComponent({
     const { isAuthenticated } = useUserSession()
 
     onMounted(async () => {
+      // TODO] oauth 이후 callback에서 넘어올때 GET /users/self 한번 더 호출함
       if (await isAuthenticated(null)) {
         const result = await getCurrentUser()
         authStore.user.value = result
