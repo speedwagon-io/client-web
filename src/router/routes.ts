@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router'
 
 import { storeToRefs } from 'pinia'
 import { useModeStore } from 'src/stores/mode'
+import { useAuthStore } from 'src/stores/auth'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -11,14 +12,18 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         component: async () => {
+          const authStore = storeToRefs(useAuthStore())
           const modeStore = storeToRefs(useModeStore())
-          console.log('router localstorage:', localStorage.getItem('userMode'))
-          console.log('router:', modeStore.user.value)
           switch (modeStore.user.value) {
             case 'query':
               return import('pages/home/QModeHome.vue')
             case 'answer':
-              return import('pages/home/AModeHome.vue')
+              if (authStore.user.value) {
+                modeStore.user.value = 'query'
+                return import('pages/home/QModeHome.vue')
+              } else {
+                return import('pages/home/AModeHome.vue')
+              }
             default:
               return import('pages/home/QModeHome.vue')
           }

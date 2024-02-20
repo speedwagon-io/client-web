@@ -127,16 +127,12 @@ export default defineComponent({
     )
 
     const redirectTo = () => {
-      // TODO] 로그인 발생시킨 곳으로 다시 goBack
       if (route.query.method === 'email') {
         router.replace('/login')
         return
       }
-
-      if (!route.query.redirect) {
-        router.go(-1)
-        return
-      }
+      
+      router.push(redirect_url.value || '/')
     }
 
     const handleSignIn = async () => {
@@ -195,7 +191,9 @@ export default defineComponent({
         } else if (signInStep === 'DONE') {
           const result = await getCurrentUser()
           authStore.user.value = result
-          router.push(redirect_url.value || '/')
+          router.push(redirect_url.value || '/').then(() => {
+            router.go(0)
+          })
         }
       } catch (error: any) {
         switch (error.name) {
