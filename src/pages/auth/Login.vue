@@ -139,15 +139,11 @@ export default defineComponent({
       }
     }
 
-    const routeAfterLogin = () => {
-      // TODO] 적절한 곳으로 리다이렉트
-      router.push('/')
-    }
-
     const handleSignIn = async () => {
       const kakaoAuthUrlOrAnyString = 'accounts.kakao.com/login'
 
       try {
+        // INFO] 로그인 안하고 카카오 인증화면에서 뒤로가기 시 버튼 무반응 버그 대응
         localStorage.setItem('previousUrl', kakaoAuthUrlOrAnyString)
         if (localStorage.getItem('previousUrl') === kakaoAuthUrlOrAnyString) {
           router.go(1)
@@ -199,7 +195,7 @@ export default defineComponent({
         } else if (signInStep === 'DONE') {
           const result = await getCurrentUser()
           authStore.user.value = result
-          routeAfterLogin()
+          router.push(redirect_url.value || '/')
         }
       } catch (error: any) {
         switch (error.name) {

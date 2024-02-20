@@ -24,6 +24,7 @@ import { storeToRefs } from 'pinia'
 import { useModeStore } from 'src/stores/mode'
 
 import { makeFullPath } from 'src/util/routeParser'
+import { useWatchRoute } from 'src/composition/useWatchRoute'
 
 export default defineComponent({
   name: 'QnAModeToggle',
@@ -32,27 +33,28 @@ export default defineComponent({
     const route = useRoute()
     const modeStore = storeToRefs(useModeStore())
     const { isAuthenticated } = useUserSession()
+    const { watchRouteQueryParam } = useWatchRoute()
 
     onMounted(async () => {
       if (!(await isAuthenticated(null)) && modeStore.user.value === 'answer') {
         modeStore.user.value = 'query'
       }
+      watchRouteQueryParam('mode', modeStore.user)
     })
 
     const handleModeClicked = async () => {
       // TODO] 홈으로 보내고 리프레시가 맞나?
       if (modeStore.user.value === 'query') {
-        // router.push('/').then(() => {
-        //   router.go(0)
-        // })
+        router.push('/').then(() => {
+          router.go(0)
+        })
       } else {
         // TODO] 답변자 온보딩
         if (await isAuthenticated(makeFullPath(route, { mode: 'answer' }))) {
-          // router.push('/').then(() => {
-          //   router.go(0)
-          // })
+          router.push('/').then(() => {
+            router.go(0)
+          })
         } else {
-          console.log('in?!')
           modeStore.user.value = 'query'
         }
       }
