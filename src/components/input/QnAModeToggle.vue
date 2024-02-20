@@ -39,7 +39,9 @@ export default defineComponent({
       if (!(await isAuthenticated(null)) && modeStore.user.value === 'answer') {
         modeStore.user.value = 'query'
       }
-      watchRouteQueryParam('mode', modeStore.user)
+      console.log('QnAModeToggle1:', modeStore.user.value)
+      await watchRouteQueryParam('mode', modeStore.user)
+      console.log('QnAModeToggle2:', modeStore.user.value)
     })
 
     const handleModeClicked = async () => {

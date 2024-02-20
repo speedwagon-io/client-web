@@ -106,6 +106,9 @@ export default defineComponent({
     const group = ref([])
     const loading = ref(false)
 
+    const redirect_url = ref('')
+    redirect_url.value = history.state.redirect_url
+
     const openDetail = (value: string) => {
       router.push(`/register/policy/detail?page=${value}`)
     }
@@ -124,8 +127,8 @@ export default defineComponent({
         await updateTermsAgreement(isMarketingAgreed)
         loading.value = false
 
-        if (route.query.redirect_url) {
-          router.push(route.query.redirect_url.toString())
+        if (redirect_url.value) {
+          router.push(redirect_url.value)
         } else {
           router.push('/')
         }

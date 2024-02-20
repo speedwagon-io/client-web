@@ -33,6 +33,7 @@ export const useWatchRoute = (
       to => {
         if (to.query[queryParamKey]) {
           valueToSet.value = to.query[queryParamKey] as string
+          console.log(valueToSet.value)
         }
       },
       option,

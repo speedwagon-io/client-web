@@ -10,8 +10,10 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        component: () => {
+        component: async () => {
           const modeStore = storeToRefs(useModeStore())
+          console.log('router localstorage:', localStorage.getItem('userMode'))
+          console.log('router:', modeStore.user.value)
           switch (modeStore.user.value) {
             case 'query':
               return import('pages/home/QModeHome.vue')
