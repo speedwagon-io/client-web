@@ -1,6 +1,6 @@
 <template>
   <q-btn-toggle
-    v-model="mode"
+    v-model="modeStore.user.value"
     class="q-pa-sm"
     no-caps
     rounded
@@ -16,49 +16,49 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 
 import { useUserSession } from 'src/composition/useUserSession'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useModeStore } from 'src/stores/mode'
+
+import { makeFullPath } from 'src/util/routeParser'
 
 export default defineComponent({
   name: 'QnAModeToggle',
   setup() {
     const router = useRouter()
     const route = useRoute()
+    const modeStore = storeToRefs(useModeStore())
     const { isAuthenticated } = useUserSession()
 
-    const mode = ref('query')
-
     onMounted(async () => {
-      const userMode = localStorage.getItem('userMode')
-      if (!(await isAuthenticated(null)) && userMode === 'answer') {
-        mode.value = 'query'
-        return
+      if (!(await isAuthenticated(null)) && modeStore.user.value === 'answer') {
+        modeStore.user.value = 'query'
       }
-      mode.value = userMode || 'query'
     })
 
     const handleModeClicked = async () => {
-      localStorage.setItem('userMode', mode.value)
       // TODO] 홈으로 보내고 리프레시가 맞나?
-      if (mode.value === 'query') {
-        router.push('/').then(() => {
-          router.go(0)
-        })
+      if (modeStore.user.value === 'query') {
+        // router.push('/').then(() => {
+        //   router.go(0)
+        // })
       } else {
         // TODO] 답변자 온보딩
-        if (await isAuthenticated(route.fullPath)) {
-          router.push('/').then(() => {
-            router.go(0)
-          })
+        if (await isAuthenticated(makeFullPath(route, { mode: 'answer' }))) {
+          // router.push('/').then(() => {
+          //   router.go(0)
+          // })
         } else {
-          mode.value = 'query'
+          console.log('in?!')
+          modeStore.user.value = 'query'
         }
       }
     }
 
-    return { mode, handleModeClicked }
+    return { modeStore, handleModeClicked }
   },
 })
 </script>

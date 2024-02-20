@@ -1,5 +1,8 @@
 import { RouteRecordRaw } from 'vue-router'
 
+import { storeToRefs } from 'pinia'
+import { useModeStore } from 'src/stores/mode'
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -7,16 +10,15 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        name: 'home',
         component: () => {
-          const userMode = localStorage.getItem('userMode')
-          switch (userMode) {
+          const modeStore = storeToRefs(useModeStore())
+          switch (modeStore.user.value) {
             case 'query':
-              return import('pages/QModeHome.vue')
+              return import('pages/home/QModeHome.vue')
             case 'answer':
-              return import('pages/AModeHome.vue')
+              return import('pages/home/AModeHome.vue')
             default:
-              return import('pages/QModeHome.vue')
+              return import('pages/home/QModeHome.vue')
           }
         },
       },
