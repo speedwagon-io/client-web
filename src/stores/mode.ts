@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 
 export const useModeStore = defineStore('mode', () => {
-  const user = ref<string>('query')
+  const user = ref<string>('')
   user.value = localStorage.getItem('userMode') || 'query'
 
   watch(user, (val: string) => {
