@@ -25,9 +25,11 @@ export default defineComponent({
       if (user.terms_and_marketing_agreement.policy_and_terms) {
         router.push(redirect_url || '/')
       } else {
-        router.push(
-          `/register/policy?method=kakao&redirect_url=${redirect_url}`,
-        )
+        router.push({
+          path: '/register/policy',
+          query: { method: 'kakao' },
+          state: { redirect_url: redirect_url },
+        })
       }
     }
 
