@@ -27,6 +27,7 @@
       <router-link to="/login">로그인하기 ></router-link>
       <MenuButtonGrid class="q-my-md" />
     </section>
+    <q-btn @click="handleSignOut">로그아웃</q-btn>
   </q-drawer>
 </template>
 
@@ -35,6 +36,8 @@ import { defineComponent } from 'vue'
 import { useQuasar } from 'quasar'
 
 import MenuButtonGrid from 'components/buttons/MenuButtonGrid.vue'
+
+import { useUserSession } from 'src/composition/useUserSession'
 
 export default defineComponent({
   name: 'MobileMenuDrawer',
@@ -45,11 +48,18 @@ export default defineComponent({
   setup(props, { emit }) {
     const quasar = useQuasar()
 
+    const { logOut } = useUserSession()
+
+    const handleSignOut = async () => {
+      await logOut()
+    }
+
     return {
       closeMenuDrawer() {
         emit('close-menu-drawer')
       },
       screenWidth: quasar.screen.width,
+      handleSignOut,
     }
   },
 })
