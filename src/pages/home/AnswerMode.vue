@@ -3,7 +3,11 @@
     <section>
       <p class="text-weight-bold text-subtitle2">진행중인 답변(0)</p>
       <div class="row justify-start">
-        <ContentButton :title="'제목'" :content="'내용'" :progress="true" />
+        <ContentButton
+          :title="'답변제목'"
+          :content="'답변내용'"
+          :progress="true"
+        />
       </div>
     </section>
 
