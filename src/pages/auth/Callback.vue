@@ -5,11 +5,12 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
+
 import { getCurrentUser } from 'src/api/user'
 import { UserInfo } from 'src/api/user.type'
+import { popFromUrlSearchParam } from 'src/util/routeParser'
 
 import { Hub } from 'aws-amplify/utils'
 
@@ -23,7 +24,14 @@ export default defineComponent({
 
     const routeAfterLogin = (user: UserInfo) => {
       if (user.terms_and_marketing_agreement.policy_and_terms) {
-        router.push(redirect_url || '/')
+        const url = new URL(window.location.origin + redirect_url)
+        router.push({
+          path: url.pathname || '/',
+          state: {
+            mode: popFromUrlSearchParam(url.searchParams, 'mode'),
+          },
+          query: Object.fromEntries(url.searchParams),
+        })
       } else {
         router.push({
           path: '/register/policy',

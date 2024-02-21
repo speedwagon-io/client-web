@@ -77,11 +77,12 @@
 import { computed, defineComponent, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
+
 import { useFormRules } from 'src/composition/useFormRules'
 import { getCurrentUser } from 'src/api/user'
+import { popFromUrlSearchParam } from 'src/util/routeParser'
 
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 
@@ -194,7 +195,15 @@ export default defineComponent({
         } else if (signInStep === 'DONE') {
           const result = await getCurrentUser()
           authStore.user.value = result
-          router.push(redirect_url.value || '/')
+
+          const url = new URL(window.location.origin + redirect_url.value)
+          router.push({
+            path: url.pathname || '/',
+            state: {
+              mode: popFromUrlSearchParam(url.searchParams, 'mode'),
+            },
+            query: Object.fromEntries(url.searchParams),
+          })
         }
       } catch (error: any) {
         switch (error.name) {

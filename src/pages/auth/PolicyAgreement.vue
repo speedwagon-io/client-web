@@ -52,11 +52,12 @@
 <script lang="ts">
 import { Ref, computed, defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-
-import { useWatchRoute } from 'src/composition/useWatchRoute'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
+
+import { useWatchRoute } from 'src/composition/useWatchRoute'
 import { updateTermsAgreement } from 'src/api/user'
+import { popFromUrlSearchParam } from 'src/util/routeParser'
 
 const options = [
   { label: '[필수] 이용약관1', value: 'one', required: true },
@@ -127,11 +128,14 @@ export default defineComponent({
         await updateTermsAgreement(isMarketingAgreed)
         loading.value = false
 
-        if (redirect_url.value) {
-          router.push(redirect_url.value)
-        } else {
-          router.push('/')
-        }
+        const url = new URL(window.location.origin + redirect_url.value)
+        router.push({
+          path: url.pathname || '/',
+          state: {
+            mode: popFromUrlSearchParam(url.searchParams, 'mode'),
+          },
+          query: Object.fromEntries(url.searchParams),
+        })
       }
     }
 
