@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <AnswerMode v-if="modeStore.user.value === 'answer' && isSignedIn" />
-    <QueryMode v-else />
+    <QueryMode v-if="modeStore.user.value === 'query'" />
   </q-page>
 </template>
 

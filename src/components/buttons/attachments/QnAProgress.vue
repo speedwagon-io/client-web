@@ -26,11 +26,17 @@ import QLinearProgress from 'components/quasarOverride/linear-progress/QLinearPr
 export default defineComponent({
   name: 'QnAProgress',
   components: { QLinearProgress },
-  setup() {
+  props: {
+    progressValue: {
+      type: Number,
+      default: 0,
+    },
+  },
+  setup(props) {
     const progress = ref(0)
 
     onMounted(() => {
-      progress.value = 0.3
+      progress.value = props.progressValue
     })
 
     return {

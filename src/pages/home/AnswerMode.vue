@@ -7,6 +7,7 @@
           :title="'답변제목'"
           :content="'답변내용'"
           :progress="true"
+          :progressValue="0.3"
         />
       </div>
     </section>
@@ -28,13 +29,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 
 import ContentButton from 'components/buttons/ContentButton.vue'
 
 export default defineComponent({
   name: 'AnswerMode',
   components: { ContentButton },
+  setup() {
+    onMounted(() => {
+      console.log('AnswerMode mounted')
+      setTimeout(() => {
+        console.log('yayaya')
+      }, 1000)
+    })
+  },
 })
 </script>
 

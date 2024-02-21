@@ -6,12 +6,18 @@
           <InButtonTopLabel :name="'0분전'" />
           <InButtonTopLabel :name="'0답변'" />
         </div>
-        <span class="text-weight-bold text-subtitle1">{{ title }}</span>
-        <span class="text-weight-light text-body2">{{ content }}</span>
+        <span class="text-weight-bold text-subtitle1">
+          <q-skeleton v-if="!title" type="text" width="40px" />
+          <span v-else>{{ title }}</span>
+        </span>
+        <span class="text-weight-light text-body2">
+          <q-skeleton v-if="!content" type="text" width="80px" />
+          <span v-else>{{ content }}</span>
+        </span>
       </div>
       <q-icon name="chevron_right" />
     </div>
-    <QnAProgress v-if="progress" />
+    <QnAProgress v-if="progress" :progressValue="progressValue" />
   </q-btn>
 </template>
 
@@ -37,9 +43,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-  },
-  setup() {
-    return {}
+    progressValue: {
+      type: Number,
+      default: 0,
+    },
   },
 })
 </script>
