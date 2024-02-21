@@ -20,6 +20,7 @@ import { defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useModeStore } from 'src/stores/mode'
+import { useAuthStore } from 'src/stores/auth'
 
 import { useUserSession } from 'src/composition/useUserSession'
 
@@ -28,6 +29,7 @@ export default defineComponent({
   setup() {
     const { isAuthenticated } = useUserSession()
     const modeStore = storeToRefs(useModeStore())
+    const authStore = storeToRefs(useAuthStore())
     const route = useRoute()
 
     const handleModeClicked = async () => {
@@ -35,10 +37,13 @@ export default defineComponent({
       if (modeStore.user.value === 'answer') {
         await isAuthenticated(route.fullPath)
       }
-      console.log(modeStore.user.value)
+
+      if (!authStore.user.value) {
+        modeStore.user.value = 'query'
+      }
     }
 
-    return { modeStore, handleModeClicked }
+    return { modeStore, authStore, handleModeClicked }
   },
 })
 </script>

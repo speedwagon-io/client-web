@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <AnswerMode v-if="modeStore.user.value === 'answer' && isSignedIn" />
+    <AnswerMode v-if="modeStore.user.value === 'answer' && authStore.user.value" />
     <QueryMode v-else />
   </q-page>
 </template>
@@ -9,28 +9,21 @@
 import { defineComponent, ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useModeStore } from 'src/stores/mode'
+import { useAuthStore } from 'src/stores/auth'
 
 import AnswerMode from 'pages/home/AnswerMode.vue'
 import QueryMode from 'pages/home/QueryMode.vue'
-
-import { useUserSession } from 'src/composition/useUserSession'
 
 export default defineComponent({
   name: 'Home',
   components: { AnswerMode, QueryMode },
   setup() {
     const modeStore = storeToRefs(useModeStore())
-    const { isAuthenticated } = useUserSession()
-
-    const isSignedIn = ref(false)
-
-    onMounted(async () => {
-      isSignedIn.value = await isAuthenticated(null) as boolean
-    })
+    const authStore = storeToRefs(useAuthStore())
 
     return {
       modeStore,
-      isSignedIn
+      authStore
     }
   }
 })
