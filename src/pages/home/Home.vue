@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useModeStore } from 'src/stores/mode'
 import { useAuthStore } from 'src/stores/auth'
@@ -16,21 +16,30 @@ import { useAuthStore } from 'src/stores/auth'
 import AnswerMode from 'pages/home/AnswerMode.vue'
 import QueryMode from 'pages/home/QueryMode.vue'
 
+import { useUserSession } from 'src/composition/useUserSession'
+
 export default defineComponent({
   name: 'Home',
   components: { AnswerMode, QueryMode },
   setup() {
-    const modeStore = storeToRefs(useModeStore())
     const authStore = storeToRefs(useAuthStore())
+    const modeStore = storeToRefs(useModeStore())
+    const { isAuthenticated } = useUserSession()
 
-    // INFO] 답변자모드 변경 > 로그인 이후 Home으로 리다이렉트시 mode세팅
-    if (!authStore.user.value) {
-      modeStore.user.value = 'query'
-    } else {
-      if (modeStore.user.value === history.state.mode) {
-        modeStore.user.value = history.state.mode
+    const isSignedIn = ref(false)
+
+    onMounted(async () => {
+      isSignedIn.value = (await isAuthenticated(null)) as boolean
+
+      // INFO] 답변자모드 변경 > 로그인 이후 Home으로 리다이렉트시 mode세팅
+      if (!isSignedIn.value) {
+        modeStore.user.value = 'query'
+      } else {
+        if (modeStore.user.value === history.state.mode) {
+          modeStore.user.value = history.state.mode
+        }
       }
-    }
+    })
 
     return {
       modeStore,
