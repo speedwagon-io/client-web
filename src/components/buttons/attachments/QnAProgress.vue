@@ -3,7 +3,7 @@
     <QLinearProgress
       class="q-my-sm"
       rounded
-      :value="progress"
+      :value="progressValue"
       color="accent"
       animationSpeed="1000"
       size="lg"
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent } from 'vue'
 
 import QLinearProgress from 'components/quasarOverride/linear-progress/QLinearProgress'
 
@@ -31,17 +31,6 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
-  },
-  setup(props) {
-    const progress = ref(0)
-
-    onMounted(() => {
-      progress.value = props.progressValue
-    })
-
-    return {
-      progress,
-    }
   },
 })
 </script>

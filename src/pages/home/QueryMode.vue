@@ -1,7 +1,10 @@
 <template>
   <div>
     <section>
-      <p class="text-weight-bold text-subtitle2">진행중인 질문(0)</p>
+      <p class="text-weight-bold text-subtitle2">
+        <q-skeleton v-if="!data.title" width="100px" height="100%" />
+        <span v-else>진행중인 질문(0)</span>
+      </p>
       <div class="row justify-start">
         <ContentButton
           :title="data.title"
@@ -13,7 +16,10 @@
     </section>
 
     <section>
-      <p class="text-weight-bold text-subtitle2">인기 질문</p>
+      <p class="text-weight-bold text-subtitle2">
+        <q-skeleton v-if="!data.title" width="50px" height="100%" />
+        <span v-else>인기 질문</span>
+      </p>
       <div class="row justify-start">
         <ContentButton
           v-for="x of 12"
@@ -49,7 +55,7 @@ export default defineComponent({
           content: '내용',
           progressValue: 0.5,
         }
-      }, 1000)
+      }, 2000)
     })
 
     return {
