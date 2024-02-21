@@ -73,7 +73,8 @@ export default createComponent({
 
     const trackStyle = computed(() => ({
       opacity: 'unset',
-      background: 'linear-gradient(270deg, #FFFFFF -0.95%, rgba(255, 255, 255, 0.1) 87.45%)'
+      background:
+        'linear-gradient(270deg, #FFFFFF -0.95%, rgba(255, 255, 255, 0.1) 87.45%)',
     }))
 
     const trackClass = computed(

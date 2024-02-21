@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <div>
     <section>
       <p class="text-weight-bold text-subtitle2">진행중인 질문(0)</p>
       <div class="row justify-start">
@@ -18,7 +18,7 @@
         />
       </div>
     </section>
-  </q-page>
+  </div>
 </template>
 
 <script lang="ts">
@@ -27,7 +27,7 @@ import { defineComponent } from 'vue'
 import ContentButton from 'components/buttons/ContentButton.vue'
 
 export default defineComponent({
-  name: 'Home',
+  name: 'QueryMode',
   components: { ContentButton },
 })
 </script>
