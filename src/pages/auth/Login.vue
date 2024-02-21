@@ -139,11 +139,6 @@ export default defineComponent({
       }
     }
 
-    const routeAfterLogin = () => {
-      // TODO] 적절한 곳으로 리다이렉트
-      router.push('/')
-    }
-
     const handleSignIn = async () => {
       const kakaoAuthUrlOrAnyString = 'accounts.kakao.com/login'
 
@@ -199,7 +194,7 @@ export default defineComponent({
         } else if (signInStep === 'DONE') {
           const result = await getCurrentUser()
           authStore.user.value = result
-          routeAfterLogin()
+          router.push(redirect_url.value || '/')
         }
       } catch (error: any) {
         switch (error.name) {

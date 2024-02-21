@@ -1,12 +1,14 @@
 <template>
   <q-page padding>
-    <AnswerMode v-if="modeStore.user.value === 'answer' && authStore.user.value" />
+    <AnswerMode
+      v-if="modeStore.user.value === 'answer' && authStore.user.value"
+    />
     <QueryMode v-else />
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useModeStore } from 'src/stores/mode'
 import { useAuthStore } from 'src/stores/auth'
@@ -23,9 +25,9 @@ export default defineComponent({
 
     return {
       modeStore,
-      authStore
+      authStore,
     }
-  }
+  },
 })
 </script>
 

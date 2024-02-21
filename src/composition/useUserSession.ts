@@ -14,6 +14,7 @@ export const useUserSession = () => {
   const modeStore = storeToRefs(useModeStore())
 
   const getCurrentSession = async () => {
+    // TODO] 토큰 만료시 로그인 화면으로 돌아가도록
     const { idToken } = (await fetchAuthSession()).tokens ?? {}
     const idTokenString = idToken?.toString()
     return { idTokenDecoded: idToken, idTokenString }
