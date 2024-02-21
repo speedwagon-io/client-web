@@ -1,19 +1,38 @@
 <template>
   <q-page padding>
-    <AnswerMode />
-    <QueryMode />
+    <AnswerMode v-if="modeStore.user.value === 'answer' && isSignedIn" />
+    <QueryMode v-else />
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useModeStore } from 'src/stores/mode'
 
 import AnswerMode from 'pages/home/AnswerMode.vue'
 import QueryMode from 'pages/home/QueryMode.vue'
 
+import { useUserSession } from 'src/composition/useUserSession'
+
 export default defineComponent({
   name: 'Home',
   components: { AnswerMode, QueryMode },
+  setup() {
+    const modeStore = storeToRefs(useModeStore())
+    const { isAuthenticated } = useUserSession()
+
+    const isSignedIn = ref(false)
+
+    onMounted(async () => {
+      isSignedIn.value = await isAuthenticated(null) as boolean
+    })
+
+    return {
+      modeStore,
+      isSignedIn
+    }
+  }
 })
 </script>
 
