@@ -24,7 +24,13 @@ export default defineComponent({
     const authStore = storeToRefs(useAuthStore())
 
     // INFO] 답변자모드 변경 > 로그인 이후 Home으로 리다이렉트시 mode세팅
-    modeStore.user.value = !authStore.user.value ? 'query' : history.state.mode
+    if (!authStore.user.value) {
+      modeStore.user.value = 'query'
+    } else {
+      if (modeStore.user.value === history.state.mode) {
+        modeStore.user.value = history.state.mode
+      }
+    }
 
     return {
       modeStore,
