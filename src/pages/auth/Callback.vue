@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div class="container row flex-center">
+    <q-spinner color="accent" size="3em" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -61,3 +63,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.container {
+  height: calc(100vh - 30vh);
+}
+</style>
