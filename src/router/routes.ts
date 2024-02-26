@@ -12,6 +12,11 @@ const routes: RouteRecordRaw[] = [
         path: 'auth/kakao/callback',
         component: () => import('pages/auth/Callback.vue'),
       },
+      {
+        path: 'question/:id',
+        name: 'QuestionDetail',
+        component: () => import('pages/q&aDetail/QuestionDetail.vue'),
+      },
     ],
   },
   {

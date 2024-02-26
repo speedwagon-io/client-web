@@ -26,6 +26,12 @@
           :key="x"
           :title="'제목'"
           :content="x.toString()"
+          :to="{
+            name: 'QuestionDetail',
+            params: {
+              id: x,
+            },
+          }"
         />
       </div>
     </section>
@@ -48,7 +54,6 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      console.log('QueryMode mounted')
       setTimeout(() => {
         data.value = {
           title: '제목',

@@ -48,7 +48,6 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      console.log('AnswerMode mounted')
       setTimeout(() => {
         data.value = {
           title: '답변제목',
