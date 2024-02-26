@@ -26,15 +26,6 @@ export default defineComponent({
 
     onMounted(async () => {
       isSignedIn.value = (await isAuthenticated(null)) as boolean
-
-      // INFO] 답변자모드 변경 > 로그인 이후 Home으로 리다이렉트시 mode세팅
-      if (!isSignedIn.value) {
-        modeStore.user.value = 'query'
-      } else {
-        if (modeStore.user.value === history.state.mode) {
-          modeStore.user.value = history.state.mode
-        }
-      }
     })
 
     return {

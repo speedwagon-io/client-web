@@ -14,14 +14,14 @@ export default defineComponent({
   name: 'PolicyDetail',
   emits: ['menu-name', 'back-or-close'],
   setup(props, { emit }) {
-    const { watchRouteForRegisterLayout, watchRouteQueryParam } =
+    const { watchRouteForAuthLayout, watchRouteQueryParam } =
       useWatchRoute(emit)
 
     const content = ref('')
 
     onMounted(() => {
-      watchRouteForRegisterLayout(
-        '/register/policy/detail',
+      watchRouteForAuthLayout(
+        '/auth/register/policy/detail',
         '약관상세',
         'CLOSE',
       )

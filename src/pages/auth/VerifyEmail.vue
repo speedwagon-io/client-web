@@ -75,15 +75,15 @@ export default defineComponent({
   setup(props, { emit }) {
     const router = useRouter()
     const quasar = useQuasar()
-    const { watchRouteForRegisterLayout } = useWatchRoute(emit)
+    const { watchRouteForAuthLayout } = useWatchRoute(emit)
 
     const email = ref()
     email.value = history.state.email
     const code = ref()
 
     onMounted(() => {
-      watchRouteForRegisterLayout(
-        '/register/email/verify',
+      watchRouteForAuthLayout(
+        '/auth/register/email/verify',
         '이메일 인증',
         'BACK',
       )

@@ -62,11 +62,11 @@
           />
         </q-card-actions>
         <q-card-section class="q-pa-none row items-center justify-center">
-          <router-link to="/register/policy?method=email"
+          <router-link to="/auth/register/policy?method=email"
             >회원가입 하기</router-link
           >
           <span class="separator">|</span>
-          <router-link to="/register/reset_password">비밀번호 찾기</router-link>
+          <router-link to="/auth/reset_password">비밀번호 찾기</router-link>
         </q-card-section>
       </q-card>
     </div>
@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
@@ -83,6 +83,7 @@ import { useAuthStore } from 'src/stores/auth'
 import { useFormRules } from 'src/composition/useFormRules'
 import { getCurrentUser } from 'src/api/user'
 import { popFromUrlSearchParam } from 'src/util/routeParser'
+import { useWatchRoute } from 'src/composition/useWatchRoute'
 
 import CatchyPhrase from 'components/static/CatchyPhrase.vue'
 
@@ -96,11 +97,12 @@ export default defineComponent({
   components: {
     CatchyPhrase,
   },
-  setup() {
+  setup(props, { emit }) {
     const route = useRoute()
     const router = useRouter()
     const quasar = useQuasar()
     const authStore = storeToRefs(useAuthStore())
+    const { watchRouteForAuthLayout } = useWatchRoute(emit)
 
     const isEmailSignIn = ref(route.query.method === 'email' ? true : false)
     const email = ref('')
@@ -116,6 +118,10 @@ export default defineComponent({
     const redirect_url = ref('')
     redirect_url.value = history.state.redirect_url
 
+    onMounted(() => {
+      watchRouteForAuthLayout('/auth/login', '', null)
+    })
+
     watch(
       () => route.query,
       change => {
@@ -130,7 +136,7 @@ export default defineComponent({
     const redirectTo = () => {
       // TODO] 로그인 발생시킨 곳으로 다시 goBack
       if (route.query.method === 'email') {
-        router.replace('/login')
+        router.replace('/auth/login')
         return
       }
 
@@ -179,13 +185,13 @@ export default defineComponent({
             })
             .onOk(() => {
               router.push({
-                path: '/register/email/verify',
+                path: '/auth/register/email/verify',
                 state: { email: email.value },
               })
             })
             .onDismiss(() => {
               router.push({
-                path: '/register/email/verify',
+                path: '/auth/register/email/verify',
                 state: { email: email.value },
               })
             })
@@ -230,7 +236,7 @@ export default defineComponent({
       handleSignIn,
       handleEmailSignIn,
       toEmailSignin() {
-        router.replace('/login?method=email')
+        router.replace('/auth/login?method=email')
       },
       redirectTo,
       emailRules,

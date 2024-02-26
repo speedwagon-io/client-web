@@ -27,15 +27,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
 import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useModeStore } from 'src/stores/mode'
 
 import HeaderBar from 'components/header/HeaderBar.vue'
 import QnAModeToggle from 'components/input/QnAModeToggle.vue'
 import DesktopMenuDrawer from 'components/drawer/DesktopMenuDrawer.vue'
 import MobileMenuDrawer from 'components/drawer/MobileMenuDrawer.vue'
 import SwipeableBottomDrawer from 'components/drawer/SwipeableBottomDrawer.vue'
+
+import { useUserSession } from 'src/composition/useUserSession'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -51,14 +55,31 @@ export default defineComponent({
   setup() {
     const quasar = useQuasar()
     const route = useRoute()
+    const modeStore = storeToRefs(useModeStore())
+    const { isAuthenticated } = useUserSession()
 
-    const isHeaderActive = ref(route.path === '/login' ? false : true)
+    const isHeaderActive = ref(route.path === '/auth/login' ? false : true)
     const menuDrawerOpen = ref(false)
+
+    const isSignedIn = ref(false)
+
+    onMounted(async () => {
+      isSignedIn.value = (await isAuthenticated(null)) as boolean
+
+      // INFO] 답변자모드 변경 > 로그인 이후 Home으로 리다이렉트시 mode세팅
+      if (!isSignedIn.value) {
+        modeStore.user.value = 'query'
+      } else {
+        if (modeStore.user.value === history.state.mode) {
+          modeStore.user.value = history.state.mode
+        }
+      }
+    })
 
     watch(
       () => route.path,
       (change: string) => {
-        if (change === '/login') {
+        if (change === '/auth/login') {
           isHeaderActive.value = false
         } else {
           isHeaderActive.value = true
@@ -76,6 +97,8 @@ export default defineComponent({
       },
       isMobile: quasar.platform.is.mobile,
       isHeaderActive,
+      modeStore,
+      isSignedIn,
     }
   },
 })

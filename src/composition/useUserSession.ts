@@ -28,7 +28,7 @@ export const useUserSession = () => {
       if (error.name === 'UserUnAuthenticatedException') {
         if (redirect_url) {
           router.push({
-            path: '/login',
+            path: '/auth/login',
             state: { redirect_url: redirect_url },
           })
         } else {

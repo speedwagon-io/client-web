@@ -98,15 +98,11 @@ export default defineComponent({
     const router = useRouter()
     const quasar = useQuasar()
     const { formRef, formBindValidation, formHasError } = useFormValidation()
-    const { watchRouteForRegisterLayout } = useWatchRoute(emit)
+    const { watchRouteForAuthLayout } = useWatchRoute(emit)
 
     onMounted(() => {
       formBindValidation()
-      watchRouteForRegisterLayout(
-        '/register/reset_password',
-        '비밀번호 찾기',
-        'BACK',
-      )
+      watchRouteForAuthLayout('/auth/reset_password', '비밀번호 찾기', 'BACK')
     })
 
     const email = ref('')

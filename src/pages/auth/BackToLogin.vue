@@ -25,7 +25,7 @@ export default defineComponent({
 
     const goToLoginWithEmail = () => {
       router.push({
-        path: '/login',
+        path: '/auth/login',
         query: { method: 'email' },
         state: { email: email },
       })

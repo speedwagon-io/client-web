@@ -97,11 +97,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const router = useRouter()
     const route = useRoute()
-    const { watchRouteForRegisterLayout } = useWatchRoute(emit)
+    const { watchRouteForAuthLayout } = useWatchRoute(emit)
     const authStore = storeToRefs(useAuthStore())
 
     onMounted(() => {
-      watchRouteForRegisterLayout('/register/policy', '약관동의', 'BACK')
+      watchRouteForAuthLayout('/auth/register/policy', '약관동의', 'BACK')
     })
 
     const group = ref([])
@@ -111,7 +111,7 @@ export default defineComponent({
     redirect_url.value = history.state.redirect_url
 
     const openDetail = (value: string) => {
-      router.push(`/register/policy/detail?page=${value}`)
+      router.push(`/auth/register/policy/detail?page=${value}`)
     }
 
     const next = async () => {
@@ -122,7 +122,7 @@ export default defineComponent({
           policy_and_terms: true,
           subscribe_to_marketing: isMarketingAgreed,
         }
-        router.push('/register/email')
+        router.push('/auth/register/email')
       } else if (route.query.method === 'kakao') {
         loading.value = true
         await updateTermsAgreement(isMarketingAgreed)

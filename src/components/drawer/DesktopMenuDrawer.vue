@@ -33,7 +33,7 @@ const menuDrawerList = [
     title: '로그인',
     caption: '로그인',
     icon: 'login',
-    to: '/login',
+    to: '/auth/login',
   },
 ]
 

@@ -36,7 +36,7 @@ export default defineComponent({
         })
       } else {
         router.push({
-          path: '/register/policy',
+          path: '/auth/register/policy',
           query: { method: 'kakao' },
           state: { redirect_url: redirect_url },
         })

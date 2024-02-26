@@ -7,7 +7,6 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('pages/home/Home.vue') },
       { path: 'index', component: () => import('pages/IndexPage.vue') },
-      { path: 'login', component: () => import('pages/auth/Login.vue') },
       {
         path: 'auth/kakao/callback',
         component: () => import('pages/auth/Callback.vue'),
@@ -20,28 +19,32 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/register',
-    component: () => import('layouts/RegisterLayout.vue'),
+    path: '/auth',
+    component: () => import('layouts/AuthLayout.vue'),
     children: [
       {
-        path: 'policy',
-        component: () => import('pages/auth/PolicyAgreement.vue'),
-      },
-      {
-        path: 'policy/detail',
-        component: () => import('pages/auth/PolicyDetail.vue'),
-      },
-      {
-        path: 'email',
-        component: () => import('pages/auth/EmailRegister.vue'),
-      },
-      {
-        path: 'email/verify',
-        component: () => import('pages/auth/VerifyEmail.vue'),
+        path: 'login',
+        component: () => import('pages/auth/Login.vue'),
       },
       {
         path: 'reset_password',
         component: () => import('pages/auth/ResetPassword.vue'),
+      },
+      {
+        path: 'register/policy',
+        component: () => import('pages/auth/PolicyAgreement.vue'),
+      },
+      {
+        path: 'register/policy/detail',
+        component: () => import('pages/auth/PolicyDetail.vue'),
+      },
+      {
+        path: 'register/email',
+        component: () => import('pages/auth/EmailRegister.vue'),
+      },
+      {
+        path: 'register/email/verify',
+        component: () => import('pages/auth/VerifyEmail.vue'),
       },
     ],
   },

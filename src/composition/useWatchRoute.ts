@@ -7,10 +7,10 @@ export const useWatchRoute = (
   const route = useRoute()
   const option = { immediate: true }
 
-  const watchRouteForRegisterLayout = (
+  const watchRouteForAuthLayout = (
     path: string,
     menuName: string,
-    backOrClose: 'BACK' | 'CLOSE',
+    backOrClose: 'BACK' | 'CLOSE' | null,
   ) => {
     watch(
       route,
@@ -40,7 +40,7 @@ export const useWatchRoute = (
   }
 
   return {
-    watchRouteForRegisterLayout,
+    watchRouteForAuthLayout,
     watchRouteQueryParam,
   }
 }

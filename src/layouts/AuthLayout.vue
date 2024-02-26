@@ -37,7 +37,7 @@ import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
 export default defineComponent({
-  name: 'RegisterLayout',
+  name: 'AuthLayout',
   setup() {
     const router = useRouter()
     const quasar = useQuasar()
@@ -69,6 +69,8 @@ export default defineComponent({
             isCloseShown.value = true
             break
           default:
+            isGoBackShown.value = false
+            isCloseShown.value = false
             break
         }
       },

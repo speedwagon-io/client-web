@@ -24,7 +24,7 @@
     </section>
 
     <section class="q-ma-md">
-      <router-link to="/login">로그인하기 ></router-link>
+      <router-link to="/auth/login">로그인하기 ></router-link>
       <MenuButtonGrid class="q-my-md" />
     </section>
     <q-btn @click="handleSignOut">로그아웃</q-btn>

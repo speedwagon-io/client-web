@@ -76,12 +76,16 @@ export default defineComponent({
     const router = useRouter()
     const quasar = useQuasar()
     const { formRef, formBindValidation, formHasError } = useFormValidation()
-    const { watchRouteForRegisterLayout } = useWatchRoute(emit)
+    const { watchRouteForAuthLayout } = useWatchRoute(emit)
     const authStore = storeToRefs(useAuthStore())
 
     onMounted(() => {
       formBindValidation()
-      watchRouteForRegisterLayout('/register/email', '로그인 정보 입력', 'BACK')
+      watchRouteForAuthLayout(
+        '/auth/register/email',
+        '로그인 정보 입력',
+        'BACK',
+      )
     })
 
     const email = ref('')
@@ -111,7 +115,7 @@ export default defineComponent({
       try {
         const termsAgreement = authStore.termsAgreement.value
         if (!termsAgreement?.policy_and_terms) {
-          router.push('/register/policy?method=email')
+          router.push('/auth/register/policy?method=email')
         }
 
         const result = await signUp({
@@ -135,13 +139,13 @@ export default defineComponent({
             })
             .onOk(() => {
               router.push({
-                path: '/register/email/verify',
+                path: '/auth/register/email/verify',
                 state: { email: email.value },
               })
             })
             .onDismiss(() => {
               router.push({
-                path: '/register/email/verify',
+                path: '/auth/register/email/verify',
                 state: { email: email.value },
               })
             })
