@@ -134,10 +134,7 @@ export default defineComponent({
         return
       }
 
-      if (!route.query.redirect) {
-        router.go(-1)
-        return
-      }
+      router.go(-1)
     }
 
     const handleSignIn = async () => {
