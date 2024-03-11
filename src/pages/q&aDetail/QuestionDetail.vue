@@ -1,14 +1,18 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <q-header>
-      <q-toolbar
-        class="justify-between"
-        :class="isDark ? 'text-white' : 'text-black'"
-      >
-        <GoBack :icon="'chevron_left'" />
-      </q-toolbar>
-    </q-header>
-    <UserProfile />
+  <q-page>
+    <section class="content">
+      <q-header>
+        <q-toolbar
+          class="justify-between"
+          :class="isDark ? 'text-white' : 'text-black'"
+        >
+          <GoBack :icon="'chevron_left'" />
+        </q-toolbar>
+      </q-header>
+    </section>
+    <section class="row items-center justify-evenly">
+      <UserProfile />
+    </section>
   </q-page>
 </template>
 
@@ -38,3 +42,12 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+.content {
+  height: 45vh;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: 0 3px 4px -3px gray;
+}
+</style>
