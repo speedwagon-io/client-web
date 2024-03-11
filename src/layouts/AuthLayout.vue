@@ -5,15 +5,11 @@
         class="justify-between"
         :class="isDark ? 'text-white' : 'text-black'"
       >
-        <q-btn flat round dense @click="goBack">
-          <q-icon v-show="isGoBackShown" name="chevron_left" />
-        </q-btn>
+        <GoBack v-if="isGoBackShown" :icon="'chevron_left'" />
         <q-toolbar-title class="text-center">
           {{ menuName }}
         </q-toolbar-title>
-        <q-btn flat round dense @click="goBack">
-          <q-icon v-show="isCloseShown" name="close" />
-        </q-btn>
+        <GoBack v-if="isCloseShown" :icon="'close'" />
       </q-toolbar>
     </q-header>
 
@@ -36,8 +32,11 @@ import { computed, defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
+import GoBack from 'components/buttons/GoBack.vue'
+
 export default defineComponent({
   name: 'AuthLayout',
+  components: { GoBack },
   setup() {
     const router = useRouter()
     const quasar = useQuasar()
@@ -46,13 +45,8 @@ export default defineComponent({
     const isGoBackShown = ref(true)
     const isCloseShown = ref(false)
 
-    const goBack = () => {
-      router.go(-1)
-    }
-
     return {
       menuName,
-      goBack,
       setMenuName(menu: string) {
         menuName.value = menu
       },
