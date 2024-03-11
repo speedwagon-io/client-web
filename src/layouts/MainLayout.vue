@@ -58,7 +58,7 @@ export default defineComponent({
     const modeStore = storeToRefs(useModeStore())
     const { isAuthenticated } = useUserSession()
 
-    const isHeaderActive = ref(route.path === '/auth/login' ? false : true)
+    const isHeaderActive = ref(route.name === 'QuestionDetail' ? false : true)
     const menuDrawerOpen = ref(false)
 
     const isSignedIn = ref(false)
@@ -77,9 +77,9 @@ export default defineComponent({
     })
 
     watch(
-      () => route.path,
-      (change: string) => {
-        if (change === '/auth/login') {
+      () => route.name,
+      (change) => {
+        if (change === 'QuestionDetail') {
           isHeaderActive.value = false
         } else {
           isHeaderActive.value = true
