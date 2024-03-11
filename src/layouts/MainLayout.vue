@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh lpR lFf">
-    <transition name="slide_up" v-show="isHeaderActive">
-      <q-header>
+    <transition name="slide_up">
+      <q-header v-if="isHeaderActive">
         <HeaderBar @toggle-menu-drawer="toggleMenuDrawer" />
         <QnAModeToggle />
       </q-header>
@@ -14,7 +14,7 @@
       @close-menu-drawer="closeMenuDrawer"
     />
 
-    <q-page-container style="padding-top: 100px">
+    <q-page-container>
       <router-view />
     </q-page-container>
 
@@ -78,7 +78,7 @@ export default defineComponent({
 
     watch(
       () => route.name,
-      (change) => {
+      change => {
         if (change === 'QuestionDetail') {
           isHeaderActive.value = false
         } else {

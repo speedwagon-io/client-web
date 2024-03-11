@@ -11,6 +11,6 @@ import UserProfile from 'components/profile/UserProfile.vue'
 
 export default defineComponent({
   name: 'QuestionDetail',
-  components: { UserProfile }
+  components: { UserProfile },
 })
 </script>
