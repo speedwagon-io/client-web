@@ -42,7 +42,7 @@ export default {
   components: { TextareaMobile },
   data() {
     return {
-      drawerPos: drawerMinHeight,
+      drawerPos: 100,
     }
   },
 
