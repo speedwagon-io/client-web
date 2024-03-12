@@ -23,7 +23,7 @@
       </q-card-section>
 
       <q-card-section class="col q-pt-none">
-        <section ref="section">
+        <section>
           <q-resize-observer @resize="onResize" />
           <header>
             <TextareaMobile @textarea-focus="textareaFocused" />
@@ -50,12 +50,21 @@ export default {
   data() {
     return {
       drawerPos: drawerDefaultHeight,
+      sectionHeight: 0,
     }
   },
 
   computed: {
     drawerMaxHeight() {
       return Math.max(0, this.$q.screen.height - drawerTopOffset)
+    },
+
+    drawerHalfMaxHeight() {
+      return Math.round(this.drawerMaxHeight / 2)
+    },
+
+    drawerHalfMaxHeightExceptHandle() {
+      return this.drawerHalfMaxHeight - 40
     },
 
     drawerOpenRatio() {
@@ -110,9 +119,9 @@ export default {
             direction === 'up'
               ? aboveHalf
                 ? this.drawerMaxHeight
-                : Math.round(this.drawerMaxHeight / 2)
+                : this.drawerHalfMaxHeight
               : aboveHalf
-              ? Math.round(this.drawerMaxHeight / 2)
+              ? this.drawerHalfMaxHeight
               : drawerMinHeight
 
           this.animateDrawerTo(targetHeight)
@@ -123,7 +132,7 @@ export default {
     cycleDrawer() {
       const targetHeight =
         this.drawerMode === 'handler'
-          ? Math.round(this.drawerMaxHeight / 2)
+          ? this.drawerHalfMaxHeight
           : this.drawerMode === 'half'
           ? this.drawerMaxHeight
           : drawerMinHeight
@@ -147,14 +156,19 @@ export default {
 
     textareaFocused() {
       if (this.drawerPos <= drawerDefaultHeight) {
-        const targetHeight = Math.round(this.drawerMaxHeight / 2)
-        this.animateDrawerTo(targetHeight)
+        if (this.sectionHeight >= this.drawerHalfMaxHeightExceptHandle) {
+          this.animateDrawerTo(this.drawerMaxHeight)
+          return
+        }
+        this.animateDrawerTo(this.drawerHalfMaxHeight)
       }
     },
 
     onResize(size) {
-      const spareArea = Math.round(this.drawerMaxHeight / 2) - 40
-      if (size.height >= spareArea) {
+      this.sectionHeight = size.height
+      const spareArea = this.drawerHalfMaxHeightExceptHandle
+
+      if (this.sectionHeight >= spareArea) {
         this.animateDrawerTo(this.drawerMaxHeight)
       }
     },
