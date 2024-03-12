@@ -28,7 +28,28 @@
           <header>
             <TextareaMobile @textarea-focus="textareaFocused" />
           </header>
-          <footer>카테고리, 리워드</footer>
+          <footer class="row justify-around q-mt-lg">
+            <q-btn
+              class="col-grow q-mr-xs"
+              unelevated
+              rounded
+              color="grey-4"
+              text-color="black"
+            >
+              <img src="~assets/icons/reward.svg" alt="" />
+              리워드 추가
+            </q-btn>
+            <q-btn
+              class="col-grow q-ml-xs"
+              unelevated
+              rounded
+              color="grey-4"
+              text-color="black"
+            >
+              <img src="~assets/icons/plus.svg" alt="" />
+              카테고리 추가
+            </q-btn>
+          </footer>
         </section>
       </q-card-section>
     </q-card>

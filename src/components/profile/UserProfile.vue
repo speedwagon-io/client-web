@@ -1,7 +1,7 @@
 <template>
   <q-avatar class="row items-center justify-evenly" :size="size">
     <img v-if="image" :src="image" />
-    <img v-else src="../../assets/flower_check.svg" />
+    <img v-else src="~assets/flower_check.svg" />
   </q-avatar>
 </template>
 

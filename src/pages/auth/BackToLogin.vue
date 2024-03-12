@@ -2,7 +2,7 @@
   <q-page class="column justify-between q-pa-lg">
     <p>{{ title }}</p>
     <div class="self-center">
-      <img src="../../assets/flower_check.svg" alt="" />
+      <img src="~assets/flower_check.svg" alt="" />
     </div>
     <q-btn
       class="full-width"

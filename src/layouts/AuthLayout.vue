@@ -38,7 +38,6 @@ export default defineComponent({
   name: 'AuthLayout',
   components: { GoBack },
   setup() {
-    const router = useRouter()
     const quasar = useQuasar()
 
     const menuName = ref('')

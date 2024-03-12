@@ -10,10 +10,18 @@
     @focus="focus"
   >
     <template v-slot:prepend>
-      <q-icon name="image" @click="console.log('image')" />
+      <img
+        src="~assets/icons/image.svg"
+        alt=""
+        @click="console.log('image clicked')"
+      />
     </template>
     <template v-slot:append>
-      <q-icon name="send" @click="console.log('send')" />
+      <img
+        src="~assets/icons/send.svg"
+        alt=""
+        @click="console.log('send clicked')"
+      />
     </template>
   </q-input>
 </template>
