@@ -23,7 +23,13 @@
       </q-card-section>
 
       <q-card-section class="col q-pt-none">
-        <TextareaMobile @textarea-focus="textareaFocused" />
+        <section ref="section">
+          <q-resize-observer @resize="onResize" />
+          <header>
+            <TextareaMobile @textarea-focus="textareaFocused" />
+          </header>
+          <footer>카테고리, 리워드</footer>
+        </section>
       </q-card-section>
     </q-card>
   </div>
@@ -143,6 +149,13 @@ export default {
       if (this.drawerPos <= drawerDefaultHeight) {
         const targetHeight = Math.round(this.drawerMaxHeight / 2)
         this.animateDrawerTo(targetHeight)
+      }
+    },
+
+    onResize(size) {
+      const spareArea = Math.round(this.drawerMaxHeight / 2) - 40
+      if (size.height >= spareArea) {
+        this.animateDrawerTo(this.drawerMaxHeight)
       }
     },
   },
