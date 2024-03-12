@@ -34,6 +34,7 @@ import TextareaMobile from 'components/input/TextareaMobile.vue'
 
 // TODO] vue2 to vue3
 const drawerMinHeight = 30
+const drawerDefaultHeight = 100
 const drawerTopOffset = 100
 const drawerOpenRatioHalf = 50
 
@@ -42,7 +43,7 @@ export default {
   components: { TextareaMobile },
   data() {
     return {
-      drawerPos: 100,
+      drawerPos: drawerDefaultHeight,
     }
   },
 
@@ -53,8 +54,8 @@ export default {
 
     drawerOpenRatio() {
       return Math.round(
-        (Math.max(0, this.drawerPos - drawerMinHeight) /
-          Math.max(1, this.drawerMaxHeight - drawerMinHeight)) *
+        (Math.max(0, this.drawerPos - drawerDefaultHeight) /
+          Math.max(1, this.drawerMaxHeight - drawerDefaultHeight)) *
           100,
       )
     },
@@ -77,8 +78,8 @@ export default {
     backdropStyle() {
       let style =
         Math.round(
-          (Math.max(0, this.drawerPos - drawerMinHeight) /
-            Math.max(1, this.drawerMaxHeight - drawerMinHeight)) *
+          (Math.max(0, this.drawerPos - drawerDefaultHeight) /
+            Math.max(1, this.drawerMaxHeight - drawerDefaultHeight)) *
             100,
         ) * 0.4
       return {
