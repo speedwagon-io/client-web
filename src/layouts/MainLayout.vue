@@ -18,7 +18,7 @@
       <router-view />
     </q-page-container>
 
-    <transition name="slide_down" v-show="isHeaderActive">
+    <transition name="slide_down">
       <div v-if="isMobile">
         <SwipeableBottomDrawer />
       </div>
