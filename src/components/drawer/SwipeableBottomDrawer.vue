@@ -49,6 +49,7 @@
               <img src="~assets/icons/plus.svg" alt="" />
               카테고리 추가
             </q-btn>
+            <CategoryButtons class="q-mt-xs" />
           </footer>
         </section>
       </q-card-section>
@@ -58,6 +59,7 @@
 
 <script>
 import TextareaMobile from 'components/input/TextareaMobile.vue'
+import CategoryButtons from 'components/buttons/CategoryButtons.vue'
 
 // TODO] vue2 to vue3
 const drawerMinHeight = 30
@@ -67,7 +69,7 @@ const drawerOpenRatioHalf = 50
 
 export default {
   name: 'SwipeableBottomDrawer',
-  components: { TextareaMobile },
+  components: { TextareaMobile, CategoryButtons },
   data() {
     return {
       drawerPos: drawerDefaultHeight,

@@ -29,7 +29,6 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
 import GoBack from 'components/buttons/GoBack.vue'
