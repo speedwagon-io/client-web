@@ -1,13 +1,22 @@
 <template>
   <div>
-    <q-btn class="float-right q-ma-xs" rounded v-for="i in 10" :key="i">{{
-      ex[i - 1]
-    }}</q-btn>
+    <q-btn
+      class="float-right q-ma-xs"
+      :class="isChosen(id) ? 'text-weight-bold' : ''"
+      rounded
+      :outline="isChosen(id)"
+      v-for="(val, id) of ex"
+      :key="id"
+      @click="choiceToggle(id)"
+    >
+      {{ val }}
+    </q-btn>
+    {{ choiceList }}
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 const ex = [
   '사람과그룹',
@@ -25,7 +34,23 @@ const ex = [
 export default defineComponent({
   name: 'CategoryButtons',
   setup() {
-    return { ex }
+    const choiceList = ref<number[]>([])
+
+    const choiceToggle = (id: number) => {
+      if (choiceList.value.includes(id)) {
+        choiceList.value = choiceList.value.filter(e => e !== id)
+      } else {
+        choiceList.value.push(id)
+      }
+    }
+    return {
+      ex,
+      choiceToggle,
+      choiceList,
+      isChosen: (id: number) => {
+        return choiceList.value.includes(id)
+      },
+    }
   },
 })
 </script>

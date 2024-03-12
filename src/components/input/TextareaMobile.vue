@@ -5,7 +5,7 @@
     autogrow
     outlined
     :dense="true"
-    input-style="max-height: 300px"
+    input-style="max-height: 270px"
     placeholder="질문을 입력하세요"
     @focus="focus"
   >

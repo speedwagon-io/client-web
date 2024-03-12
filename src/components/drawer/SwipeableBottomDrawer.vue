@@ -49,7 +49,7 @@
               <img src="~assets/icons/plus.svg" alt="" />
               카테고리 추가
             </q-btn>
-            <CategoryButtons class="q-mt-xs" />
+            <CategoryButtons class="q-mt-sm" />
           </footer>
         </section>
       </q-card-section>
