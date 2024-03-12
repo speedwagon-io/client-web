@@ -7,6 +7,7 @@
     :dense="true"
     input-style="max-height: 300px"
     placeholder="질문을 입력하세요"
+    @focus="focus"
   >
     <template v-slot:prepend>
       <q-icon name="image" @click="console.log('image')" />
@@ -21,9 +22,14 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  name: 'TextareaSimple',
-  setup() {
-    return { text: ref('') }
+  name: 'TextareaMobile',
+  setup(props, { emit }) {
+    return {
+      text: ref(''),
+      focus: () => {
+        emit('textarea-focus')
+      },
+    }
   },
 })
 </script>

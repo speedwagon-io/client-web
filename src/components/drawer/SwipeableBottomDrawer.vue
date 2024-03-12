@@ -23,23 +23,23 @@
       </q-card-section>
 
       <q-card-section class="col q-pt-none">
-        <TextareaSimple />
+        <TextareaMobile @textarea-focus="textareaFocused" />
       </q-card-section>
     </q-card>
   </div>
 </template>
 
 <script>
-import TextareaSimple from 'components/input/TextareaSimple.vue'
+import TextareaMobile from 'components/input/TextareaMobile.vue'
 
 // TODO] vue2 to vue3
-const drawerMinHeight = 100
+const drawerMinHeight = 30
 const drawerTopOffset = 100
 const drawerOpenRatioHalf = 50
 
 export default {
   name: 'SwipeableBottomDrawer',
-  components: { TextareaSimple },
+  components: { TextareaMobile },
   data() {
     return {
       drawerPos: drawerMinHeight,
@@ -136,6 +136,11 @@ export default {
           this.animateDrawerTo(height)
         }, 30)
       }
+    },
+
+    textareaFocused() {
+      const targetHeight = Math.round(this.drawerMaxHeight / 2)
+      this.animateDrawerTo(targetHeight)
     },
   },
 
