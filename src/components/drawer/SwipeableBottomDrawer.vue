@@ -155,12 +155,14 @@ export default {
     },
 
     textareaFocused() {
+      if (this.sectionHeight >= this.drawerHalfMaxHeightExceptHandle) {
+        this.animateDrawerTo(this.drawerMaxHeight)
+        return
+      }
+
       if (this.drawerPos <= drawerDefaultHeight) {
-        if (this.sectionHeight >= this.drawerHalfMaxHeightExceptHandle) {
-          this.animateDrawerTo(this.drawerMaxHeight)
-          return
-        }
         this.animateDrawerTo(this.drawerHalfMaxHeight)
+        return
       }
     },
 
