@@ -140,8 +140,10 @@ export default {
     },
 
     textareaFocused() {
-      const targetHeight = Math.round(this.drawerMaxHeight / 2)
-      this.animateDrawerTo(targetHeight)
+      if (this.drawerPos <= drawerDefaultHeight) {
+        const targetHeight = Math.round(this.drawerMaxHeight / 2)
+        this.animateDrawerTo(targetHeight)
+      }
     },
   },
 
