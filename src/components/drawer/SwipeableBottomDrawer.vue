@@ -206,7 +206,7 @@ export default {
       this.sectionHeight = size.height
       const spareArea = this.drawerHalfMaxHeightExceptHandle
 
-      if (this.sectionHeight >= spareArea) {
+      if (this.drawerMode === 'half' && this.sectionHeight >= spareArea) {
         this.animateDrawerTo(this.drawerMaxHeight)
       }
     },
