@@ -18,6 +18,8 @@ import { getCurrentUser } from './api/user'
 
 import SwipeableBottomDrawer from 'components/drawer/SwipeableBottomDrawer.vue'
 
+const hideBottomSheetPathPrefix = ['auth', 'next']
+
 export default defineComponent({
   name: 'App',
   components: {
@@ -28,14 +30,12 @@ export default defineComponent({
     const authStore = storeToRefs(useAuthStore())
     const { isAuthenticated } = useUserSession()
 
-    const isBottomDrawerActive = ref(
-      route.path.startsWith('/auth') ? false : true,
-    )
+    const isBottomDrawerActive = ref(true)
 
     watch(
       () => route.path,
       change => {
-        if (change.startsWith('/auth')) {
+        if (hideBottomSheetPathPrefix.some(v => change.includes(v))) {
           isBottomDrawerActive.value = false
         } else {
           isBottomDrawerActive.value = true
