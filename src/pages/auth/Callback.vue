@@ -61,6 +61,10 @@ export default defineComponent({
             break
         }
       })
+
+      if (authStore.user.value) {
+        router.push('/')
+      }
     })
   },
 })
