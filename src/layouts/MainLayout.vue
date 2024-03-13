@@ -17,12 +17,6 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-
-    <transition name="slide_down">
-      <div v-if="isMobile">
-        <SwipeableBottomDrawer />
-      </div>
-    </transition>
   </q-layout>
 </template>
 
@@ -37,7 +31,6 @@ import HeaderBar from 'components/header/HeaderBar.vue'
 import QnAModeToggle from 'components/input/QnAModeToggle.vue'
 import DesktopMenuDrawer from 'components/drawer/DesktopMenuDrawer.vue'
 import MobileMenuDrawer from 'components/drawer/MobileMenuDrawer.vue'
-import SwipeableBottomDrawer from 'components/drawer/SwipeableBottomDrawer.vue'
 
 import { useUserSession } from 'src/composition/useUserSession'
 
@@ -45,7 +38,6 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    SwipeableBottomDrawer,
     HeaderBar,
     DesktopMenuDrawer,
     MobileMenuDrawer,
@@ -117,17 +109,6 @@ export default defineComponent({
 .slide_up-enter,
 .slide_up-leave-to {
   transform: translateY(-100%);
-  transition: all 150ms ease-in 0s;
-}
-
-.slide_down-enter-active,
-.slide_down-leave-active {
-  transition: transform 0.2s ease;
-}
-
-.slide_down-enter,
-.slide_down-leave-to {
-  transform: translateY(100%);
   transition: all 150ms ease-in 0s;
 }
 </style>
