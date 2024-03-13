@@ -44,6 +44,8 @@ export default defineComponent({
     }
 
     onMounted(async () => {
+      // TODO] 인증되어 있을때 브라우저 뒤로가기 등으로 여기 들어오면 다른데로 보내야함
+
       Hub.listen('auth', async ({ payload }) => {
         switch (payload.event) {
           case 'signInWithRedirect':

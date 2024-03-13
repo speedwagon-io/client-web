@@ -5,6 +5,7 @@
       <SwipeableBottomDrawer />
     </div>
   </transition>
+  <Callback style="display: none" />
 </template>
 
 <script lang="ts">
@@ -17,6 +18,7 @@ import { useUserSession } from './composition/useUserSession'
 import { getCurrentUser } from './api/user'
 
 import SwipeableBottomDrawer from 'components/drawer/SwipeableBottomDrawer.vue'
+import Callback from 'pages/auth/Callback.vue'
 
 const hideBottomSheetPathPrefix = ['auth', 'next']
 
@@ -24,6 +26,7 @@ export default defineComponent({
   name: 'App',
   components: {
     SwipeableBottomDrawer,
+    Callback
   },
   setup() {
     const route = useRoute()
