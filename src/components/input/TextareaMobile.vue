@@ -8,6 +8,7 @@
     input-style="max-height: 270px"
     placeholder="질문을 입력하세요"
     @focus="focus"
+    @keyup.ctrl.enter="submit"
   >
     <template v-slot:prepend>
       <img
@@ -17,11 +18,7 @@
       />
     </template>
     <template v-slot:append>
-      <img
-        src="~assets/icons/send.svg"
-        alt=""
-        @click="console.log('send clicked')"
-      />
+      <img src="~assets/icons/send.svg" alt="" @click="submit" />
     </template>
   </q-input>
 </template>
@@ -36,6 +33,9 @@ export default defineComponent({
       text: ref(''),
       focus: () => {
         emit('textarea-focus')
+      },
+      submit: () => {
+        emit('submit')
       },
     }
   },

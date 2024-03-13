@@ -26,7 +26,7 @@ export default defineComponent({
   name: 'App',
   components: {
     SwipeableBottomDrawer,
-    Callback
+    Callback,
   },
   setup() {
     const route = useRoute()

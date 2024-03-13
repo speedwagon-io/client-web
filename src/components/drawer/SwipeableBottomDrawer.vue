@@ -26,7 +26,10 @@
         <section>
           <q-resize-observer @resize="onResize" />
           <header>
-            <TextareaMobile @textarea-focus="textareaFocused" />
+            <TextareaMobile
+              @textarea-focus="textareaFocused"
+              @submit="submitted"
+            />
           </header>
           <footer class="row justify-around q-mt-lg">
             <q-btn
@@ -49,7 +52,7 @@
               <img src="~assets/icons/plus.svg" alt="" />
               카테고리 추가
             </q-btn>
-            <CategoryButtons class="q-mt-sm" />
+            <CategoryButtons class="q-mt-xs" />
           </footer>
         </section>
       </q-card-section>
@@ -58,6 +61,8 @@
 </template>
 
 <script>
+import { useUserSession } from 'src/composition/useUserSession'
+
 import TextareaMobile from 'components/input/TextareaMobile.vue'
 import CategoryButtons from 'components/buttons/CategoryButtons.vue'
 
@@ -189,6 +194,14 @@ export default {
       }
     },
 
+    async submitted() {
+      if (await this.isAuthenticated(this.$route.fullPath)) {
+        console.log('authed')
+      } else {
+        console.log('bon')
+      }
+    },
+
     onResize(size) {
       this.sectionHeight = size.height
       const spareArea = this.drawerHalfMaxHeightExceptHandle
@@ -201,6 +214,11 @@ export default {
 
   beforeUnmount() {
     clearTimeout(this.animateTimeout)
+  },
+
+  setup() {
+    const { isAuthenticated } = useUserSession()
+    return { isAuthenticated }
   },
 }
 </script>
