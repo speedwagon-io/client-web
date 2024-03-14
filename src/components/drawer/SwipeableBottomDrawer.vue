@@ -85,7 +85,6 @@ export default {
       drawerPos: drawerDefaultHeight,
       sectionHeight: 0,
       debouncer: {
-        prevVal: '',
         instance: null,
         period: 2000, // INFO] mili-second
       },
@@ -215,12 +214,6 @@ export default {
     },
 
     textareaUpdated(val) {
-      if (val.length < this.debouncer.prevVal.length) {
-        return
-      }
-
-      this.debouncer.prevVal = val
-
       if (this.debouncer.instance) {
         clearTimeout(this.debouncer.instance)
       }
