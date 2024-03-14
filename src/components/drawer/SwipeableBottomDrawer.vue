@@ -53,7 +53,11 @@
               <img src="~assets/icons/plus.svg" alt="" />
               카테고리 추가
             </q-btn>
-            <CategoryButtons class="q-mt-xs" :buttons="categoryButtons" />
+            <CategoryButtons
+              class="q-mt-xs"
+              :buttons="categoryButtons"
+              :loading="categoryButtonsLoading"
+            />
           </footer>
         </section>
       </q-card-section>
@@ -81,10 +85,12 @@ export default {
       drawerPos: drawerDefaultHeight,
       sectionHeight: 0,
       debouncer: {
+        prevVal: '',
         instance: null,
         period: 2000, // INFO] mili-second
       },
       categoryButtons: [],
+      categoryButtonsLoading: false,
     }
   },
 
@@ -209,14 +215,23 @@ export default {
     },
 
     textareaUpdated(val) {
+      if (val.length < this.debouncer.prevVal.length) {
+        return
+      }
+
+      this.debouncer.prevVal = val
+
       if (this.debouncer.instance) {
         clearTimeout(this.debouncer.instance)
       }
       this.debouncer.instance = setTimeout(async () => {
+        this.categoryButtonsLoading = true
+
         // TODO] fasttext api 호출
         const result = await mockApiCall(val)
         this.categoryButtons = result
-        console.log('mockCategoryButtons:', result)
+
+        this.categoryButtonsLoading = false
       }, this.debouncer.period)
 
       function mockApiCall(val) {

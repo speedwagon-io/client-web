@@ -1,16 +1,28 @@
 <template>
   <div>
-    <q-btn
-      class="float-right q-ma-xs"
-      :class="isChosen(id) ? 'text-weight-bold' : ''"
-      rounded
-      :outline="isChosen(id)"
-      v-for="(val, id) of buttons"
-      :key="id"
-      @click="choiceToggle(id)"
-    >
-      {{ val }}
-    </q-btn>
+    <div v-if="loading">
+      <q-skeleton
+        v-for="i of 10"
+        :key="i"
+        type="QChip"
+        class="float-right q-ma-xs"
+        :width="Math.floor(Math.random() * 71) + 45 + 'px'"
+        height="35px"
+      />
+    </div>
+    <div v-else>
+      <q-btn
+        class="float-right q-ma-xs"
+        :class="isChosen(id) ? 'text-weight-bold' : ''"
+        rounded
+        :outline="isChosen(id)"
+        v-for="(val, id) of buttons"
+        :key="id"
+        @click="choiceToggle(id)"
+      >
+        {{ val }}
+      </q-btn>
+    </div>
   </div>
 </template>
 
@@ -23,6 +35,10 @@ export default defineComponent({
     buttons: {
       type: Array,
       default: () => [],
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
   setup() {
