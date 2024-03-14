@@ -8,6 +8,7 @@
     input-style="max-height: 270px"
     placeholder="질문을 입력하세요"
     @focus="focus"
+    @update:model-value="update"
     @keyup.ctrl.enter="submit"
   >
     <template v-slot:prepend>
@@ -33,6 +34,9 @@ export default defineComponent({
       text: ref(''),
       focus: () => {
         emit('textarea-focus')
+      },
+      update: (val: string | number | null) => {
+        emit('update', val)
       },
       submit: () => {
         emit('submit')

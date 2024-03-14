@@ -5,7 +5,7 @@
       :class="isChosen(id) ? 'text-weight-bold' : ''"
       rounded
       :outline="isChosen(id)"
-      v-for="(val, id) of ex"
+      v-for="(val, id) of buttons"
       :key="id"
       @click="choiceToggle(id)"
     >
@@ -17,21 +17,14 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-const ex = [
-  '사람과그룹',
-  '대출',
-  '어학,외국어',
-  '응용소프트웨어개발',
-  '파이썬',
-  '메이플스토리',
-  '올림픽',
-  '시',
-  '옥련동',
-  '웹툰',
-]
-
 export default defineComponent({
   name: 'CategoryButtons',
+  props: {
+    buttons: {
+      type: Array,
+      default: () => [],
+    },
+  },
   setup() {
     const choiceList = ref<number[]>([])
 
@@ -43,7 +36,6 @@ export default defineComponent({
       }
     }
     return {
-      ex,
       choiceToggle,
       choiceList,
       isChosen: (id: number) => {

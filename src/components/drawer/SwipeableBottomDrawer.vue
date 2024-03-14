@@ -28,6 +28,7 @@
           <header>
             <TextareaMobile
               @textarea-focus="textareaFocused"
+              @update="textareaUpdated"
               @submit="submitted"
             />
           </header>
@@ -52,7 +53,7 @@
               <img src="~assets/icons/plus.svg" alt="" />
               카테고리 추가
             </q-btn>
-            <CategoryButtons class="q-mt-xs" />
+            <CategoryButtons class="q-mt-xs" :buttons="categoryButtons" />
           </footer>
         </section>
       </q-card-section>
@@ -79,6 +80,11 @@ export default {
     return {
       drawerPos: drawerDefaultHeight,
       sectionHeight: 0,
+      debouncer: {
+        instance: null,
+        period: 2000, // INFO] mili-second
+      },
+      categoryButtons: [],
     }
   },
 
@@ -199,6 +205,40 @@ export default {
         console.log('authed')
       } else {
         console.log('bon')
+      }
+    },
+
+    textareaUpdated(val) {
+      if (this.debouncer.instance) {
+        clearTimeout(this.debouncer.instance)
+      }
+      this.debouncer.instance = setTimeout(async () => {
+        // TODO] fasttext api 호출
+        const result = await mockApiCall(val)
+        this.categoryButtons = result
+        console.log('mockCategoryButtons:', result)
+      }, this.debouncer.period)
+
+      function mockApiCall(val) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            console.log('mock api call finished with: ', val)
+            const mockCategoryButtons = [
+              '사람과그룹',
+              '대출',
+              '어학,외국어',
+              '응용소프트웨어개발',
+              '파이썬',
+              '메이플스토리',
+              '올림픽',
+              '시',
+              '옥련동',
+              '웹툰',
+            ].sort(() => Math.random() - 0.5)
+
+            resolve(mockCategoryButtons)
+          }, 2000)
+        })
       }
     },
 
