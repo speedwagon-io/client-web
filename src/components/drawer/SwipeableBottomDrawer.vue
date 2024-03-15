@@ -71,6 +71,9 @@ import { useUserSession } from 'src/composition/useUserSession'
 import TextareaMobile from 'components/input/TextareaMobile.vue'
 import CategoryButtons from 'components/buttons/CategoryButtons.vue'
 
+import { getCategoryPrediction } from 'src/api/category'
+import { parseCategory } from 'src/util/common'
+
 // TODO] vue2 to vue3
 const drawerMinHeight = 30
 const drawerDefaultHeight = 100
@@ -217,37 +220,21 @@ export default {
       if (this.debouncer.instance) {
         clearTimeout(this.debouncer.instance)
       }
+
+      if (val.length === 0) {
+        this.categoryButtons = []
+        this.categoryButtonsLoading = false
+        return
+      }
+
       this.debouncer.instance = setTimeout(async () => {
         this.categoryButtonsLoading = true
 
-        // TODO] fasttext api 호출
-        const result = await mockApiCall(val)
-        this.categoryButtons = result
+        const result = await getCategoryPrediction(val)
+        this.categoryButtons = parseCategory(result)
 
         this.categoryButtonsLoading = false
       }, this.debouncer.period)
-
-      function mockApiCall(val) {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            console.log('mock api call finished with: ', val)
-            const mockCategoryButtons = [
-              '사람과그룹',
-              '대출',
-              '어학,외국어',
-              '응용소프트웨어개발',
-              '파이썬',
-              '메이플스토리',
-              '올림픽',
-              '시',
-              '옥련동',
-              '웹툰',
-            ].sort(() => Math.random() - 0.5)
-
-            resolve(mockCategoryButtons)
-          }, 2000)
-        })
-      }
     },
 
     onResize(size) {
