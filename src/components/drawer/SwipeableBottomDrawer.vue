@@ -209,14 +209,16 @@ export default {
     },
 
     async submitted() {
-      if (await this.isAuthenticated(this.$route.fullPath)) {
-        console.log('authed')
-      } else {
-        console.log('bon')
+      if (!(await this.isAuthenticated(this.$route.fullPath))) {
+        return
       }
     },
 
-    textareaUpdated(val) {
+    async textareaUpdated(val) {
+      if (!(await this.isAuthenticated(this.$route.fullPath))) {
+        return
+      }
+
       if (this.debouncer.instance) {
         clearTimeout(this.debouncer.instance)
       }

@@ -56,7 +56,7 @@ import { storeToRefs } from 'pinia'
 import { useAuthStore } from 'src/stores/auth'
 
 import { useWatchRoute } from 'src/composition/useWatchRoute'
-import { updateTermsAgreement } from 'src/api/user'
+import { patchTermsAgreement } from 'src/api/user'
 import { popFromUrlSearchParam } from 'src/util/routeParser'
 
 const options = [
@@ -125,7 +125,7 @@ export default defineComponent({
         router.push('/auth/register/email')
       } else if (route.query.method === 'kakao') {
         loading.value = true
-        await updateTermsAgreement(isMarketingAgreed)
+        await patchTermsAgreement(isMarketingAgreed)
         loading.value = false
 
         const url = new URL(window.location.origin + redirect_url.value)
