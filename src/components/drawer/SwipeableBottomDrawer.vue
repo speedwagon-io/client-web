@@ -72,6 +72,7 @@ import TextareaMobile from 'components/input/TextareaMobile.vue'
 import CategoryButtons from 'components/buttons/CategoryButtons.vue'
 
 import { getCategoryPrediction } from 'src/api/category'
+import { postQuestion } from 'src/api/question'
 import { parseCategory } from 'src/util/common'
 
 // TODO] vue2 to vue3
@@ -208,10 +209,18 @@ export default {
       }
     },
 
-    async submitted() {
+    async submitted(question) {
       if (!(await this.isAuthenticated(this.$route.fullPath))) {
         return
       }
+
+      const result = await postQuestion(question)
+      this.$router.push({
+        name: 'QuestionDetail',
+        params: {
+          id: result.id,
+        },
+      })
     },
 
     async textareaUpdated(val) {

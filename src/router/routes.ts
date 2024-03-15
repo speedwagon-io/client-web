@@ -12,7 +12,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/auth/Callback.vue'),
       },
       {
-        path: 'question/:id',
+        path: 'questions/:id',
         name: 'QuestionDetail',
         component: () => import('pages/q&aDetail/QuestionDetail.vue'),
       },

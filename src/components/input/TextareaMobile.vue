@@ -30,8 +30,10 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   name: 'TextareaMobile',
   setup(props, { emit }) {
+    const text = ref('')
+
     return {
-      text: ref(''),
+      text,
       focus: () => {
         emit('textarea-focus')
       },
@@ -39,7 +41,7 @@ export default defineComponent({
         emit('update', val)
       },
       submit: () => {
-        emit('submit')
+        emit('submit', text.value)
       },
     }
   },
