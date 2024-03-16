@@ -1,9 +1,9 @@
 import { api } from 'boot/axios'
 
-const postQuestion = async (content: string, categoryIds: number[]) => {
+const postQuestion = async (content: string, categories: string[]) => {
   const result = await api.post('/questions', {
     content: content,
-    categoryIds: categoryIds,
+    categories: categories,
   })
   return result.data
 }

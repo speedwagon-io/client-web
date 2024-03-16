@@ -57,6 +57,7 @@
               class="q-mt-xs"
               :buttons="categoryButtons"
               :loading="categoryButtonsLoading"
+              @category-choice="categoryChosen"
             />
           </footer>
         </section>
@@ -94,6 +95,7 @@ export default {
       },
       categoryButtons: [],
       categoryButtonsLoading: false,
+      categoryChoices: [],
     }
   },
 
@@ -214,13 +216,17 @@ export default {
         return
       }
 
-      const result = await postQuestion(question)
+      const result = await postQuestion(question, this.categoryChoices)
       this.$router.push({
         name: 'QuestionDetail',
         params: {
           id: result.id,
         },
       })
+    },
+
+    categoryChosen(val) {
+      this.categoryChoices = val
     },
 
     async textareaUpdated(val) {

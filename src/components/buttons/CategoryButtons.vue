@@ -13,27 +13,28 @@
     <div v-else>
       <q-btn
         class="float-right q-ma-xs"
-        :class="isChosen(id) ? 'text-weight-bold' : ''"
+        :class="isChosen(val) ? 'text-weight-bold' : ''"
         rounded
-        :outline="isChosen(id)"
+        :outline="isChosen(val)"
         v-for="(val, id) of buttons"
         :key="id"
-        @click="choiceToggle(id)"
+        @click="choiceToggle(val)"
       >
         {{ val }}
       </q-btn>
+      {{ choiceList }}
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { PropType, defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'CategoryButtons',
   props: {
     buttons: {
-      type: Array,
+      type: Array as PropType<string[]>,
       default: () => [],
     },
     loading: {
@@ -41,21 +42,30 @@ export default defineComponent({
       default: false,
     },
   },
-  setup() {
-    const choiceList = ref<number[]>([])
+  setup(props, { emit }) {
+    const choiceList = ref<string[]>([])
 
-    const choiceToggle = (id: number) => {
-      if (choiceList.value.includes(id)) {
-        choiceList.value = choiceList.value.filter(e => e !== id)
+    watch(
+      () => props.buttons,
+      change => {
+        choiceList.value = choiceList.value.filter(e => change.includes(e))
+        emit('category-choice', choiceList.value)
+      },
+    )
+
+    const choiceToggle = (val: string) => {
+      if (choiceList.value.includes(val)) {
+        choiceList.value = choiceList.value.filter(e => e !== val)
       } else {
-        choiceList.value.push(id)
+        choiceList.value.push(val)
       }
+      emit('category-choice', choiceList.value)
     }
     return {
       choiceToggle,
       choiceList,
-      isChosen: (id: number) => {
-        return choiceList.value.includes(id)
+      isChosen: (val: string) => {
+        return choiceList.value.includes(val)
       },
     }
   },
