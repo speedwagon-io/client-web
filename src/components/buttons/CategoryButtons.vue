@@ -22,7 +22,6 @@
       >
         {{ val }}
       </q-btn>
-      {{ choiceList }}
     </div>
   </div>
 </template>
