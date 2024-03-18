@@ -30,6 +30,7 @@
               @textarea-focus="textareaFocused"
               @update="textareaUpdated"
               @submit="submitted"
+              :key="textareaKey"
             />
           </header>
           <footer class="row justify-around q-mt-lg">
@@ -96,6 +97,7 @@ export default {
       categoryButtons: [],
       categoryButtonsLoading: false,
       categoryChoices: [],
+      textareaKey: 0,
     }
   },
 
@@ -215,15 +217,22 @@ export default {
       if (await this.isAuthenticated(null)) {
         const result = await postQuestion(question, this.categoryChoices)
 
-        this.$router.push({
-          name: 'QuestionDetail',
-          params: {
-            id: result.id,
-          },
-        })
+        this.$router.push('/')
+
+        this.resetTextareaAndCategoryButtons()
+        this.animateDrawerTo(drawerDefaultHeight)
       } else {
         // TODO] bringback saved text, category choice after login
+        this.$router.push({
+          path: '/auth/login',
+          state: { redirect_url: this.$route.fullPath },
+        })
       }
+    },
+
+    resetTextareaAndCategoryButtons() {
+      this.categoryButtons = []
+      this.textareaKey += 1
     },
 
     categoryChosen(val) {
