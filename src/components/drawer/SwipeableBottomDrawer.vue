@@ -212,17 +212,18 @@ export default {
     },
 
     async submitted(question) {
-      if (!(await this.isAuthenticated(this.$route.fullPath))) {
-        return
-      }
+      if (await this.isAuthenticated(null)) {
+        const result = await postQuestion(question, this.categoryChoices)
 
-      const result = await postQuestion(question, this.categoryChoices)
-      this.$router.push({
-        name: 'QuestionDetail',
-        params: {
-          id: result.id,
-        },
-      })
+        this.$router.push({
+          name: 'QuestionDetail',
+          params: {
+            id: result.id,
+          },
+        })
+      } else {
+        // TODO] bringback saved text, category choice after login
+      }
     },
 
     categoryChosen(val) {
@@ -230,10 +231,6 @@ export default {
     },
 
     async textareaUpdated(val) {
-      if (!(await this.isAuthenticated(this.$route.fullPath))) {
-        return
-      }
-
       if (this.debouncer.instance) {
         clearTimeout(this.debouncer.instance)
       }
