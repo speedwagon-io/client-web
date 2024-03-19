@@ -223,6 +223,7 @@ export default {
 
         this.resetTextareaAndCategoryButtons()
         this.animateDrawerTo(drawerDefaultHeight)
+        this.questionStore.question.value = ''
       } else {
         // TODO] bringback saved text, category choice after login
         this.$router.push({
