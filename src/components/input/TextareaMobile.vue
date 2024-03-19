@@ -25,12 +25,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useQuesitonStore } from 'src/stores/question'
 
 export default defineComponent({
   name: 'TextareaMobile',
   setup(props, { emit }) {
     const text = ref('')
+    const questionStore = storeToRefs(useQuesitonStore())
+
+    onMounted(() => {
+      text.value = questionStore.question.value
+      emit('update', text.value)
+    })
 
     return {
       text,

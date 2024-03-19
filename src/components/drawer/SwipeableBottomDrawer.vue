@@ -68,6 +68,8 @@
 </template>
 
 <script>
+import { storeToRefs } from 'pinia'
+import { useQuesitonStore } from 'src/stores/question'
 import { useUserSession } from 'src/composition/useUserSession'
 
 import TextareaMobile from 'components/input/TextareaMobile.vue'
@@ -215,7 +217,7 @@ export default {
 
     async submitted(question) {
       if (await this.isAuthenticated(null)) {
-        const result = await postQuestion(question, this.categoryChoices)
+        await postQuestion(question, this.categoryChoices)
 
         this.$router.push('/')
 
@@ -240,6 +242,8 @@ export default {
     },
 
     async textareaUpdated(val) {
+      this.questionStore.question.value = val
+
       if (this.debouncer.instance) {
         clearTimeout(this.debouncer.instance)
       }
@@ -276,7 +280,8 @@ export default {
 
   setup() {
     const { isAuthenticated } = useUserSession()
-    return { isAuthenticated }
+    const questionStore = storeToRefs(useQuesitonStore())
+    return { isAuthenticated, questionStore }
   },
 }
 </script>
