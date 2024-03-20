@@ -216,6 +216,10 @@ export default {
     },
 
     async submitted(question) {
+      if (!question) {
+        return
+      }
+
       if (await this.isAuthenticated(null)) {
         await postQuestion(question, this.categoryChoices)
 
@@ -225,7 +229,6 @@ export default {
         this.animateDrawerTo(drawerDefaultHeight)
         this.questionStore.question.value = ''
       } else {
-        // TODO] bringback saved text, category choice after login
         this.$router.push({
           path: '/auth/login',
           state: { redirect_url: this.$route.fullPath },
