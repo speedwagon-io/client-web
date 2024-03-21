@@ -222,6 +222,7 @@ export default {
 
       if (await this.isAuthenticated(null)) {
         await postQuestion(question, this.categoryChoices)
+        // TODO] 현재 route가 root면 데이터 통째로 다시 불러오거나 insert한 데이터 추가해줘야함
 
         this.$router.push('/')
 
@@ -261,8 +262,22 @@ export default {
       this.debouncer.instance = setTimeout(async () => {
         this.categoryButtonsLoading = true
 
-        const result = await getCategoryPrediction(val)
-        this.categoryButtons = parseCategory(result)
+        try {
+          const result = await getCategoryPrediction(val)
+          this.categoryButtons = parseCategory(result)
+        } catch (error) {
+          this.categoryButtons = [
+            '교육',
+            '엔터테인먼트,예술',
+            '게임',
+            '건강',
+            '컴퓨터통신',
+            '생활',
+            '경제',
+            '사회',
+            '스포츠,레저',
+          ]
+        }
 
         this.categoryButtonsLoading = false
       }, this.debouncer.period)

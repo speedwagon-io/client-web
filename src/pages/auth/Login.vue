@@ -31,6 +31,7 @@
               v-model="password"
               type="password"
               autocomplete="off"
+              @keydown.enter.prevent="handleEmailSignIn"
             />
           </q-form>
         </q-card-section>
@@ -225,7 +226,8 @@ export default defineComponent({
             errorMessage.value.email = '아이디 혹은 비밀번호를 확인해주세요.'
             break
           default:
-            errorMessage.value.email = 'Something went wrong. Please try again:('
+            errorMessage.value.email =
+              'Something went wrong. Please try again:('
             break
         }
       } finally {

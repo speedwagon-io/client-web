@@ -2,33 +2,39 @@
   <div>
     <section v-if="isSignedIn">
       <p class="text-weight-bold text-subtitle2">
-        <q-skeleton v-if="preparingMyWaitingQuestions" width="100px" height="100%" />
+        <q-skeleton
+          v-if="preparingMyWaitingQuestions"
+          width="100px"
+          height="100%"
+        />
         <span v-else>진행중인 질문 ({{ myWaitingQuestions.length }})</span>
       </p>
-      <div v-if="preparingMyWaitingQuestions">
-        <ContentButton :progress="true" :progressValue="0" />
-      </div>
-      <div
-        v-else-if="myWaitingQuestions.length > 0"
-        class="row justify-start"
-        v-for="question in myWaitingQuestions"
-        :key="question.id"
-      >
+      <div class="row justify-start">
         <ContentButton
-          :subject="question?.subject"
-          :content="question?.content"
+          v-if="preparingMyWaitingQuestions"
           :progress="true"
           :progressValue="0"
         />
-      </div>
-      <div class="text-center" v-else>
-        진행중인 질문이 없습니다
+        <ContentButton
+          v-else-if="myWaitingQuestions.length > 0"
+          v-for="question in myWaitingQuestions"
+          :key="question.id"
+          :subject="question?.subject"
+          :content="question?.content"
+          :progress="true"
+          :progressValue="question?.progress || 0.3"
+        />
+        <div class="text-center" v-else>진행중인 질문이 없습니다</div>
       </div>
     </section>
 
     <section>
       <p class="text-weight-bold text-subtitle2">
-        <q-skeleton v-if="preparingMyWaitingQuestions" width="50px" height="100%" />
+        <q-skeleton
+          v-if="preparingMyWaitingQuestions"
+          width="50px"
+          height="100%"
+        />
         <span v-else>인기 질문</span>
       </p>
       <div class="row justify-start">
@@ -70,7 +76,7 @@ export default defineComponent({
     const isSignedIn = ref(false)
 
     onMounted(async () => {
-      isSignedIn.value = await isAuthenticated(null) as boolean
+      isSignedIn.value = (await isAuthenticated(null)) as boolean
 
       if (isSignedIn.value) {
         preparingMyWaitingQuestions.value = true

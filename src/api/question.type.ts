@@ -9,4 +9,5 @@ export interface QuestionInfo {
   image_thumbnail_s3key: string
   bounty: number
   status: string
+  progress: number // TODO] progress 값 0 ~ 1 받아오기
 }
