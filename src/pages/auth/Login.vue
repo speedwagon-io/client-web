@@ -116,7 +116,7 @@ export default defineComponent({
     const { emailRules } = useFormRules(errorMessage)
 
     const redirect_url = ref('')
-    redirect_url.value = history.state.redirect_url
+    redirect_url.value = history.state.redirect_url || ''
 
     onMounted(() => {
       watchRouteForAuthLayout('/auth/login', '', null)
@@ -218,8 +218,14 @@ export default defineComponent({
             errorMessage.value.email = '이미 인증된 유저가 있습니다.'
             router.push('/')
             break
-          default:
+          case 'NotAuthorizedException':
             errorMessage.value.email = '아이디 혹은 비밀번호를 확인해주세요.'
+            break
+          case 'UserNotFoundException':
+            errorMessage.value.email = '아이디 혹은 비밀번호를 확인해주세요.'
+            break
+          default:
+            errorMessage.value.email = 'Something went wrong. Please try again:('
             break
         }
       } finally {
