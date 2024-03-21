@@ -2,29 +2,37 @@
   <div>
     <section>
       <p class="text-weight-bold text-subtitle2">
-        <q-skeleton v-if="!data.title" width="100px" height="100%" />
-        <span v-else>진행중인 질문(0)</span>
+        <q-skeleton v-if="questions.length === 0" width="100px" height="100%" />
+        <span v-else>진행중인 질문({{ questions.length }})</span>
       </p>
-      <div class="row justify-start">
+      <div v-if="questions.length === 0">
+        <ContentButton :progress="true" :progressValue="0" />
+      </div>
+      <div
+        v-else
+        class="row justify-start"
+        v-for="question in questions"
+        :key="question.id"
+      >
         <ContentButton
-          :title="data.title"
-          :content="data.content"
+          :subject="question?.subject"
+          :content="question?.content"
           :progress="true"
-          :progressValue="data.progressValue"
+          :progressValue="0"
         />
       </div>
     </section>
 
     <section>
       <p class="text-weight-bold text-subtitle2">
-        <q-skeleton v-if="!data.title" width="50px" height="100%" />
+        <q-skeleton v-if="questions.length === 0" width="50px" height="100%" />
         <span v-else>인기 질문</span>
       </p>
       <div class="row justify-start">
         <ContentButton
           v-for="x of 12"
           :key="x"
-          :title="'제목'"
+          :subject="'제목'"
           :content="x.toString()"
           :to="{
             name: 'QuestionDetail',
@@ -42,29 +50,21 @@
 import { defineComponent, onMounted, ref } from 'vue'
 
 import ContentButton from 'components/buttons/ContentButton.vue'
+import { getMyWaitingQeustions } from 'src/api/question'
+import { QuestionInfo } from 'src/api/question.type'
 
 export default defineComponent({
   name: 'QueryMode',
   components: { ContentButton },
   setup() {
-    const data = ref({
-      title: '',
-      content: '',
-      progressValue: 0,
-    })
+    const questions = ref<QuestionInfo[]>([])
 
-    onMounted(() => {
-      setTimeout(() => {
-        data.value = {
-          title: '제목',
-          content: '내용',
-          progressValue: 0.5,
-        }
-      }, 2000)
+    onMounted(async () => {
+      questions.value = await getMyWaitingQeustions()
     })
 
     return {
-      data,
+      questions,
     }
   },
 })

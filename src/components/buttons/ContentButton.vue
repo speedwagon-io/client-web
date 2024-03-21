@@ -7,8 +7,8 @@
           <InButtonTopLabel :name="'0답변'" />
         </div>
         <span class="text-weight-bold text-subtitle1">
-          <q-skeleton v-if="!title" type="text" width="40px" />
-          <span v-else>{{ title }}</span>
+          <q-skeleton v-if="!subject" type="text" width="40px" />
+          <span v-else>{{ subject }}</span>
         </span>
         <span class="text-weight-light text-body2">
           <q-skeleton v-if="!content" type="text" width="80px" />
@@ -31,13 +31,13 @@ export default defineComponent({
   name: 'ContentButton',
   components: { InButtonTopLabel, QnAProgress },
   props: {
-    title: {
+    subject: {
       type: String,
-      required: true,
+      default: '',
     },
     content: {
       type: String,
-      required: true,
+      default: '',
     },
     progress: {
       type: Boolean,

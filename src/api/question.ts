@@ -1,5 +1,7 @@
 import { api } from 'boot/axios'
 
+import { QuestionInfo } from './question.type'
+
 const postQuestion = async (content: string, categories: string[]) => {
   const result = await api.post('/questions', {
     content: content,
@@ -8,4 +10,13 @@ const postQuestion = async (content: string, categories: string[]) => {
   return result.data
 }
 
-export { postQuestion }
+const getMyWaitingQeustions = async () => {
+  const result = await api.get('/users/self/questions', {
+    params: {
+      status: 'waiting',
+    },
+  })
+  return result.data as QuestionInfo[]
+}
+
+export { postQuestion, getMyWaitingQeustions }
