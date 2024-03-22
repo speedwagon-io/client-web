@@ -223,7 +223,6 @@ export default {
 
       if (await this.isAuthenticated(null)) {
         await postQuestion(question, this.categoryChoices)
-        // TODO] 현재 route가 root면 데이터 통째로 다시 불러오거나 insert한 데이터 추가해줘야함
 
         this.modeStore.user.value = 'query'
         if (this.$route.path === '/') {

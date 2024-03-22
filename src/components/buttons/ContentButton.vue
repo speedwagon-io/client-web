@@ -1,7 +1,7 @@
 <template>
   <q-btn>
-    <div class="row justify-between items-center full-width q-py-xs">
-      <div class="column items-start">
+    <div class="row justify-between items-center full-width q-py-xs text-left">
+      <div class="column items-start col-11">
         <div class="row q-py-xs">
           <InButtonTopLabel :name="'0분전'" />
           <InButtonTopLabel :name="'0답변'" />
@@ -11,11 +11,15 @@
           <span v-else>{{ subject }}</span>
         </span>
         <span class="text-weight-light text-body2">
-          <q-skeleton v-if="!content" type="text" width="80px" />
+          <q-skeleton
+            v-if="typeof content !== 'string'"
+            type="text"
+            width="80px"
+          />
           <span v-else>{{ content }}</span>
         </span>
       </div>
-      <q-icon name="chevron_right" />
+      <q-icon name="chevron_right" class="col-1" />
     </div>
     <QnAProgress v-if="progress" :progressValue="progressValue" />
   </q-btn>
@@ -37,7 +41,7 @@ export default defineComponent({
     },
     content: {
       type: String,
-      default: '',
+      default: undefined,
     },
     progress: {
       type: Boolean,

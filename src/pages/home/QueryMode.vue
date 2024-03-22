@@ -20,9 +20,9 @@
           v-for="question in myWaitingQuestions"
           :key="question.id"
           :subject="question?.subject"
-          :content="question?.content"
+          :content="question?.content.split(' ').slice(5).join(' ')"
           :progress="true"
-          :progressValue="question?.progress || 0.3"
+          :progressValue="question?.progress || 0.1"
         />
         <div class="text-center" v-else>진행중인 질문이 없습니다</div>
       </div>
