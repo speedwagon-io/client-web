@@ -26,6 +26,12 @@
           :key="x"
           :subject="'제목'"
           :content="x.toString()"
+          :to="{
+            name: 'QuestionDetail',
+            params: {
+              id: x,
+            },
+          }"
         />
       </div>
     </section>

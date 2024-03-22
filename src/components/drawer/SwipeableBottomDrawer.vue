@@ -70,6 +70,7 @@
 <script>
 import { storeToRefs } from 'pinia'
 import { useQuesitonStore } from 'src/stores/question'
+import { useModeStore } from 'src/stores/mode'
 import { useUserSession } from 'src/composition/useUserSession'
 
 import TextareaMobile from 'components/input/TextareaMobile.vue'
@@ -224,7 +225,12 @@ export default {
         await postQuestion(question, this.categoryChoices)
         // TODO] 현재 route가 root면 데이터 통째로 다시 불러오거나 insert한 데이터 추가해줘야함
 
-        this.$router.push('/')
+        this.modeStore.user.value = 'query'
+        if (this.$route.path === '/') {
+          this.$emit('re-render-home')
+        } else {
+          this.$router.push('/')
+        }
 
         this.resetTextareaAndCategoryButtons()
         this.animateDrawerTo(drawerDefaultHeight)
@@ -299,8 +305,9 @@ export default {
 
   setup() {
     const { isAuthenticated } = useUserSession()
+    const modeStore = storeToRefs(useModeStore())
     const questionStore = storeToRefs(useQuesitonStore())
-    return { isAuthenticated, questionStore }
+    return { isAuthenticated, questionStore, modeStore }
   },
 }
 </script>

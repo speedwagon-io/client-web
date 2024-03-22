@@ -1,8 +1,8 @@
 <template>
-  <router-view />
+  <router-view :key="count" />
   <transition name="slide_down">
     <div v-show="isBottomDrawerActive">
-      <SwipeableBottomDrawer />
+      <SwipeableBottomDrawer @re-render-home="raiseKeyCount" />
     </div>
   </transition>
   <Callback style="display: none" />
@@ -34,6 +34,7 @@ export default defineComponent({
     const { isAuthenticated } = useUserSession()
 
     const isBottomDrawerActive = ref(true)
+    const count = ref(0)
 
     watch(
       () => route.path,
@@ -56,6 +57,10 @@ export default defineComponent({
 
     return {
       isBottomDrawerActive,
+      count,
+      raiseKeyCount: () => {
+        count.value += 1
+      },
     }
   },
 })
