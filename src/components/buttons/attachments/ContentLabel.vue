@@ -14,7 +14,7 @@
 import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
-  name: 'InButtonTopLabel',
+  name: 'ContentLabel',
   props: {
     name: {
       type: String,

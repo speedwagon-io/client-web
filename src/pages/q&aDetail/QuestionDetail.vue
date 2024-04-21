@@ -10,11 +10,21 @@
         </q-toolbar>
       </q-header>
       <section>
-        <header>
+        <header class="row">
           <UserProfile />
+          <span>하하</span>
         </header>
-        <div>몸통</div>
-        <footer>푸터</footer>
+        <div class="column">
+          <div>제목</div>
+          <div>내용</div>
+        </div>
+        <footer class="row">
+          <div class="row">
+            <ContentLabel :name="'0분전'" />
+            <ContentLabel :name="'0답변'" />
+          </div>
+          <div>카테고리</div>
+        </footer>
       </section>
     </section>
     <section class="row items-center justify-evenly">
@@ -29,10 +39,11 @@ import { useQuasar } from 'quasar'
 
 import UserProfile from 'components/profile/UserProfile.vue'
 import GoBack from 'components/buttons/GoBack.vue'
+import ContentLabel from 'components/buttons/attachments/ContentLabel.vue'
 
 export default defineComponent({
   name: 'QuestionDetail',
-  components: { UserProfile, GoBack },
+  components: { UserProfile, GoBack, ContentLabel },
   setup() {
     const router = useRouter()
     const quasar = useQuasar()
