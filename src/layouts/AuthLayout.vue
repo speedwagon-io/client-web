@@ -6,7 +6,7 @@
         :class="isDark ? 'text-white' : 'text-black'"
       >
         <GoBack v-if="isGoBackShown" :icon="'chevron_left'" />
-        <q-toolbar-title class="text-center">
+        <q-toolbar-title class="absolute-center q-px-none">
           {{ menuName }}
         </q-toolbar-title>
         <GoBack v-if="isCloseShown" :icon="'close'" />
