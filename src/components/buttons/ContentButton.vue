@@ -3,7 +3,7 @@
     <div class="row justify-between items-center full-width q-py-xs text-left">
       <div class="column items-start col-11">
         <div class="row q-py-xs">
-          <ContentLabel :name="'0분전'" />
+          <ContentLabel :name="calculateElapsedTime(createdAt) || '?분전'" />
           <ContentLabel :name="'0답변'" />
         </div>
         <span class="text-weight-bold text-subtitle1">
@@ -28,6 +28,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import { calculateElapsedTime } from 'src/util/common'
+
 import ContentLabel from './attachments/ContentLabel.vue'
 import QnAProgress from './attachments/QnAProgress.vue'
 
@@ -43,6 +45,10 @@ export default defineComponent({
       type: String,
       default: undefined,
     },
+    createdAt: {
+      type: Date,
+      default: '',
+    },
     progress: {
       type: Boolean,
       default: false,
@@ -51,6 +57,11 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
+  },
+  setup() {
+    return {
+      calculateElapsedTime,
+    }
   },
 })
 </script>

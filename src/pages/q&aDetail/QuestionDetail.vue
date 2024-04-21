@@ -9,8 +9,8 @@
           <GoBack :icon="'chevron_left'" />
         </q-toolbar>
       </q-header>
-      <section>
-        <header class="row">
+      <section class="q-px-md">
+        <header class="row justify-between q-py-md">
           <UserProfile />
           <span>하하</span>
         </header>
@@ -18,7 +18,7 @@
           <div>제목</div>
           <div>내용</div>
         </div>
-        <footer class="row">
+        <footer class="row justify-between q-py-md">
           <div class="row">
             <ContentLabel :name="'0분전'" />
             <ContentLabel :name="'0답변'" />

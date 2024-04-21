@@ -21,6 +21,7 @@
           :key="question.id"
           :subject="question?.subject"
           :content="question?.content.split(' ').slice(5).join(' ')"
+          :createdAt="question?.created_at"
           :progress="true"
           :progressValue="question?.progress || 0.1"
           :to="{
