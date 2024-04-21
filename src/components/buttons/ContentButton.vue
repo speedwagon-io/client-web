@@ -4,7 +4,7 @@
       <div class="column items-start col-11">
         <div class="row q-py-xs">
           <ContentLabel :name="calculateElapsedTime(createdAt) || '?분전'" />
-          <ContentLabel :name="'0답변'" />
+          <ContentLabel :name="'?답변'" />
         </div>
         <span class="text-weight-bold text-subtitle1">
           <q-skeleton v-if="!subject" type="text" width="40px" />
@@ -47,7 +47,7 @@ export default defineComponent({
     },
     createdAt: {
       type: Date,
-      default: '',
+      default: undefined,
     },
     progress: {
       type: Boolean,

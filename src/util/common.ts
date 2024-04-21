@@ -20,8 +20,7 @@ export const calculateElapsedTime = (dateTime: Date | undefined) => {
   }
 
   const now = new Date()
-  const diff = +now - +(new Date(dateTime))
-  console.log(diff)
+  const diff = +now - +dateTime
 
   const seconds = Math.floor(diff / 1000)
   const minutes = Math.floor(seconds / 60)
