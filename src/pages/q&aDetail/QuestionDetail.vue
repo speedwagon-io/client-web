@@ -9,9 +9,15 @@
           <GoBack :icon="'chevron_left'" />
         </q-toolbar>
       </q-header>
+      <section>
+        <header>
+          <UserProfile />
+        </header>
+        <div>몸통</div>
+        <footer>푸터</footer>
+      </section>
     </section>
     <section class="row items-center justify-evenly">
-      <UserProfile />
     </section>
   </q-page>
 </template>
@@ -45,7 +51,6 @@ export default defineComponent({
 
 <style>
 .content {
-  height: 45vh;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
   box-shadow: 0 3px 4px -3px gray;

@@ -23,6 +23,12 @@
           :content="question?.content.split(' ').slice(5).join(' ')"
           :progress="true"
           :progressValue="question?.progress || 0.1"
+          :to="{
+            name: 'QuestionDetail',
+            params: {
+              id: question.id,
+            },
+          }"
         />
         <div class="text-center" v-else>진행중인 질문이 없습니다</div>
       </div>
