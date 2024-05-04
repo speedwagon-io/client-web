@@ -27,8 +27,7 @@
         </footer>
       </section>
     </section>
-    <section class="row items-center justify-evenly">
-    </section>
+    <section class="row items-center justify-evenly"></section>
   </q-page>
 </template>
 
