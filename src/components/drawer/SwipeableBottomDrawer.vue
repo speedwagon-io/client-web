@@ -33,27 +33,29 @@
               :key="textareaKey"
             />
           </header>
-          <footer class="row justify-around q-mt-lg">
-            <q-btn
-              class="col-grow q-mr-xs"
-              unelevated
-              rounded
-              color="grey-4"
-              text-color="black"
-            >
-              <img src="~assets/icons/reward.svg" alt="" />
-              리워드 추가
-            </q-btn>
-            <q-btn
-              class="col-grow q-ml-xs"
-              unelevated
-              rounded
-              color="grey-4"
-              text-color="black"
-            >
-              <img src="~assets/icons/plus.svg" alt="" />
-              카테고리 추가
-            </q-btn>
+          <footer>
+            <div class="row justify-around q-mt-lg">
+              <q-btn
+                class="col-grow q-mr-xs"
+                unelevated
+                rounded
+                color="grey-4"
+                text-color="black"
+              >
+                <img src="~assets/icons/reward.svg" alt="" />
+                리워드 추가
+              </q-btn>
+              <q-btn
+                class="col-grow q-ml-xs"
+                unelevated
+                rounded
+                color="grey-4"
+                text-color="black"
+              >
+                <img src="~assets/icons/plus.svg" alt="" />
+                카테고리 추가
+              </q-btn>
+            </div>
             <CategoryButtons
               class="q-mt-xs"
               :buttons="categoryButtons"
