@@ -20,7 +20,7 @@
         </div>
         <footer class="row justify-between q-py-md">
           <div class="row">
-            <ContentLabel :name="'0분전'" />
+            <ContentLabel :name="calculateElapsedTime(createdAt) || '?분전'" />
             <ContentLabel :name="'0답변'" />
           </div>
           <div>카테고리</div>
@@ -32,20 +32,28 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, defineComponent, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useQuasar } from 'quasar'
 
 import UserProfile from 'components/profile/UserProfile.vue'
 import GoBack from 'components/buttons/GoBack.vue'
 import ContentLabel from 'components/buttons/attachments/ContentLabel.vue'
 
+import { calculateElapsedTime } from 'src/util/common'
+
 export default defineComponent({
   name: 'QuestionDetail',
   components: { UserProfile, GoBack, ContentLabel },
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const quasar = useQuasar()
+
+    onMounted(() => {
+      console.log('QuestionDetail mounted:', route.params)
+      // TODO] GET /question/:id
+    })
 
     const goBack = () => {
       router.go(-1)
@@ -54,6 +62,8 @@ export default defineComponent({
     return {
       goBack,
       isDark: computed(() => quasar.dark.isActive),
+      calculateElapsedTime,
+      createdAt: undefined, // TEMP
     }
   },
 })

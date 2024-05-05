@@ -28,6 +28,7 @@
       <MenuButtonGrid class="q-my-md" />
     </section>
     <q-btn @click="handleSignOut">로그아웃</q-btn>
+    <LightDarkToggle />
   </q-drawer>
 </template>
 
@@ -36,6 +37,7 @@ import { defineComponent } from 'vue'
 import { useQuasar } from 'quasar'
 
 import MenuButtonGrid from 'components/buttons/MenuButtonGrid.vue'
+import LightDarkToggle from 'components/input/LightDarkToggle.vue'
 
 import { useUserSession } from 'src/composition/useUserSession'
 
@@ -43,6 +45,7 @@ export default defineComponent({
   name: 'MobileMenuDrawer',
   components: {
     MenuButtonGrid,
+    LightDarkToggle,
   },
   emits: ['close-menu-drawer'],
   setup(props, { emit }) {
