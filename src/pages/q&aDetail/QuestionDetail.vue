@@ -53,6 +53,7 @@ export default defineComponent({
     onMounted(() => {
       console.log('QuestionDetail mounted:', route.params)
       // TODO] GET /question/:id
+      // TODO] GET /question/:id/answers
     })
 
     const goBack = () => {
