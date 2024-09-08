@@ -10,7 +10,7 @@ const postQuestion = async (content: string, categories: string[]) => {
   return result.data
 }
 
-const getMyWaitingQeustions = async () => {
+const getMyWaitingQuestions = async () => {
   const result = await api.get('/users/self/questions', {
     params: {
       status: 'waiting',
@@ -19,4 +19,4 @@ const getMyWaitingQeustions = async () => {
   return result.data as QuestionInfo[]
 }
 
-export { postQuestion, getMyWaitingQeustions }
+export { postQuestion, getMyWaitingQuestions }

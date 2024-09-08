@@ -67,7 +67,7 @@ import { defineComponent, onMounted, ref } from 'vue'
 
 import ContentButton from 'components/buttons/ContentButton.vue'
 
-import { getMyWaitingQeustions } from 'src/api/question'
+import { getMyWaitingQuestions } from 'src/api/question'
 import { QuestionInfo } from 'src/api/question.type'
 import { useUserSession } from 'src/composition/useUserSession'
 
@@ -87,7 +87,7 @@ export default defineComponent({
 
       if (isSignedIn.value) {
         preparingMyWaitingQuestions.value = true
-        myWaitingQuestions.value = await getMyWaitingQeustions()
+        myWaitingQuestions.value = await getMyWaitingQuestions()
         preparingMyWaitingQuestions.value = false
       }
     })
